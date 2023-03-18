@@ -54,14 +54,38 @@
 		B45C6ECF29C58DCC00739811 /* OpenMarket */ = {
 			isa = PBXGroup;
 			children = (
-				B45C6ED029C58DCC00739811 /* AppDelegate.swift */,
-				B45C6ED229C58DCC00739811 /* SceneDelegate.swift */,
+				B45C6EE429C5912C00739811 /* Source */,
+				B45C6EE529C5913600739811 /* Resource */,
+			);
+			path = OpenMarket;
+			sourceTree = "<group>";
+		};
+		B45C6EE429C5912C00739811 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				B45C6EE629C5914700739811 /* App */,
 				B45C6ED429C58DCC00739811 /* ViewController.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		B45C6EE529C5913600739811 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
 				B45C6ED929C58DCD00739811 /* Assets.xcassets */,
 				B45C6EDB29C58DCD00739811 /* LaunchScreen.storyboard */,
 				B45C6EDE29C58DCD00739811 /* Info.plist */,
 			);
-			path = OpenMarket;
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		B45C6EE629C5914700739811 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B45C6ED229C58DCC00739811 /* SceneDelegate.swift */,
+				B45C6ED029C58DCC00739811 /* AppDelegate.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,7 +301,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7T7HF9QMND;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = OpenMarket/Info.plist;
+				INFOPLIST_FILE = OpenMarket/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -306,7 +330,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7T7HF9QMND;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = OpenMarket/Info.plist;
+				INFOPLIST_FILE = OpenMarket/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
