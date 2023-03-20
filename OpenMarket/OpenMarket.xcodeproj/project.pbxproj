@@ -18,7 +18,7 @@
 		B455B0E229C8765A0062D612 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0E129C8765A0062D612 /* Array+Extension.swift */; };
 		B45C6ED129C58DCC00739811 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6ED029C58DCC00739811 /* AppDelegate.swift */; };
 		B45C6ED329C58DCC00739811 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6ED229C58DCC00739811 /* SceneDelegate.swift */; };
-		B45C6ED529C58DCC00739811 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6ED429C58DCC00739811 /* ViewController.swift */; };
+		B45C6ED529C58DCC00739811 /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6ED429C58DCC00739811 /* ProductListView.swift */; };
 		B45C6EDA29C58DCD00739811 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B45C6ED929C58DCD00739811 /* Assets.xcassets */; };
 		B45C6EDD29C58DCD00739811 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B45C6EDB29C58DCD00739811 /* LaunchScreen.storyboard */; };
 		B45C6EE929C597B000739811 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6EE829C597B000739811 /* Product.swift */; };
@@ -42,7 +42,7 @@
 		B45C6ECD29C58DCC00739811 /* OpenMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B45C6ED029C58DCC00739811 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B45C6ED229C58DCC00739811 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B45C6ED429C58DCC00739811 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B45C6ED429C58DCC00739811 /* ProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListView.swift; sourceTree = "<group>"; };
 		B45C6ED929C58DCD00739811 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B45C6EDC29C58DCD00739811 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B45C6EDE29C58DCD00739811 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -112,6 +112,23 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		B455B0DC29C871CD0062D612 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B455B0DD29C871DD0062D612 /* ProductListView */,
+				B455B0DE29C875D90062D612 /* SearchView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B455B0DD29C871DD0062D612 /* ProductListView */ = {
+			isa = PBXGroup;
+			children = (
+				B45C6ED429C58DCC00739811 /* ProductListView.swift */,
+			);
+			path = ProductListView;
+			sourceTree = "<group>";
+		};
 		B45C6EC429C58DCC00739811 = {
 			isa = PBXGroup;
 			children = (
@@ -145,9 +162,9 @@
 				B45C6EE629C5914700739811 /* App */,
 				B45C6EE729C5979200739811 /* Model */,
 				B455B0C729C5997D0062D612 /* Network */,
+				B455B0DC29C871CD0062D612 /* Views */,
 				B455B0DA29C867A40062D612 /* Error */,
 				B455B0DB29C867B20062D612 /* Extensions */,
-				B45C6ED429C58DCC00739811 /* ViewController.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -165,8 +182,8 @@
 		B45C6EE629C5914700739811 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				B45C6ED229C58DCC00739811 /* SceneDelegate.swift */,
 				B45C6ED029C58DCC00739811 /* AppDelegate.swift */,
+				B45C6ED229C58DCC00739811 /* SceneDelegate.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -312,7 +329,7 @@
 				B455B0CE29C59F3E0062D612 /* APIRouter.swift in Sources */,
 				B455B0D229C5CA2E0062D612 /* JSONDecode+Extension.swift in Sources */,
 				B455B0D429C5CA410062D612 /* JSONDecodeError.swift in Sources */,
-				B45C6ED529C58DCC00739811 /* ViewController.swift in Sources */,
+				B45C6ED529C58DCC00739811 /* ProductListView.swift in Sources */,
 				B455B0D729C5E6950062D612 /* APIConstant.swift in Sources */,
 				B455B0E229C8765A0062D612 /* Array+Extension.swift in Sources */,
 				B45C6EEB29C5980D00739811 /* Currency.swift in Sources */,
