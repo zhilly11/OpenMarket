@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		9589F38EF4B95012F9DB2FEE /* Pods_OpenMarket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F5689292F30E5977E34D35 /* Pods_OpenMarket.framework */; };
+		B455B0C929C599A50062D612 /* OpenMarketAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0C829C599A50062D612 /* OpenMarketAPI.swift */; };
+		B455B0CB29C59A100062D612 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0CA29C59A100062D612 /* NetworkManager.swift */; };
+		B455B0CE29C59F3E0062D612 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0CD29C59F3E0062D612 /* APIRouter.swift */; };
+		B455B0D229C5CA2E0062D612 /* JSONDecode+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0D129C5CA2E0062D612 /* JSONDecode+Extension.swift */; };
+		B455B0D429C5CA410062D612 /* JSONDecodeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0D329C5CA410062D612 /* JSONDecodeError.swift */; };
+		B455B0D729C5E6950062D612 /* APIConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0D629C5E6950062D612 /* APIConstant.swift */; };
+		B455B0D929C8416E0062D612 /* OpenMarketAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0D829C8416E0062D612 /* OpenMarketAPIError.swift */; };
 		B45C6ED129C58DCC00739811 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6ED029C58DCC00739811 /* AppDelegate.swift */; };
 		B45C6ED329C58DCC00739811 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6ED229C58DCC00739811 /* SceneDelegate.swift */; };
 		B45C6ED529C58DCC00739811 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6ED429C58DCC00739811 /* ViewController.swift */; };
@@ -23,6 +30,13 @@
 /* Begin PBXFileReference section */
 		84F5822B036BCB10B6F6380F /* Pods-OpenMarket.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenMarket.release.xcconfig"; path = "Target Support Files/Pods-OpenMarket/Pods-OpenMarket.release.xcconfig"; sourceTree = "<group>"; };
 		93F5689292F30E5977E34D35 /* Pods_OpenMarket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenMarket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B455B0C829C599A50062D612 /* OpenMarketAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketAPI.swift; sourceTree = "<group>"; };
+		B455B0CA29C59A100062D612 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		B455B0CD29C59F3E0062D612 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
+		B455B0D129C5CA2E0062D612 /* JSONDecode+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecode+Extension.swift"; sourceTree = "<group>"; };
+		B455B0D329C5CA410062D612 /* JSONDecodeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDecodeError.swift; sourceTree = "<group>"; };
+		B455B0D629C5E6950062D612 /* APIConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConstant.swift; sourceTree = "<group>"; };
+		B455B0D829C8416E0062D612 /* OpenMarketAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketAPIError.swift; sourceTree = "<group>"; };
 		B45C6ECD29C58DCC00739811 /* OpenMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B45C6ED029C58DCC00739811 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B45C6ED229C58DCC00739811 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +73,42 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		B455B0C729C5997D0062D612 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B455B0D529C5E6810062D612 /* API */,
+				B455B0CA29C59A100062D612 /* NetworkManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		B455B0D529C5E6810062D612 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				B455B0D629C5E6950062D612 /* APIConstant.swift */,
+				B455B0CD29C59F3E0062D612 /* APIRouter.swift */,
+				B455B0C829C599A50062D612 /* OpenMarketAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		B455B0DA29C867A40062D612 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				B455B0D829C8416E0062D612 /* OpenMarketAPIError.swift */,
+				B455B0D329C5CA410062D612 /* JSONDecodeError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		B455B0DB29C867B20062D612 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B455B0D129C5CA2E0062D612 /* JSONDecode+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		B45C6EC429C58DCC00739811 = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +141,9 @@
 			children = (
 				B45C6EE629C5914700739811 /* App */,
 				B45C6EE729C5979200739811 /* Model */,
+				B455B0C729C5997D0062D612 /* Network */,
+				B455B0DA29C867A40062D612 /* Error */,
+				B455B0DB29C867B20062D612 /* Extensions */,
 				B45C6ED429C58DCC00739811 /* ViewController.swift */,
 			);
 			path = Source;
@@ -250,11 +303,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				B45C6EF029C5982900739811 /* Image.swift in Sources */,
+				B455B0C929C599A50062D612 /* OpenMarketAPI.swift in Sources */,
+				B455B0CB29C59A100062D612 /* NetworkManager.swift in Sources */,
 				B45C6EF129C5982900739811 /* ProductList.swift in Sources */,
+				B455B0CE29C59F3E0062D612 /* APIRouter.swift in Sources */,
+				B455B0D229C5CA2E0062D612 /* JSONDecode+Extension.swift in Sources */,
+				B455B0D429C5CA410062D612 /* JSONDecodeError.swift in Sources */,
 				B45C6ED529C58DCC00739811 /* ViewController.swift in Sources */,
+				B455B0D729C5E6950062D612 /* APIConstant.swift in Sources */,
 				B45C6EEB29C5980D00739811 /* Currency.swift in Sources */,
 				B45C6ED129C58DCC00739811 /* AppDelegate.swift in Sources */,
 				B45C6EEF29C5982900739811 /* Vendor.swift in Sources */,
+				B455B0D929C8416E0062D612 /* OpenMarketAPIError.swift in Sources */,
 				B45C6EE929C597B000739811 /* Product.swift in Sources */,
 				B45C6ED329C58DCC00739811 /* SceneDelegate.swift in Sources */,
 			);
