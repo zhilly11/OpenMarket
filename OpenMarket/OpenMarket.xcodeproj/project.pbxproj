@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9589F38EF4B95012F9DB2FEE /* Pods_OpenMarket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F5689292F30E5977E34D35 /* Pods_OpenMarket.framework */; };
 		B455B0C929C599A50062D612 /* OpenMarketAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0C829C599A50062D612 /* OpenMarketAPI.swift */; };
-		B455B0CB29C59A100062D612 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0CA29C59A100062D612 /* NetworkManager.swift */; };
+		B455B0CB29C59A100062D612 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0CA29C59A100062D612 /* APIService.swift */; };
 		B455B0CE29C59F3E0062D612 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0CD29C59F3E0062D612 /* APIRouter.swift */; };
 		B455B0D229C5CA2E0062D612 /* JSONDecode+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0D129C5CA2E0062D612 /* JSONDecode+Extension.swift */; };
 		B455B0D429C5CA410062D612 /* JSONDecodeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0D329C5CA410062D612 /* JSONDecodeError.swift */; };
@@ -33,7 +33,7 @@
 		84F5822B036BCB10B6F6380F /* Pods-OpenMarket.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenMarket.release.xcconfig"; path = "Target Support Files/Pods-OpenMarket/Pods-OpenMarket.release.xcconfig"; sourceTree = "<group>"; };
 		93F5689292F30E5977E34D35 /* Pods_OpenMarket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenMarket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B455B0C829C599A50062D612 /* OpenMarketAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketAPI.swift; sourceTree = "<group>"; };
-		B455B0CA29C59A100062D612 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		B455B0CA29C59A100062D612 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		B455B0CD29C59F3E0062D612 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
 		B455B0D129C5CA2E0062D612 /* JSONDecode+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecode+Extension.swift"; sourceTree = "<group>"; };
 		B455B0D329C5CA410062D612 /* JSONDecodeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDecodeError.swift; sourceTree = "<group>"; };
@@ -77,21 +77,13 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		B455B0C729C5997D0062D612 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				B455B0D529C5E6810062D612 /* API */,
-				B455B0CA29C59A100062D612 /* NetworkManager.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
 		B455B0D529C5E6810062D612 /* API */ = {
 			isa = PBXGroup;
 			children = (
 				B455B0D629C5E6950062D612 /* APIConstant.swift */,
 				B455B0CD29C59F3E0062D612 /* APIRouter.swift */,
 				B455B0C829C599A50062D612 /* OpenMarketAPI.swift */,
+				B455B0CA29C59A100062D612 /* APIService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -105,22 +97,13 @@
 			path = Error;
 			sourceTree = "<group>";
 		};
-		B455B0DB29C867B20062D612 /* Extensions */ = {
+		B455B0DB29C867B20062D612 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				B455B0E129C8765A0062D612 /* Array+Extension.swift */,
 				B455B0D129C5CA2E0062D612 /* JSONDecode+Extension.swift */,
 			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		B455B0DC29C871CD0062D612 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				B455B0DD29C871DD0062D612 /* ProductListView */,
-				B455B0DE29C875D90062D612 /* SearchView */,
-			);
-			path = Views;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		B455B0DD29C871DD0062D612 /* ProductListView */ = {
@@ -170,11 +153,10 @@
 			isa = PBXGroup;
 			children = (
 				B45C6EE629C5914700739811 /* App */,
-				B45C6EE729C5979200739811 /* Model */,
-				B455B0C729C5997D0062D612 /* Network */,
-				B455B0DC29C871CD0062D612 /* Views */,
+				B466C75E29CB17F400E8745F /* Domain */,
+				B466C75F29CB180000E8745F /* Pages */,
+				B455B0DB29C867B20062D612 /* Utils */,
 				B455B0DA29C867A40062D612 /* Error */,
-				B455B0DB29C867B20062D612 /* Extensions */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -208,6 +190,24 @@
 				B45C6EEA29C5980D00739811 /* Currency.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B466C75E29CB17F400E8745F /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				B455B0D529C5E6810062D612 /* API */,
+				B45C6EE729C5979200739811 /* Model */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		B466C75F29CB180000E8745F /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				B455B0DD29C871DD0062D612 /* ProductListView */,
+				B455B0DE29C875D90062D612 /* SearchView */,
+			);
+			path = Pages;
 			sourceTree = "<group>";
 		};
 		E66A1EACF6086D1B21B7D426 /* Frameworks */ = {
@@ -334,7 +334,7 @@
 			files = (
 				B45C6EF029C5982900739811 /* Image.swift in Sources */,
 				B455B0C929C599A50062D612 /* OpenMarketAPI.swift in Sources */,
-				B455B0CB29C59A100062D612 /* NetworkManager.swift in Sources */,
+				B455B0CB29C59A100062D612 /* APIService.swift in Sources */,
 				B45C6EF129C5982900739811 /* ProductList.swift in Sources */,
 				B455B0CE29C59F3E0062D612 /* APIRouter.swift in Sources */,
 				B455B0D229C5CA2E0062D612 /* JSONDecode+Extension.swift in Sources */,

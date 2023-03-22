@@ -1,9 +1,9 @@
-//  OpenMarket - NetworkManager.swift
+//  OpenMarket - APIService.swift
 //  Created by zhilly on 2023/03/18
 
 import Alamofire
 
-final class NetworkManager {
+final class APIService {
     
     typealias onSuccess<T> = ((T) -> Void)
     typealias onFailure = ((_ error: Error) -> Void)
@@ -40,7 +40,7 @@ final class NetworkManager {
     }
 }
 
-extension NetworkManager: OpenMarketAPI {
+extension APIService: OpenMarketAPI {
     
     func healthCheck(completion: @escaping (Result<String, OpenMarketAPIError>) -> Void) {
         request(String.self,
