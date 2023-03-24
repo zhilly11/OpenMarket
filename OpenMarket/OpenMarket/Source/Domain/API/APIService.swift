@@ -2,16 +2,17 @@
 //  Created by zhilly on 2023/03/18
 
 import Alamofire
+import RxSwift
 
 final class APIService {
     
     typealias onSuccess<T> = ((T) -> Void)
     typealias onFailure = ((_ error: Error) -> Void)
     
-    private func request<T>(_ object: T.Type,
-                            router: APIRouter,
-                            success: @escaping onSuccess<T>,
-                            failure: @escaping onFailure) where T: Decodable {
+    static func request<T>(_ object: T.Type,
+                           router: APIRouter,
+                           success: @escaping onSuccess<T>,
+                           failure: @escaping onFailure) where T: Decodable {
         AF.request(router)
             .validate(statusCode: 200..<300)
             .response { data in
@@ -38,11 +39,8 @@ final class APIService {
                 }
             }
     }
-}
-
-extension APIService: OpenMarketAPI {
     
-    func healthCheck(completion: @escaping (Result<String, OpenMarketAPIError>) -> Void) {
+    static func healthCheck(completion: @escaping (Result<String, OpenMarketAPIError>) -> Void) {
         request(String.self,
                 router: .healthChecker) { result in
             completion(.success(result))
@@ -51,7 +49,7 @@ extension APIService: OpenMarketAPI {
         }
     }
     
-    func inquiryProduct(id: Int, completion: @escaping (Result<Product, OpenMarketAPIError>) -> Void) {
+    static func inquiryProduct(id: Int, completion: @escaping (Result<Product, OpenMarketAPIError>) -> Void) {
         request(Product.self,
                 router: .inquiryProduct(id: id)) { item in
             completion(.success(item))
@@ -60,24 +58,26 @@ extension APIService: OpenMarketAPI {
         }
     }
     
-    func inquiryProductList(pageNumber: Int,
-                            itemsPerPage: Int,
-                            searchValue: String? = nil,
-                            completion: @escaping (Result<ProductList, OpenMarketAPIError>) -> Void) {
-        request(ProductList.self,
-                router: .inquiryProductList(pageNumber: pageNumber,
-                                            itemsPerPage: itemsPerPage,
-                                            searchValue: searchValue)) { item in
-            completion(.success(item))
-        } failure: { error in
-            completion(.failure(.unknownError))
+    static func inquiryProductList(pageNumber: Int,
+                                   itemsPerPage: Int,
+                                   searchValue: String? = nil) -> Observable<ProductList> {
+        return Observable.create() { emitter in
+            request(ProductList.self,
+                    router: .inquiryProductList(pageNumber: pageNumber,
+                                                itemsPerPage: itemsPerPage)) { items in
+                emitter.onNext(items)
+                emitter.onCompleted()
+            } failure: { error in
+                emitter.onError(error)
+            }
+            
+            return Disposables.create()
         }
-        
     }
     
-    func createProduct() {}
+    static func createProduct() {}
     
-    func inquiryDeleteURI(id: Int) {
+    static func inquiryDeleteURI(id: Int) {
         request(String.self,
                 router: .inquiryDeleteURI(id: id)) { item in
             print("delete ULI = \(item)")
@@ -87,11 +87,11 @@ extension APIService: OpenMarketAPI {
         }
     }
     
-    func updateProduct(id: Int) {
+    static func updateProduct(id: Int) {
         
     }
     
-    func deleteProduct(path: String) {
+    static func deleteProduct(path: String) {
         
     }
 }
