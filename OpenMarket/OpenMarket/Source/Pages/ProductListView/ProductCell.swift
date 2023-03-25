@@ -8,7 +8,7 @@ final class ProductCell: UITableViewCell, ReusableView {
     
     private let thumbnail: UIImageView = {
         
-        return UIImageView(image: UIImage(systemName: "folder.fill"))
+        return UIImageView(image: UIImage(systemName: "rays"))
     }()
     
     private let nameLabel: UILabel = {
@@ -71,6 +71,10 @@ final class ProductCell: UITableViewCell, ReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        thumbnail.image = UIImage(systemName: "rays")
+    }
+    
     private func setupViews() {
         
         [nameLabel, priceLabel, stockLabel].forEach(labelStackView.addArrangedSubview(_:))
@@ -91,5 +95,6 @@ final class ProductCell: UITableViewCell, ReusableView {
         nameLabel.text = "\(item.name)"
         priceLabel.text = "\(item.price)"
         stockLabel.text = "재고: \(item.stock)개"
+        thumbnail.load(url: URL(string: item.thumbnail))
     }
 }
