@@ -64,7 +64,8 @@ final class APIService {
         return Observable.create() { emitter in
             request(ProductList.self,
                     router: .inquiryProductList(pageNumber: pageNumber,
-                                                itemsPerPage: itemsPerPage)) { items in
+                                                itemsPerPage: itemsPerPage,
+                                                searchValue: searchValue)) { items in
                 emitter.onNext(items)
                 emitter.onCompleted()
             } failure: { error in
