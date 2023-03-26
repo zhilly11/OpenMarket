@@ -54,6 +54,7 @@ final class ProductListViewController: UIViewController {
     
     private func setupView() {
         view.backgroundColor = .white
+        title = "오픈 마켓"
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints {

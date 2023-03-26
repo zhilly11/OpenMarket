@@ -7,8 +7,13 @@ import SnapKit
 final class ProductCell: UITableViewCell, ReusableView {
     
     private let thumbnail: UIImageView = {
+        let imageView = UIImageView()
         
-        return UIImageView(image: UIImage(systemName: "rays"))
+        imageView.image = UIImage(systemName: "rays")
+        imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
+        
+        return imageView
     }()
     
     private let nameLabel: UILabel = {
@@ -73,6 +78,7 @@ final class ProductCell: UITableViewCell, ReusableView {
     
     override func prepareForReuse() {
         thumbnail.image = UIImage(systemName: "rays")
+        stockLabel.textColor = .black
     }
     
     private func setupViews() {
@@ -93,8 +99,29 @@ final class ProductCell: UITableViewCell, ReusableView {
     
     func configure(with item: Product) {
         nameLabel.text = "\(item.name)"
-        priceLabel.text = "\(item.price)"
-        stockLabel.text = "재고: \(item.stock)개"
+        displayPrice(currency: item.currency, price: item.price, bargainPrice: item.bargainPrice)
+        displayStock(stock: item.stock)
         thumbnail.load(url: URL(string: item.thumbnail))
+    }
+    
+    private func displayStock(stock: Int) {
+        if stock > 0 {
+            stockLabel.text = "잔여수량 : \(stock)"
+        } else {
+            stockLabel.text = "품절"
+            stockLabel.textColor = .systemOrange
+        }
+    }
+    
+    private func displayPrice(currency: Currency, price: Double, bargainPrice: Double) {
+        let priceText: String = currency.symbol + " " + price.convertNumberFormat()
+        let bargainText: String = currency.symbol + " " + bargainPrice.convertNumberFormat()
+        
+        if priceText == bargainText {
+            priceLabel.text = priceText
+        } else {
+            priceLabel.text = priceText + "  " + bargainText
+            priceLabel.attributedText = priceLabel.text?.strikeThrough(length: priceText.count, color: .red)
+        }
     }
 }
