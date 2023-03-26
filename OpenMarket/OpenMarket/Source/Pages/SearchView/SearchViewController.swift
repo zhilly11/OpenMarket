@@ -57,7 +57,7 @@ final class SearchViewController: UIViewController {
 }
 
 extension SearchViewController: UISearchBarDelegate {
-    // 서치바에서 검색을 시작할 때 호출
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.viewModel.search(self.searchBar.text ?? "")
         self.searchBar.showsCancelButton = true
@@ -70,30 +70,9 @@ extension SearchViewController: UISearchBarDelegate {
         self.tableView.reloadData()
     }
     
-    // 서치바에서 검색버튼을 눌렀을 때 호출
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        dismissKeyboard()
-        
-//        guard let text = searchController.searchBar.text?.lowercased() else { return }
-//        self.filterredArr = self.arr.filter { $0.localizedCaseInsensitiveContains(text) }
-        
-        self.tableView.reloadData()
-    }
-    
-    // 서치바에서 취소 버튼을 눌렀을 때 호출
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.text = ""
         self.searchBar.resignFirstResponder()
         self.tableView.reloadData()
-    }
-    
-    // 서치바 검색이 끝났을 때 호출
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        self.tableView.reloadData()
-    }
-    
-    // 서치바 키보드 내리기
-    func dismissKeyboard() {
-        searchBar.resignFirstResponder()
     }
 }
