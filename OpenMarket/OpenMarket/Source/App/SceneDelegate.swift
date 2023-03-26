@@ -14,8 +14,16 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let tabBarController = UITabBarController()
-        let productListViewController = UINavigationController(rootViewController: ProductListViewController())
-        let searchViewController = UINavigationController(rootViewController: SearchViewController())
+        
+        let productListViewModel = ProductListViewModel()
+        let productListViewController = UINavigationController(
+            rootViewController: ProductListViewController(viewModel: productListViewModel)
+        )
+        
+        let searchViewModel = SearchViewModel()
+        let searchViewController = UINavigationController(
+            rootViewController: SearchViewController(viewModel: searchViewModel)
+        )
         
         tabBarController.setViewControllers([productListViewController,
                                              searchViewController], animated: true)

@@ -8,7 +8,7 @@ import SnapKit
 
 final class ProductListViewController: UIViewController {
     
-    private let viewModel = ProductListViewModel()
+    private let viewModel: ProductListViewModel
     private let disposeBag = DisposeBag()
     private var currentPage = 1
     private let refreshController: UIRefreshControl = .init()
@@ -30,6 +30,16 @@ final class ProductListViewController: UIViewController {
         spinner.startAnimating()
         
         return footerView
+    }
+    
+    init(viewModel: ProductListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
