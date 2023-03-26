@@ -10,6 +10,8 @@
 		9589F38EF4B95012F9DB2FEE /* Pods_OpenMarket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F5689292F30E5977E34D35 /* Pods_OpenMarket.framework */; };
 		B44936D929CD6406001E5F20 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44936D829CD6406001E5F20 /* UIImageView+Extension.swift */; };
 		B44936DB29CEF459001E5F20 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44936DA29CEF459001E5F20 /* SearchViewModel.swift */; };
+		B44936DD29D0292F001E5F20 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44936DC29D0292F001E5F20 /* String+Extension.swift */; };
+		B44936E029D02A36001E5F20 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44936DF29D02A36001E5F20 /* Double+Extension.swift */; };
 		B455B0C929C599A50062D612 /* OpenMarketAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0C829C599A50062D612 /* OpenMarketAPI.swift */; };
 		B455B0CB29C59A100062D612 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0CA29C59A100062D612 /* APIService.swift */; };
 		B455B0CE29C59F3E0062D612 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0CD29C59F3E0062D612 /* APIRouter.swift */; };
@@ -39,6 +41,8 @@
 		93F5689292F30E5977E34D35 /* Pods_OpenMarket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenMarket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B44936D829CD6406001E5F20 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		B44936DA29CEF459001E5F20 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		B44936DC29D0292F001E5F20 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		B44936DF29D02A36001E5F20 /* Double+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Double+Extension.swift"; path = "../../../../../ios-open-market/OpenMarket/OpenMarket/Sources/Extension/Double+Extension.swift"; sourceTree = "<group>"; };
 		B455B0C829C599A50062D612 /* OpenMarketAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketAPI.swift; sourceTree = "<group>"; };
 		B455B0CA29C59A100062D612 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		B455B0CD29C59F3E0062D612 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
@@ -114,6 +118,8 @@
 				B455B0E129C8765A0062D612 /* Array+Extension.swift */,
 				B455B0D129C5CA2E0062D612 /* JSONDecode+Extension.swift */,
 				B44936D829CD6406001E5F20 /* UIImageView+Extension.swift */,
+				B44936DC29D0292F001E5F20 /* String+Extension.swift */,
+				B44936DF29D02A36001E5F20 /* Double+Extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -359,6 +365,7 @@
 				B455B0D729C5E6950062D612 /* APIConstant.swift in Sources */,
 				B44936D929CD6406001E5F20 /* UIImageView+Extension.swift in Sources */,
 				B455B0E229C8765A0062D612 /* Array+Extension.swift in Sources */,
+				B44936DD29D0292F001E5F20 /* String+Extension.swift in Sources */,
 				B45C6EEB29C5980D00739811 /* Currency.swift in Sources */,
 				B466C76529CC1CBB00E8745F /* ReusableView.swift in Sources */,
 				B455B0E029C875F60062D612 /* SearchViewController.swift in Sources */,
@@ -366,6 +373,7 @@
 				B45C6EEF29C5982900739811 /* Vendor.swift in Sources */,
 				B466C76129CC0EC100E8745F /* ProductListViewModel.swift in Sources */,
 				B466C76329CC109200E8745F /* ProductCell.swift in Sources */,
+				B44936E029D02A36001E5F20 /* Double+Extension.swift in Sources */,
 				B455B0D929C8416E0062D612 /* OpenMarketAPIError.swift in Sources */,
 				B45C6EE929C597B000739811 /* Product.swift in Sources */,
 				B45C6ED329C58DCC00739811 /* SceneDelegate.swift in Sources */,
