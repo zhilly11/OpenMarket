@@ -7,7 +7,7 @@ import RxSwift
 final class APIService {
     
     typealias onSuccess<T> = ((T) -> Void)
-    typealias onFailure = ((_ error: Error) -> Void)
+    typealias onFailure = ((_ error: OpenMarketAPIError) -> Void)
     
     static func request<T>(_ object: T.Type,
                            router: APIRouter,
@@ -19,7 +19,7 @@ final class APIService {
                 switch data.result {
                 case .success(let data):
                     guard let data = data else {
-                        return failure(JSONDecodeError.invalidData)
+                        return failure(OpenMarketAPIError.invalidData)
                     }
                     
                     if object == String.self,
@@ -35,7 +35,7 @@ final class APIService {
                         success(JSONDecoder.decodeData(data: data, to: object)!)
                     }
                 case .failure(_):
-                    failure(OpenMarketAPIError.unknownError)
+                    failure(OpenMarketAPIError.unknown)
                 }
             }
     }
@@ -49,12 +49,32 @@ final class APIService {
         }
     }
     
-    static func inquiryProduct(id: Int, completion: @escaping (Result<Product, OpenMarketAPIError>) -> Void) {
-        request(Product.self,
-                router: .inquiryProduct(id: id)) { item in
-            completion(.success(item))
-        } failure: { error in
-            completion(.failure(.unknownError))
+    static func healthCheck() -> Observable<String> {
+        return Observable.create { emitter in
+            request(String.self,
+                    router: .healthChecker) { result in
+                emitter.onNext(result)
+                emitter.onCompleted()
+            } failure: { _ in
+                emitter.onError(OpenMarketAPIError.failHealthChecker)
+            }
+            
+            return Disposables.create()
+        }
+
+    }
+    
+    static func inquiryProduct(id: Int) -> Observable<Product> {
+        return Observable.create { emitter in
+            request(Product.self,
+                    router: .inquiryProduct(id: id)) { item in
+                emitter.onNext(item)
+                emitter.onCompleted()
+            } failure: { error in
+                emitter.onError(OpenMarketAPIError.inquiryProduct)
+            }
+            
+            return Disposables.create()
         }
     }
     
@@ -68,8 +88,8 @@ final class APIService {
                                                 searchValue: searchValue)) { items in
                 emitter.onNext(items)
                 emitter.onCompleted()
-            } failure: { error in
-                emitter.onError(error)
+            } failure: { _ in
+                emitter.onError(OpenMarketAPIError.unknown)
             }
             
             return Disposables.create()
