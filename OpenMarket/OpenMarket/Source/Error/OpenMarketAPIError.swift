@@ -2,6 +2,8 @@
 //  Created by zhilly on 2023/03/20
 
 enum OpenMarketAPIError: Error {
+    case invalidData
     case failHealthChecker
-    case unknownError
+    case inquiryProduct
+    case unknown
 }
