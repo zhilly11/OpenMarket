@@ -8,7 +8,7 @@ enum AlertKind {
     case exit
 }
 
-class AlertFactory {
+final class AlertFactory {
     
     private enum Constant {
         static let exitAlertTitle = "종료"
