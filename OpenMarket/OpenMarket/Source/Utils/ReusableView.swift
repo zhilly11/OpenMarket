@@ -1,5 +1,5 @@
-//  Diary - ReusableView.swift
-//  Created by Ayaan, zhilly on 2022/12/22
+//  OpenMarket - ReusableView.swift
+//  Created by zhilly on 2023/03/18
 
 import UIKit.UIView
 

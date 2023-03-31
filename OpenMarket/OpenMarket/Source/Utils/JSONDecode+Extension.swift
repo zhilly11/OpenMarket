@@ -1,8 +1,5 @@
-//
-//  OpenMarket - JSONDecode+Extension.swift
-//  Created by Zhilly, Dragon. 22/11/14
-//  Copyright © yagom. All rights reserved.
-//
+//  OpenMarket - JSONDecoder+Extension.swift
+//  Created by zhilly on 2023/03/24
 
 import UIKit.NSDataAsset
 
