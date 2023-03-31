@@ -45,16 +45,36 @@ final class ProductListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.delegate = self
-        
-        setupView()
-        initRefresh()
-        bind()
+        checkAPIServerStatus { [weak self] result in
+            switch result {
+            case true:
+                self?.setupView()
+                self?.initRefresh()
+                self?.bind()
+            case false:
+                let alert = AlertFactory.make(.exit)
+                self?.present(alert, animated: true)
+            }
+        }
+    }
+    
+    private func checkAPIServerStatus(completion: @escaping (Bool) -> Void) {
+        _ = APIService.healthCheck()
+            .subscribe(onNext: { result in
+                if result.trimmingCharacters(in: ["\""]) == "OK" {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            }, onError: { _ in
+                completion(false)
+            }).disposed(by: disposeBag)
     }
     
     private func setupView() {
         view.backgroundColor = .white
         title = "오픈 마켓"
+        tableView.delegate = self
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints {
@@ -73,7 +93,7 @@ final class ProductListViewController: UIViewController {
 }
 
 extension ProductListViewController: UITableViewDelegate {
-
+    
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         let currentOffset = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
