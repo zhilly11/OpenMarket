@@ -1,8 +1,5 @@
-//
 //  OpenMarket - Double+Extension.swift
-//  Created by Zhilly, Dragon. 22/11/25
-//  Copyright © yagom. All rights reserved.
-//
+//  Created by zhilly on 2023/03/31
 
 import UIKit
 
