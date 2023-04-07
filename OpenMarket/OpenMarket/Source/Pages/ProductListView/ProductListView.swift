@@ -92,9 +92,9 @@ final class ProductListViewController: UIViewController {
         
         tableView.rx.modelSelected(Product.self)
             .subscribe { element in
-                let popUpViewController = PopUpViewController(product: element)
-                popUpViewController.modalPresentationStyle = .overCurrentContext
-                self.present(popUpViewController, animated: true, completion: nil)
+                let productDetailViewController = ProductDetailViewController(product: element)
+                productDetailViewController.modalPresentationStyle = .popover
+                self.present(productDetailViewController, animated: true, completion: nil)
             }.disposed(by: disposeBag)
     }
 }
