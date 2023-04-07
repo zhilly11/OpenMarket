@@ -89,6 +89,13 @@ final class ProductListViewController: UIViewController {
                                          cellType: ProductCell.self)) { index, item, cell in
                 cell.configure(with: item)
             }.disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(Product.self)
+            .subscribe { element in
+                let popUpViewController = PopUpViewController(product: element)
+                popUpViewController.modalPresentationStyle = .overCurrentContext
+                self.present(popUpViewController, animated: true, completion: nil)
+            }.disposed(by: disposeBag)
     }
 }
 
