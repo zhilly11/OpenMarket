@@ -113,6 +113,39 @@ extension ProductListViewController: UITableViewDelegate {
             }
         }
     }
+
+    func tableView(_ tableView: UITableView,
+                   contextMenuConfigurationForRowAt indexPath: IndexPath,
+                   point: CGPoint) -> UIContextMenuConfiguration? {
+        var imageThumbnail: String = .init()
+        
+        do {
+            let datasource = try viewModel.productList.value()
+            imageThumbnail = datasource[indexPath.item].thumbnail
+        } catch {
+            print("error")
+        }
+       
+        let identifierString = NSString(string: "\(indexPath.row)")
+        return UIContextMenuConfiguration(identifier: identifierString, previewProvider: {
+            let previewController = PreviewViewController(thumbnailURL: imageThumbnail)
+            
+            return previewController
+        }, actionProvider: { suggestedActions in
+            let inspectAction = UIAction(title: "inspect") { _ in
+                print("inspect")
+            }
+            let duplicateAction = UIAction(title: "duplicate") { _ in
+                print("duplicate")
+            }
+            let deleteAction = UIAction(title: "delete") { _ in
+                print("delete")
+            }
+            
+            return UIMenu(title: "",
+                          children: [inspectAction, duplicateAction, deleteAction])
+        })
+    }
 }
 
 extension ProductListViewController {
