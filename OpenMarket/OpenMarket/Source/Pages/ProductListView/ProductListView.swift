@@ -127,24 +127,28 @@ extension ProductListViewController: UITableViewDelegate {
         }
        
         let identifierString = NSString(string: "\(indexPath.row)")
-        return UIContextMenuConfiguration(identifier: identifierString, previewProvider: {
-            let previewController = PreviewViewController(thumbnailURL: imageThumbnail)
-            
-            return previewController
-        }, actionProvider: { suggestedActions in
-            let inspectAction = UIAction(title: "inspect") { _ in
-                print("inspect")
+        
+        return UIContextMenuConfiguration(
+            identifier: identifierString,
+            previewProvider: {
+                let previewController = PreviewViewController(thumbnailURL: imageThumbnail)
+                
+                return previewController
+            },
+            actionProvider: { suggestedActions in
+                let inspectAction = UIAction(title: "inspect") { _ in
+                    print("inspect")
+                }
+                let duplicateAction = UIAction(title: "duplicate") { _ in
+                    print("duplicate")
+                }
+                let deleteAction = UIAction(title: "delete") { _ in
+                    print("delete")
+                }
+                
+                return UIMenu(title: "", children: [inspectAction, duplicateAction, deleteAction])
             }
-            let duplicateAction = UIAction(title: "duplicate") { _ in
-                print("duplicate")
-            }
-            let deleteAction = UIAction(title: "delete") { _ in
-                print("delete")
-            }
-            
-            return UIMenu(title: "",
-                          children: [inspectAction, duplicateAction, deleteAction])
-        })
+        )
     }
 }
 
