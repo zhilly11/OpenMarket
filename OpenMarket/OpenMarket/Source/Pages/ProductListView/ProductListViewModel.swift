@@ -7,6 +7,8 @@ import RxSwift
 final class ProductListViewModel {
     
     let productList = BehaviorSubject<[Product]>(value: [])
+    var currentPage = BehaviorSubject<Int>(value: 1)
+
     private let disposeBag = DisposeBag()
     
     init() { }
