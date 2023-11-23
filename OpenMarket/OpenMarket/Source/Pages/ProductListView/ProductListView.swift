@@ -2,34 +2,25 @@
 //  Created by zhilly on 2023/03/18
 
 import UIKit
-import RxSwift
+
 import RxCocoa
+import RxSwift
 import SnapKit
+import Then
 
 final class ProductListViewController: UIViewController {
     
     private let viewModel: ProductListViewModel
     private let disposeBag = DisposeBag()
-    private var currentPage = 1
+    
     private let refreshController: UIRefreshControl = .init()
     
-    private let tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
-        
-        tableView.register(ProductCell.self, forCellReuseIdentifier: ProductCell.reuseIdentifier)
-        
-        return tableView
-    }()
-    
-    private func createSpinnerFooter() -> UIView {
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
-        let spinner = UIActivityIndicatorView()
-        
-        spinner.center = footerView.center
-        footerView.addSubview(spinner)
-        spinner.startAnimating()
-        
-        return footerView
+    private let tableView = UITableView(frame: .zero, style: .plain).then {
+        $0.register(ProductCell.self, forCellReuseIdentifier: ProductCell.reuseIdentifier)
+        $0.contentInsetAdjustmentBehavior = .scrollableAxes
+        $0.allowsSelection = false
+        $0.backgroundColor = .clear
+        $0.separatorStyle = .none
     }
     
     init(viewModel: ProductListViewModel) {
@@ -55,9 +46,9 @@ final class ProductListViewController: UIViewController {
             self.initRefresh()
             self.bind()
         } catch {
-                let alert = AlertFactory.make(.exit)
+            let alert = AlertFactory.make(.exit)
             self.present(alert, animated: true)
-            }
+        }
     }
     
     private func setupView() {
@@ -86,6 +77,18 @@ final class ProductListViewController: UIViewController {
                 self.present(productDetailViewController, animated: true, completion: nil)
             }.disposed(by: disposeBag)
     }
+    
+    private func createSpinnerFooter() -> UIView {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
+        let spinner = UIActivityIndicatorView()
+        
+        spinner.center = footerView.center
+        footerView.addSubview(spinner)
+        spinner.startAnimating()
+        
+        return footerView
+    }
+    
     private func loadNextPage() {
         do {
             try viewModel.loadNextPage()
@@ -100,16 +103,7 @@ final class ProductListViewController: UIViewController {
 extension ProductListViewController: UITableViewDelegate {
     
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        let currentOffset = scrollView.contentOffset.y
-        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
-        
-        if maximumOffset < currentOffset {
-            viewModel.load(pageNumber: currentPage)
-            currentPage += 1
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                self?.tableView.reloadData()
-            }
-        }
+        //TODO: Paging Feature
     }
 
     func tableView(_ tableView: UITableView,
