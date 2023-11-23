@@ -42,27 +42,35 @@ final class ProductListViewController: UIViewController {
     private func checkServerStatus() {
         do {
             try viewModel.serverCheck()
-            self.setupView()
-            self.initRefresh()
-            self.bind()
+            configure()
         } catch {
             let alert = AlertFactory.make(.exit)
             self.present(alert, animated: true)
         }
     }
     
+    private func configure() {
+        setupView()
+        setupLayout()
+        initRefresh()
+        setupBind()
+    }
+    
     private func setupView() {
         view.backgroundColor = .white
         title = "오픈 마켓"
         tableView.delegate = self
-        
+    }
+    
+    private func setupLayout() {
         view.addSubview(tableView)
+        
         tableView.snp.makeConstraints {
-            $0.top.bottom.width.equalTo(self.view.safeAreaLayoutGuide)
+            $0.top.bottom.width.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
-    private func bind() {
+    private func setupBind() {
         viewModel.productList
             .observe(on: MainScheduler.instance)
             .bind(to: tableView.rx.items(cellIdentifier: ProductCell.reuseIdentifier,
