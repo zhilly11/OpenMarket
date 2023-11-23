@@ -117,15 +117,8 @@ extension ProductListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    contextMenuConfigurationForRowAt indexPath: IndexPath,
                    point: CGPoint) -> UIContextMenuConfiguration? {
-        var imageThumbnail: String = .init()
-        
-        do {
-            let datasource = try viewModel.productList.value()
-            imageThumbnail = datasource[indexPath.item].thumbnail
-        } catch {
-            print("error")
-        }
-       
+        let datasource: [Product] = viewModel.productList.value
+        let imageThumbnail: String = datasource[indexPath.item].thumbnail
         let identifierString = NSString(string: "\(indexPath.row)")
         
         return UIContextMenuConfiguration(

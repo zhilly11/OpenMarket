@@ -2,11 +2,13 @@
 //  Created by zhilly on 2023/03/23
 
 import Foundation
+
+import RxRelay
 import RxSwift
 
 final class ProductListViewModel {
     
-    let productList = BehaviorSubject<[Product]>(value: [])
+    let productList = BehaviorRelay<[Product]>(value: [])
     var currentPage = BehaviorSubject<Int>(value: 1)
 
     private let disposeBag = DisposeBag()
@@ -30,21 +32,17 @@ final class ProductListViewModel {
         Task {
             do {
                 let currentPage = try self.currentPage.value()
-                let response = try await APIService.inquiryProductList(pageNumber: currentPage,
-                                                                       itemsPerPage: 20)
+                let response: ProductList = try await APIService.inquiryProductList(
+                    pageNumber: currentPage,
+                    itemsPerPage: 20
+                )
                 
                 self.currentPage.onNext(currentPage + 1)
                 
                 await MainActor.run {
-                    do {
-                        var currentValue = try self.productList.value()
-                        currentValue.append(contentsOf: response.pages)
-                        self.productList.onNext(currentValue)
-                    } catch {
-                        
-                    }
+                    var currentValue = productList.value
+                    productList.accept(currentValue + response.pages)
                 }
-
             } catch let error {
                 print(error)
                 throw error
