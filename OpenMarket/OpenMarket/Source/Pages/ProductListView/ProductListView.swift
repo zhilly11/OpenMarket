@@ -45,30 +45,19 @@ final class ProductListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        checkAPIServerStatus { [weak self] result in
-            switch result {
-            case true:
-                self?.setupView()
-                self?.initRefresh()
-                self?.bind()
-            case false:
-                let alert = AlertFactory.make(.exit)
-                self?.present(alert, animated: true)
-            }
-        }
+        checkServerStatus()
     }
     
-    private func checkAPIServerStatus(completion: @escaping (Bool) -> Void) {
-        _ = APIService.healthCheck()
-            .subscribe(onNext: { result in
-                if result.trimmingCharacters(in: ["\""]) == "OK" {
-                    completion(true)
-                } else {
-                    completion(false)
-                }
-            }, onError: { _ in
-                completion(false)
-            }).disposed(by: disposeBag)
+    private func checkServerStatus() {
+        do {
+            try viewModel.serverCheck()
+            self.setupView()
+            self.initRefresh()
+            self.bind()
+        } catch {
+                let alert = AlertFactory.make(.exit)
+            self.present(alert, animated: true)
+            }
     }
     
     private func setupView() {
@@ -96,6 +85,15 @@ final class ProductListViewController: UIViewController {
                 productDetailViewController.modalPresentationStyle = .popover
                 self.present(productDetailViewController, animated: true, completion: nil)
             }.disposed(by: disposeBag)
+    }
+    private func loadNextPage() {
+        do {
+            try viewModel.loadNextPage()
+            self.tableView.reloadData()
+        } catch let error {
+            let alert = AlertFactory.make(.failure(title: nil, message: error.localizedDescription))
+            self.present(alert, animated: true)
+        }
     }
 }
 

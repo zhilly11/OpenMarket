@@ -9,41 +9,44 @@ final class ProductListViewModel {
     let productList = BehaviorSubject<[Product]>(value: [])
     private let disposeBag = DisposeBag()
     
-    init() {
-        _ = APIService.inquiryProductList(pageNumber: 1, itemsPerPage: 20)
-            .map { items -> [Product] in
-                return items.pages
+    init() { }
+    
+    func serverCheck() throws {
+        Task {
+            let isServerOnline = try await APIService.healthCheck()
+            
+            if isServerOnline {
+                try loadNextPage()
+                return
+            } else {
+                throw OpenMarketAPIError.failHealthChecker
             }
-            .take(1)
-            .subscribe(onNext: { self.productList.onNext($0) })
+        }
     }
     
-    func load(pageNumber: Int) {
-        
-        var currentValue: [Product] = []
-        let newValue = APIService.inquiryProductList(pageNumber: pageNumber, itemsPerPage: 20)
-            .map { items -> [Product] in
-                return items.pages
-            }
-            .take(1)
-        
-        do {
-            currentValue = try productList.value()
-        } catch {
-            print("productList.value Error")
-        }
-        
-        newValue
-            .subscribe(onNext: { values in
-                let updatedValues = currentValue + values
+    func loadNextPage() throws {
+        Task {
+            do {
+                let currentPage = try self.currentPage.value()
+                let response = try await APIService.inquiryProductList(pageNumber: currentPage,
+                                                                       itemsPerPage: 20)
                 
-                Observable.from(updatedValues)
-                    .toArray()
-                    .subscribe(onSuccess: { array in
-                        self.productList.onNext(array)
-                    })
-                    .disposed(by: self.disposeBag)
-            })
-            .disposed(by: disposeBag)
+                self.currentPage.onNext(currentPage + 1)
+                
+                await MainActor.run {
+                    do {
+                        var currentValue = try self.productList.value()
+                        currentValue.append(contentsOf: response.pages)
+                        self.productList.onNext(currentValue)
+                    } catch {
+                        
+                    }
+                }
+
+            } catch let error {
+                print(error)
+                throw error
+            }
+        }
     }
 }
