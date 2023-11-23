@@ -5,5 +5,6 @@ enum OpenMarketAPIError: Error {
     case invalidData
     case failHealthChecker
     case inquiryProduct
+    case responseFail
     case unknown
 }
