@@ -12,15 +12,26 @@ final class ProductListViewController: UIViewController {
     
     private let viewModel: ProductListViewModel
     private let disposeBag = DisposeBag()
-    
-    private let refreshController: UIRefreshControl = .init()
-    
-    private let tableView = UITableView(frame: .zero, style: .plain).then {
+        
+    private lazy var tableView = UITableView(frame: .zero, style: .plain).then {
         $0.register(ProductCell.self, forCellReuseIdentifier: ProductCell.reuseIdentifier)
         $0.contentInsetAdjustmentBehavior = .scrollableAxes
         $0.allowsSelection = false
         $0.backgroundColor = .clear
         $0.separatorStyle = .none
+        $0.refreshControl = refreshController
+        $0.tableFooterView = UIView(frame: .zero)
+    }
+    
+    private let refreshController = UIRefreshControl()
+    
+    private lazy var viewSpinner = UIView(
+        frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100)
+    ).then {
+        let spinner = UIActivityIndicatorView()
+        spinner.center = $0.center
+        $0.addSubview(spinner)
+        spinner.startAnimating()
     }
     
     init(viewModel: ProductListViewModel) {
@@ -52,14 +63,14 @@ final class ProductListViewController: UIViewController {
     private func configure() {
         setupView()
         setupLayout()
-        initRefresh()
         setupBind()
+        setupRefreshController()
+        viewModel.fetchMoreDatas.onNext(())
     }
     
     private func setupView() {
-        view.backgroundColor = .white
         title = "오픈 마켓"
-        tableView.delegate = self
+        view.backgroundColor = .white
     }
     
     private func setupLayout() {
@@ -71,6 +82,9 @@ final class ProductListViewController: UIViewController {
     }
     
     private func setupBind() {
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        
         viewModel.productList
             .observe(on: MainScheduler.instance)
             .bind(to: tableView.rx.items(cellIdentifier: ProductCell.reuseIdentifier,
@@ -84,36 +98,40 @@ final class ProductListViewController: UIViewController {
                 productDetailViewController.modalPresentationStyle = .popover
                 self.present(productDetailViewController, animated: true, completion: nil)
             }.disposed(by: disposeBag)
+        
+        tableView.rx.didScroll.subscribe { [weak self] _ in
+            guard let self = self else { return }
+            let offSetY = self.tableView.contentOffset.y
+            let contentHeight = self.tableView.contentSize.height
+            
+            if offSetY > (contentHeight - self.tableView.frame.size.height - 100) {
+                self.viewModel.fetchMoreDatas.onNext(())
+            }
+        }.disposed(by: disposeBag)
+        
+        viewModel.isLoadingSpinnerAvailable.subscribe { [weak self] isAvailable in
+            guard let isAvailable = isAvailable.element,
+                  let self = self else { return }
+            self.tableView.tableFooterView = isAvailable ? self.viewSpinner : UIView(frame: .zero)
+        }.disposed(by: disposeBag)
+        
+        viewModel.refreshControlCompleted.subscribe { [weak self] _ in
+            guard let self = self else { return }
+            self.refreshController.endRefreshing()
+        }.disposed(by: disposeBag)
     }
     
-    private func createSpinnerFooter() -> UIView {
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
-        let spinner = UIActivityIndicatorView()
-        
-        spinner.center = footerView.center
-        footerView.addSubview(spinner)
-        spinner.startAnimating()
-        
-        return footerView
-    }
-    
-    private func loadNextPage() {
-        do {
-            try viewModel.loadNextPage()
-            self.tableView.reloadData()
-        } catch let error {
-            let alert = AlertFactory.make(.failure(title: nil, message: error.localizedDescription))
-            self.present(alert, animated: true)
+    private func setupRefreshController() {
+        let refreshAction = UIAction { [weak self] _ in
+            self?.viewModel.refreshControlAction.onNext(())
         }
+        
+        refreshController.addAction(refreshAction, for: .valueChanged)
     }
 }
 
 extension ProductListViewController: UITableViewDelegate {
     
-    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        //TODO: Paging Feature
-    }
-
     func tableView(_ tableView: UITableView,
                    contextMenuConfigurationForRowAt indexPath: IndexPath,
                    point: CGPoint) -> UIContextMenuConfiguration? {
@@ -142,29 +160,5 @@ extension ProductListViewController: UITableViewDelegate {
                 return UIMenu(title: "", children: [inspectAction, duplicateAction, deleteAction])
             }
         )
-    }
-}
-
-extension ProductListViewController {
-    
-    func initRefresh() {
-        refreshController.addTarget(self, action: #selector(refreshTable(refresh:)), for: .valueChanged)
-        refreshController.backgroundColor = UIColor.clear
-        self.tableView.refreshControl = refreshController
-    }
-    
-    @objc func refreshTable(refresh: UIRefreshControl) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.tableView.reloadData()
-            self.refreshController.endRefreshing()
-        }
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView,
-                                   withVelocity velocity: CGPoint,
-                                   targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if(velocity.y < -0.1) {
-            self.refreshTable(refresh: self.refreshController)
-        }
     }
 }
