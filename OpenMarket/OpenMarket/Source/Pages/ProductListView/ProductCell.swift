@@ -77,6 +77,7 @@ final class ProductCell: UITableViewCell, ReusableView {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         thumbnail.image = UIImage(systemName: "rays")
         stockLabel.textColor = .black
     }
@@ -101,7 +102,7 @@ final class ProductCell: UITableViewCell, ReusableView {
         nameLabel.text = "\(item.name)"
         displayPrice(currency: item.currency, price: item.price, bargainPrice: item.bargainPrice)
         displayStock(stock: item.stock)
-        thumbnail.load(url: URL(string: item.thumbnail))
+        thumbnail.setImageUrl(item.thumbnail)
     }
     
     private func displayStock(stock: Int) {
