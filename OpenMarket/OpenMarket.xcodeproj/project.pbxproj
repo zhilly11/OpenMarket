@@ -36,6 +36,7 @@
 		B45C6EEF29C5982900739811 /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6EEC29C5982900739811 /* Vendor.swift */; };
 		B45C6EF029C5982900739811 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6EED29C5982900739811 /* Image.swift */; };
 		B45C6EF129C5982900739811 /* ProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6EEE29C5982900739811 /* ProductList.swift */; };
+		B464BAAE2B195FB3001EAF1F /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B464BAAD2B195FB3001EAF1F /* ImageCacheManager.swift */; };
 		B466C76129CC0EC100E8745F /* ProductListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B466C76029CC0EC100E8745F /* ProductListViewModel.swift */; };
 		B466C76329CC109200E8745F /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B466C76229CC109200E8745F /* ProductCell.swift */; };
 		B466C76529CC1CBB00E8745F /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B466C76429CC1CBB00E8745F /* ReusableView.swift */; };
@@ -75,6 +76,7 @@
 		B45C6EEC29C5982900739811 /* Vendor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
 		B45C6EED29C5982900739811 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		B45C6EEE29C5982900739811 /* ProductList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductList.swift; sourceTree = "<group>"; };
+		B464BAAD2B195FB3001EAF1F /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		B466C76029CC0EC100E8745F /* ProductListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewModel.swift; sourceTree = "<group>"; };
 		B466C76229CC109200E8745F /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		B466C76429CC1CBB00E8745F /* ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 		B455B0DB29C867B20062D612 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B464BAAD2B195FB3001EAF1F /* ImageCacheManager.swift */,
 				B466C76429CC1CBB00E8745F /* ReusableView.swift */,
 				B455B0E129C8765A0062D612 /* Array+Extension.swift */,
 				B455B0D129C5CA2E0062D612 /* JSONDecode+Extension.swift */,
@@ -415,6 +418,7 @@
 				B44936EB29D68B1D001E5F20 /* ViewControllerFactory.swift in Sources */,
 				B45C6EF029C5982900739811 /* Image.swift in Sources */,
 				B455B0C929C599A50062D612 /* OpenMarketAPI.swift in Sources */,
+				B464BAAE2B195FB3001EAF1F /* ImageCacheManager.swift in Sources */,
 				B455B0CB29C59A100062D612 /* APIService.swift in Sources */,
 				B45C6EF129C5982900739811 /* ProductList.swift in Sources */,
 				B455B0CE29C59F3E0062D612 /* APIRouter.swift in Sources */,
