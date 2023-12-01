@@ -3,6 +3,8 @@
 
 import UIKit
 
+import Alamofire
+
 extension UIImageView {
     
     func load(url: URL?) {
@@ -36,21 +38,19 @@ extension UIImageView {
                 return
             }
             
-            URLSession.shared.dataTask(with: url) { (data, result, error) in
-                guard error == nil else {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.image = UIImage(systemName: "exclamationmark.triangle.fill")
-                    }
-                    return
-                }
-                
+            AF.request(url).response { response in
                 DispatchQueue.main.async { [weak self] in
-                    if let data = data, let image = UIImage(data: data) {
+                    switch response.result {
+                    case .success(let data):
+                        guard let data = data, let image = UIImage(data: data) else { return }
                         ImageCacheManager.shared.setObject(image, forKey: cachedKey)
                         self?.image = image
+                        
+                    case .failure(_):
+                        self?.image = UIImage(systemName: "exclamationmark.triangle.fill")
                     }
                 }
-            }.resume()
+            }
         }
     }
 }
