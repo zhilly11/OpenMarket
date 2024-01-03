@@ -2,70 +2,53 @@
 //  Created by zhilly on 2023/03/23
 
 import UIKit
+
 import SnapKit
+import Then
 
 final class ProductCell: UITableViewCell, ReusableView {
     
-    private let thumbnail: UIImageView = {
-        let imageView = UIImageView()
-        
-        imageView.image = UIImage(systemName: "rays")
-        imageView.layer.cornerRadius = 10
-        imageView.clipsToBounds = true
-        
-        return imageView
-    }()
+    // MARK: - UI Component
+
+    private let thumbnail = UIImageView().then {
+        $0.image = UIImage(systemName: "rays")
+        $0.tintColor = .systemGray
+        $0.layer.cornerRadius = 10
+        $0.clipsToBounds = true
+    }
     
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        
-        label.textColor = .black
-        label.textAlignment = .left
-        label.font = .preferredFont(forTextStyle: .title1)
-        
-        return label
-    }()
+    private let nameLabel = UILabel().then {
+        $0.textColor = .black
+        $0.textAlignment = .left
+        $0.font = .preferredFont(forTextStyle: .title1)
+    }
     
-    private let priceLabel: UILabel = {
-        let label = UILabel()
-        
-        label.textColor = .black
-        label.textAlignment = .left
-        label.font = .preferredFont(forTextStyle: .body)
-        
-        return label
-    }()
+    private let priceLabel = UILabel().then {
+        $0.textColor = .black
+        $0.textAlignment = .left
+        $0.font = .preferredFont(forTextStyle: .body)
+    }
     
-    private let stockLabel: UILabel = {
-        let label = UILabel()
-        
-        label.textColor = .black
-        label.textAlignment = .left
-        label.font = .preferredFont(forTextStyle: .body)
-        
-        return label
-    }()
+    private let stockLabel = UILabel().then {
+        $0.textColor = .black
+        $0.textAlignment = .left
+        $0.font = .preferredFont(forTextStyle: .body)
+    }
     
-    private let contentStackView: UIStackView = {
-        let stackView = UIStackView()
-        
-        stackView.axis = .horizontal
-        stackView.spacing = 10
-        stackView.distribution = .fillProportionally
-        stackView.alignment = .center
-        
-        return stackView
-    }()
+    private let contentStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.spacing = 10
+        $0.distribution = .fillProportionally
+        $0.alignment = .center
+    }
     
-    private let labelStackView: UIStackView = {
-        let stackView = UIStackView()
-        
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        
-        return stackView
-    }()
+    private let labelStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.distribution = .fillEqually
+    }
     
+    // MARK: - Initialize
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -82,8 +65,9 @@ final class ProductCell: UITableViewCell, ReusableView {
         stockLabel.textColor = .black
     }
     
+    // MARK: - Setup
+
     private func setupViews() {
-        
         [nameLabel, priceLabel, stockLabel].forEach(labelStackView.addArrangedSubview(_:))
         [thumbnail, labelStackView].forEach(contentStackView.addArrangedSubview(_:))
         [contentStackView].forEach(contentView.addSubview(_:))
@@ -105,13 +89,16 @@ final class ProductCell: UITableViewCell, ReusableView {
         thumbnail.setImageUrl(item.thumbnail)
     }
     
+    // MARK: - Methods
+
     private func displayStock(stock: Int) {
         if stock > 0 {
             stockLabel.text = "잔여수량 : \(stock)"
-        } else {
-            stockLabel.text = "품절"
-            stockLabel.textColor = .systemOrange
+            return
         }
+        
+        stockLabel.text = "품절"
+        stockLabel.textColor = .systemOrange
     }
     
     private func displayPrice(currency: Currency, price: Double, bargainPrice: Double) {
@@ -120,9 +107,10 @@ final class ProductCell: UITableViewCell, ReusableView {
         
         if priceText == bargainText {
             priceLabel.text = priceText
-        } else {
-            priceLabel.text = priceText + "  " + bargainText
-            priceLabel.attributedText = priceLabel.text?.strikeThrough(length: priceText.count, color: .red)
+            return
         }
+        
+        priceLabel.text = priceText + "  " + bargainText
+        priceLabel.attributedText = priceLabel.text?.strikeThrough(length: priceText.count, color: .red)
     }
 }
