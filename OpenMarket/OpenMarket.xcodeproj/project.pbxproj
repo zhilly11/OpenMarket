@@ -180,13 +180,13 @@
 			path = ProductListView;
 			sourceTree = "<group>";
 		};
-		B455B0DE29C875D90062D612 /* SearchView */ = {
+		B455B0DE29C875D90062D612 /* Search */ = {
 			isa = PBXGroup;
 			children = (
 				B455B0DF29C875F60062D612 /* SearchViewController.swift */,
 				B44936DA29CEF459001E5F20 /* SearchViewModel.swift */,
 			);
-			path = SearchView;
+			path = Search;
 			sourceTree = "<group>";
 		};
 		B45C6EC429C58DCC00739811 = {
@@ -273,8 +273,8 @@
 			isa = PBXGroup;
 			children = (
 				B455B0DD29C871DD0062D612 /* ProductListView */,
-				B455B0DE29C875D90062D612 /* SearchView */,
 				B44936EE29DB04F8001E5F20 /* ProductDetailView */,
+				B455B0DE29C875D90062D612 /* Search */,
 				B4A8038929E015C300C8A029 /* Preview */,
 			);
 			path = Pages;
