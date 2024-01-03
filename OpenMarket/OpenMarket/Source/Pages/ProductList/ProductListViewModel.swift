@@ -44,13 +44,12 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
         
         input.fetchMoreDatas
             .subscribe(
-                onNext: { [weak self] in
-                    guard let self = self else { return }
-                    
+                with: self,
+                onNext: { owner, _ in
                     do {
-                        try self.fetchProductPage(pageNumber: self.pageCounter)
+                        try owner.fetchProductPage(pageNumber: owner.pageCounter)
                     } catch let error {
-                        self.failAlertAction.accept(error.localizedDescription)
+                        owner.failAlertAction.accept(error.localizedDescription)
                     }
                 }
             )

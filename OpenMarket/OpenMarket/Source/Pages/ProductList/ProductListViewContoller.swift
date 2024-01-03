@@ -37,9 +37,11 @@ final class ProductListViewController: BaseTableViewController {
             }.disposed(by: disposeBag)
         
         output.failAlertAction
-            .emit(onNext: { title in
+            .emit(
+                with: self,
+                onNext: { owner, title in
                 let alert = AlertFactory.make(.exit)
-                self.present(alert, animated: true)
+                owner.present(alert, animated: true)
             })
             .disposed(by: disposeBag)
         
@@ -57,19 +59,24 @@ final class ProductListViewController: BaseTableViewController {
         
         tableView.rx.prefetchRows
             .compactMap(\.last?.row)
-            .withUnretained(self)
-            .bind { viewController, row in
-                guard row == viewController.viewModel.productList.value.count - 1 else { return }
-                input.fetchMoreDatas.onNext(())
-            }
+            .bind(
+                with: self,
+                onNext: { viewController, row in
+                    guard row == viewController.viewModel.productList.value.count - 1 else { return }
+                    input.fetchMoreDatas.onNext(())
+                }
+            )
             .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(Product.self)
-            .subscribe { element in
-                let productDetailViewController = ProductDetailViewController(product: element)
-                productDetailViewController.modalPresentationStyle = .popover
-                self.present(productDetailViewController, animated: true, completion: nil)
-            }
+            .subscribe(
+                with: self,
+                onNext: { owner, element in
+                    let productDetailViewController = ProductDetailViewController(product: element)
+                    productDetailViewController.modalPresentationStyle = .popover
+                    owner.present(productDetailViewController, animated: true, completion: nil)
+                }
+            )
             .disposed(by: disposeBag)
     }
 }
