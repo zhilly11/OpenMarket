@@ -29,7 +29,7 @@
 		B455B0E229C8765A0062D612 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0E129C8765A0062D612 /* Array+Extension.swift */; };
 		B45C6ED129C58DCC00739811 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6ED029C58DCC00739811 /* AppDelegate.swift */; };
 		B45C6ED329C58DCC00739811 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6ED229C58DCC00739811 /* SceneDelegate.swift */; };
-		B45C6ED529C58DCC00739811 /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6ED429C58DCC00739811 /* ProductListView.swift */; };
+		B45C6ED529C58DCC00739811 /* ProductListViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6ED429C58DCC00739811 /* ProductListViewContoller.swift */; };
 		B45C6EDA29C58DCD00739811 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B45C6ED929C58DCD00739811 /* Assets.xcassets */; };
 		B45C6EDD29C58DCD00739811 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B45C6EDB29C58DCD00739811 /* LaunchScreen.storyboard */; };
 		B45C6EE929C597B000739811 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45C6EE829C597B000739811 /* Product.swift */; };
@@ -72,7 +72,7 @@
 		B45C6ECD29C58DCC00739811 /* OpenMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B45C6ED029C58DCC00739811 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B45C6ED229C58DCC00739811 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B45C6ED429C58DCC00739811 /* ProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListView.swift; sourceTree = "<group>"; };
+		B45C6ED429C58DCC00739811 /* ProductListViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewContoller.swift; sourceTree = "<group>"; };
 		B45C6ED929C58DCD00739811 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B45C6EDC29C58DCD00739811 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B45C6EDE29C58DCD00739811 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -178,15 +178,15 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		B455B0DD29C871DD0062D612 /* ProductListView */ = {
+		B455B0DD29C871DD0062D612 /* ProductList */ = {
 			isa = PBXGroup;
 			children = (
-				B45C6ED429C58DCC00739811 /* ProductListView.swift */,
 				B4417F982B4503AD00A3A0F9 /* ProductListProvider.swift */,
 				B466C76029CC0EC100E8745F /* ProductListViewModel.swift */,
+				B45C6ED429C58DCC00739811 /* ProductListViewContoller.swift */,
 				B466C76229CC109200E8745F /* ProductCell.swift */,
 			);
-			path = ProductListView;
+			path = ProductList;
 			sourceTree = "<group>";
 		};
 		B455B0DE29C875D90062D612 /* Search */ = {
@@ -281,8 +281,8 @@
 		B466C75F29CB180000E8745F /* Pages */ = {
 			isa = PBXGroup;
 			children = (
-				B455B0DD29C871DD0062D612 /* ProductListView */,
 				B4E6DD6E2B3FF7BA00E2DCD8 /* Base */,
+				B455B0DD29C871DD0062D612 /* ProductList */,
 				B455B0DE29C875D90062D612 /* Search */,
 				B44936EE29DB04F8001E5F20 /* ProductDetail */,
 				B4A8038929E015C300C8A029 /* Preview */,
@@ -469,7 +469,7 @@
 				B455B0CE29C59F3E0062D612 /* APIRouter.swift in Sources */,
 				B455B0D229C5CA2E0062D612 /* JSONDecode+Extension.swift in Sources */,
 				B455B0D429C5CA410062D612 /* JSONDecodeError.swift in Sources */,
-				B45C6ED529C58DCC00739811 /* ProductListView.swift in Sources */,
+				B45C6ED529C58DCC00739811 /* ProductListViewContoller.swift in Sources */,
 				B455B0D729C5E6950062D612 /* APIConstant.swift in Sources */,
 				B44936D929CD6406001E5F20 /* UIImageView+Extension.swift in Sources */,
 				B44936F029DB0528001E5F20 /* ProductDetailViewController.swift in Sources */,
