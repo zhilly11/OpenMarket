@@ -22,8 +22,11 @@ final class ProductListViewController: BaseTableViewController {
         super.setupBind()
         
         let viewDidLoadTrigger = Observable.just(Void())
-        let input = ProductListViewModel.Input(viewDidLoadTrigger: viewDidLoadTrigger,
-                                               fetchMoreDatas: PublishSubject<Void>())
+        let input = ProductListViewModel.Input(
+            viewDidLoadTrigger: viewDidLoadTrigger,
+            fetchMoreDatas: PublishSubject<Void>(),
+            refreshAction: refreshController.rx.controlEvent(.valueChanged)
+        )
         let output = viewModel.transform(input: input)
         
         output.productList
@@ -38,6 +41,15 @@ final class ProductListViewController: BaseTableViewController {
                 let alert = AlertFactory.make(.exit)
                 self.present(alert, animated: true)
             })
+            .disposed(by: disposeBag)
+        
+        output.refreshCompleted
+            .subscribe(
+                with: self,
+                onNext: { owner, data in
+                    owner.refreshController.endRefreshing()
+                }
+            )
             .disposed(by: disposeBag)
         
         tableView.rx.setDelegate(self)
