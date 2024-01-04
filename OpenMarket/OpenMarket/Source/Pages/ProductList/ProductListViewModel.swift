@@ -35,7 +35,7 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
                     do {
                         try owner.checkServer()
                         Task {
-                            await owner.fetchProductPage(pageNumber: owner.pageCounter)
+                            await owner.fetchProductPage()
                         }
                     } catch let error {
                         owner.failAlertAction.accept(error.localizedDescription)
@@ -49,7 +49,7 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
                 with: self,
                 onNext: { owner, _ in
                     Task {
-                        await owner.fetchProductPage(pageNumber: owner.pageCounter)
+                        await owner.fetchProductPage()
                     }
                 }
             )
@@ -81,7 +81,7 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
     var pageCounter: Int = 1
     
     @MainActor
-    func fetchProductPage(pageNumber: Int) async {        
+    func fetchProductPage() async {        
         do {
             let response: ProductList = try await APIService.inquiryProductList(
                 pageNumber: self.pageCounter,
