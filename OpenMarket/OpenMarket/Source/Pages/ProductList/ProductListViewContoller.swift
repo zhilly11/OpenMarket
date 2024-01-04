@@ -40,9 +40,10 @@ final class ProductListViewController: BaseTableViewController {
             .emit(
                 with: self,
                 onNext: { owner, title in
-                let alert = AlertFactory.make(.exit)
-                owner.present(alert, animated: true)
-            })
+                    let alert = AlertFactory.make(.exit)
+                    owner.present(alert, animated: true)
+                }
+            )
             .disposed(by: disposeBag)
         
         output.refreshCompleted
