@@ -1,15 +1,110 @@
 //  OpenMarket - SearchViewModel.swift
 //  Created by zhilly on 2023/03/25
 
-import Foundation
+import RxCocoa
+import RxRelay
 import RxSwift
 
-final class SearchViewModel {
+protocol ProductSearchable {
+    var searchKeyword: String { get set }
+}
+
+final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
     
-    let productList = BehaviorSubject<[Product]>(value: [])
-    private let disposeBag = DisposeBag()
+    private let failAlertAction = PublishRelay<String>()
     
-    func search(_ searchValue: String) {
+    // MARK: - ViewModel
         
+    struct Input {
+        let fetchMoreDatas: PublishSubject<Void>
+        let searchKeyword: ControlProperty<String>
+        let refreshAction: ControlEvent<Void>
     }
+    
+    struct Output {
+        let productList: BehaviorRelay<[Product]>
+        let failAlertAction: Signal<String>
+        let refreshCompleted: PublishSubject<Void>
+    }
+    
+    var disposeBag = DisposeBag()
+    
+    func transform(input: Input) -> Output {
+        let refreshCompleted: PublishSubject<Void> = .init()
+        
+        input.searchKeyword
+            .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .subscribe(
+                with: self,
+                onNext: { owner, string in
+                    owner.pageCounter = 1
+                    owner.searchKeyword = string
+                    owner.productList.accept([])
+                    
+                    Task {
+                        await owner.fetchProductPage()
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.fetchMoreDatas
+            .subscribe(
+                with: self,
+                onNext: { owner, _ in
+                    Task {
+                        await owner.fetchProductPage()
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.refreshAction
+            .subscribe(
+                with: self,
+                onNext: { owner, _ in
+                    owner.pageCounter = 1
+                    owner.productList.accept([])
+                    input.fetchMoreDatas.onNext(())
+                    refreshCompleted.onNext(())
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        return Output(
+            productList: productList,
+            failAlertAction: failAlertAction.asSignal(),
+            refreshCompleted: refreshCompleted
+        )
+    }
+    
+    // MARK: - ProductListProvider
+    
+    var productList = BehaviorRelay<[Product]>(value: [])
+    var pageCounter: Int = 1
+    
+    @MainActor
+    func fetchProductPage() async {
+        do {
+            let response: ProductList = try await APIService.inquiryProductList(
+                pageNumber: self.pageCounter,
+                itemsPerPage: 20,
+                searchValue: self.searchKeyword
+            )
+            let newData = response.pages
+            let oldData = self.productList.value
+            
+            self.productList.accept(oldData + newData)
+            self.pageCounter += 1
+        } catch OpenMarketAPIError.invalidData {
+            print("더 이상 데이터가 없습니다.")
+        } catch let error {
+            self.failAlertAction.accept(error.localizedDescription)
+        }
+    }
+    
+    // MARK: - ProductSearchable
+    
+    var searchKeyword: String = .init()
 }
