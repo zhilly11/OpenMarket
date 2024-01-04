@@ -8,7 +8,7 @@ protocol ProductListProvider {
     var pageCounter: Int { get set }
     
     func checkServer() throws
-    func fetchProductPage(pageNumber: Int) throws
+    func fetchProductPage(pageNumber: Int) async
 }
 
 extension ProductListProvider {

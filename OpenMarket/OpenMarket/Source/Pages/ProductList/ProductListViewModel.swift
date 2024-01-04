@@ -34,7 +34,9 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
                 onNext: { owner, _ in
                     do {
                         try owner.checkServer()
-                        try owner.fetchProductPage(pageNumber: owner.pageCounter)
+                        Task {
+                            await owner.fetchProductPage(pageNumber: owner.pageCounter)
+                        }
                     } catch let error {
                         owner.failAlertAction.accept(error.localizedDescription)
                     }
@@ -46,10 +48,8 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
             .subscribe(
                 with: self,
                 onNext: { owner, _ in
-                    do {
-                        try owner.fetchProductPage(pageNumber: owner.pageCounter)
-                    } catch let error {
-                        owner.failAlertAction.accept(error.localizedDescription)
+                    Task {
+                        await owner.fetchProductPage(pageNumber: owner.pageCounter)
                     }
                 }
             )
@@ -80,18 +80,20 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
     var productList = BehaviorRelay<[Product]>(value: [])
     var pageCounter: Int = 1
     
-    func fetchProductPage(pageNumber: Int) throws {
-        Task.detached { [self] in
-            print("fetch page: \(self.pageCounter)")
+    @MainActor
+    func fetchProductPage(pageNumber: Int) async {        
+        do {
             let response: ProductList = try await APIService.inquiryProductList(
                 pageNumber: self.pageCounter,
                 itemsPerPage: 20
             )
             let newData = response.pages
-            let oldData = productList.value
+            let oldData = self.productList.value
             
-            productList.accept(oldData + newData)
-            pageCounter += 1
+            self.productList.accept(oldData + newData)
+            self.pageCounter += 1
+        } catch let error {
+            self.failAlertAction.accept(error.localizedDescription)
         }
     }
 }
