@@ -43,6 +43,10 @@ final class APIService {
         )
     }
     
+    static func fetchProduct(id: Int) async throws -> Product {
+        return try await request(Product.self, router: .inquiryProduct(id: id))
+    }
+    
     static func createProduct() {
         
     }
