@@ -5,6 +5,7 @@ import UIKit
 
 enum ViewControllerKind {
     case productList
+    case productDetail(id: Int)
     case search
 }
 
@@ -19,6 +20,13 @@ final class ViewControllerFactory {
             )
             
             return productListViewController
+            
+        case .productDetail(let id):
+            let productDetailViewModel = ProductDetailViewModel(productID: id)
+            let productDetailViewController = ProductDetailViewController(viewModel: productDetailViewModel)
+            
+            return productDetailViewController
+            
         case .search:
             let searchViewModel = SearchViewModel()
             let searchViewController = UINavigationController(
