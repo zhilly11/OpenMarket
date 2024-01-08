@@ -18,19 +18,16 @@ final class ProductCell: UITableViewCell, ReusableView {
     }
     
     private let nameLabel = UILabel().then {
-        $0.textColor = .black
         $0.textAlignment = .left
         $0.font = .preferredFont(forTextStyle: .title1)
     }
     
     private let priceLabel = UILabel().then {
-        $0.textColor = .black
         $0.textAlignment = .left
         $0.font = .preferredFont(forTextStyle: .body)
     }
     
     private let stockLabel = UILabel().then {
-        $0.textColor = .black
         $0.textAlignment = .left
         $0.font = .preferredFont(forTextStyle: .body)
     }
@@ -62,12 +59,14 @@ final class ProductCell: UITableViewCell, ReusableView {
     override func prepareForReuse() {
         super.prepareForReuse()
         thumbnail.image = UIImage(systemName: "rays")
-        stockLabel.textColor = .black
+        stockLabel.textColor = .label
     }
     
     // MARK: - Setup
 
     private func setupViews() {
+        self.backgroundColor = .customBackground
+        
         [nameLabel, priceLabel, stockLabel].forEach(labelStackView.addArrangedSubview(_:))
         [thumbnail, labelStackView].forEach(contentStackView.addArrangedSubview(_:))
         [contentStackView].forEach(contentView.addSubview(_:))
