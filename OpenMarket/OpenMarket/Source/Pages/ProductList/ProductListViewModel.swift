@@ -11,11 +11,13 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
     
     struct Input {
         let viewDidLoadTrigger: Observable<Void>
+        let viewWillAppearTrigger: Observable<Void>
         let fetchMoreDatas: PublishSubject<Void>
         let refreshAction: ControlEvent<Void>
     }
     
     struct Output {
+        let viewWillAppearCompleted: PublishSubject<Void>
         let productList: BehaviorRelay<[Product]>
         let failAlertAction: Signal<String>
         let refreshCompleted: PublishSubject<Void>
@@ -27,6 +29,7 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
     
     func transform(input: Input) -> Output {
         let refreshCompleted: PublishSubject<Void> = .init()
+        let viewWillAppearCompleted: PublishSubject<Void> = .init()
         
         input.viewDidLoadTrigger
             .subscribe(
@@ -40,6 +43,15 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
                     } catch let error {
                         owner.failAlertAction.accept(error.localizedDescription)
                     }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.viewWillAppearTrigger
+            .subscribe(
+                with: self,
+                onNext: { owner, _ in
+                    viewWillAppearCompleted.onNext(())
                 }
             )
             .disposed(by: disposeBag)
@@ -69,6 +81,7 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
             .disposed(by: disposeBag)
         
         return Output(
+            viewWillAppearCompleted: viewWillAppearCompleted,
             productList: productList,
             failAlertAction: failAlertAction.asSignal(),
             refreshCompleted: refreshCompleted

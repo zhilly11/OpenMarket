@@ -22,8 +22,10 @@ final class ProductListViewController: BaseTableViewController {
         super.setupBind()
         
         let viewDidLoadTrigger = Observable.just(Void())
+        let viewWillAppearTrigger = rx.methodInvoked(#selector(viewWillAppear)).map { _ in () }
         let input = ProductListViewModel.Input(
             viewDidLoadTrigger: viewDidLoadTrigger,
+            viewWillAppearTrigger: viewWillAppearTrigger,
             fetchMoreDatas: PublishSubject<Void>(),
             refreshAction: refreshController.rx.controlEvent(.valueChanged)
         )
@@ -35,6 +37,15 @@ final class ProductListViewController: BaseTableViewController {
                                          cellType: ProductCell.self)) { index, item, cell in
                 cell.configure(with: item)
             }.disposed(by: disposeBag)
+        
+        output.viewWillAppearCompleted
+            .subscribe(
+                with: self,
+                onNext: { owner, data in
+                    owner.tabBarController?.tabBar.isHidden = false
+                }
+            )
+            .disposed(by: disposeBag)
         
         output.failAlertAction
             .emit(
@@ -73,9 +84,14 @@ final class ProductListViewController: BaseTableViewController {
             .subscribe(
                 with: self,
                 onNext: { owner, element in
-                    let productDetailViewController = ProductDetailViewController(product: element)
-                    productDetailViewController.modalPresentationStyle = .popover
-                    owner.present(productDetailViewController, animated: true, completion: nil)
+                    let productID = element.id
+                    let productDetailViewController = ViewControllerFactory.make(
+                        .productDetail(id: productID)
+                    )
+                    
+                    owner.tabBarController?.tabBar.isHidden = true
+                    owner.navigationController?.pushViewController(productDetailViewController,
+                                                                   animated: true)
                 }
             )
             .disposed(by: disposeBag)
