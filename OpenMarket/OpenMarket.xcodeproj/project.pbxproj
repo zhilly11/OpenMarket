@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9589F38EF4B95012F9DB2FEE /* Pods_OpenMarket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F5689292F30E5977E34D35 /* Pods_OpenMarket.framework */; };
 		B4417F992B4503AD00A3A0F9 /* ProductListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4417F982B4503AD00A3A0F9 /* ProductListProvider.swift */; };
+		B4417FA62B4C08B800A3A0F9 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4417FA52B4C08B800A3A0F9 /* UIColor+.swift */; };
 		B44936D929CD6406001E5F20 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44936D829CD6406001E5F20 /* UIImageView+Extension.swift */; };
 		B44936DB29CEF459001E5F20 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44936DA29CEF459001E5F20 /* SearchViewModel.swift */; };
 		B44936DD29D0292F001E5F20 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44936DC29D0292F001E5F20 /* String+Extension.swift */; };
@@ -51,6 +52,7 @@
 		84F5822B036BCB10B6F6380F /* Pods-OpenMarket.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenMarket.release.xcconfig"; path = "Target Support Files/Pods-OpenMarket/Pods-OpenMarket.release.xcconfig"; sourceTree = "<group>"; };
 		93F5689292F30E5977E34D35 /* Pods_OpenMarket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenMarket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4417F982B4503AD00A3A0F9 /* ProductListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListProvider.swift; sourceTree = "<group>"; };
+		B4417FA52B4C08B800A3A0F9 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		B44936D829CD6406001E5F20 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		B44936DA29CEF459001E5F20 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		B44936DC29D0292F001E5F20 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				B44936D829CD6406001E5F20 /* UIImageView+Extension.swift */,
 				B44936DC29D0292F001E5F20 /* String+Extension.swift */,
 				B44936EC29D68BA0001E5F20 /* Double+Extension.swift */,
+				B4417FA52B4C08B800A3A0F9 /* UIColor+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -479,6 +482,7 @@
 				B455B0E229C8765A0062D612 /* Array+Extension.swift in Sources */,
 				B481D4AD2B44257F001F91B2 /* BaseViewModel.swift in Sources */,
 				B44936ED29D68BA0001E5F20 /* Double+Extension.swift in Sources */,
+				B4417FA62B4C08B800A3A0F9 /* UIColor+.swift in Sources */,
 				B44936DD29D0292F001E5F20 /* String+Extension.swift in Sources */,
 				B45C6EEB29C5980D00739811 /* Currency.swift in Sources */,
 				B466C76529CC1CBB00E8745F /* ReusableView.swift in Sources */,
