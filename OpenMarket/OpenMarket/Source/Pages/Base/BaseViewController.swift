@@ -39,7 +39,15 @@ class BaseViewController: UIViewController {
     }
     
     func setupView() {
-        view.backgroundColor = .systemBackground
+        let appearance = UINavigationBarAppearance()
+        
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .customBackground
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
+        view.backgroundColor = .customBackground
     }
     
     func setupLayout() { }
