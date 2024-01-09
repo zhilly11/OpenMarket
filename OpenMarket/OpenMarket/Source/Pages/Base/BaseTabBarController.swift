@@ -18,10 +18,11 @@ class BaseTabBarController: UITabBarController {
     
     func setupView() {
         let appearance = UITabBarAppearance()
+        
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .customBackground
         
-        self.tabBar.standardAppearance = appearance
-        self.tabBar.scrollEdgeAppearance = appearance
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
     }
 }
