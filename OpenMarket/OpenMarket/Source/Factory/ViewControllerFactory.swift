@@ -4,6 +4,7 @@
 import UIKit
 
 enum ViewControllerKind {
+    case tabBarController(child: [UIViewController])
     case productList
     case productDetail(id: Int)
     case search
@@ -13,12 +14,19 @@ final class ViewControllerFactory {
     
     static func make(_ kind: ViewControllerKind) -> UIViewController {
         switch kind {
+        case .tabBarController(let child):
+            let tabBarController = BaseTabBarController()
+            
+            tabBarController.setViewControllers(child, animated: true)
+            
+            return tabBarController
         case .productList:
             let productListViewModel = ProductListViewModel()
             let productListViewController = UINavigationController(
                 rootViewController: ProductListViewController(viewModel: productListViewModel)
             )
-            
+            productListViewController.tabBarItem = TabBarItemFactory.make(.productList)
+
             return productListViewController
             
         case .productDetail(let id):
@@ -32,7 +40,8 @@ final class ViewControllerFactory {
             let searchViewController = UINavigationController(
                 rootViewController: SearchViewController(viewModel: searchViewModel)
             )
-            
+            searchViewController.tabBarItem = TabBarItemFactory.make(.productSearch)
+
             return searchViewController
         }
     }

@@ -1,4 +1,4 @@
-//  OpenMarket - Array+Extension.swift
+//  OpenMarket - Array+.swift
 //  Created by zhilly on 2023/03/18
 
 extension Array {

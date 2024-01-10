@@ -12,6 +12,7 @@ extension UIViewController {
         appearance.backgroundColor = color
         appearance.shadowImage = UIImage()
         
+        navigationController?.navigationBar.tintColor = .label
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }

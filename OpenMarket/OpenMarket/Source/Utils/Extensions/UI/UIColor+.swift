@@ -17,7 +17,7 @@ extension UIColor {
     }
     
     static var separator: UIColor {
-        return UIColor(named: "Separator") ?? UIColor.systemGray4
+        return color(light: .systemGray5, dark: UIColor(named: "Separator") ?? .systemGray)
     }
     
     private static func color(light: UIColor, dark: UIColor) -> UIColor {

@@ -1,4 +1,4 @@
-//  OpenMarket - JSONDecoder+Extension.swift
+//  OpenMarket - JSONDecoder+.swift
 //  Created by zhilly on 2023/03/24
 
 import UIKit.NSDataAsset
