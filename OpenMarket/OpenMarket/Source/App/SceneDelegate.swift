@@ -13,22 +13,14 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         options connectionOptions: UIScene.ConnectionOptions
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let tabBarController = BaseTabBarController()
+        
         let productListViewController = ViewControllerFactory.make(.productList)
         let searchViewController = ViewControllerFactory.make(.search)
-        
-        tabBarController.setViewControllers([productListViewController,
-                                             searchViewController], animated: true)
-        
-        if let items = tabBarController.tabBar.items {
-            items[safe: 0]?.selectedImage = UIImage(systemName: "house.fill")
-            items[safe: 0]?.image = UIImage(systemName: "house")
-            items[safe: 0]?.title = "목록"
-            
-            items[safe: 1]?.selectedImage = UIImage(systemName: "magnifyingglass.circle.fill")
-            items[safe: 1]?.image = UIImage(systemName: "magnifyingglass.circle")
-            items[safe: 1]?.title = "검색"
-        }
+        let tabBarController = ViewControllerFactory.make(
+            .tabBarController(
+                child: [productListViewController, searchViewController]
+            )
+        )
         
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = tabBarController
