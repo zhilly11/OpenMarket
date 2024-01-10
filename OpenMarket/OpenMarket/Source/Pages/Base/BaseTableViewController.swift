@@ -13,7 +13,8 @@ class BaseTableViewController: BaseViewController {
     lazy var tableView = UITableView(frame: .zero, style: .plain).then {
         $0.register(ProductCell.self, forCellReuseIdentifier: ProductCell.reuseIdentifier)
         $0.backgroundColor = .customBackground
-        $0.separatorStyle = .none
+        $0.separatorStyle = .singleLine
+        $0.separatorColor = .separator
         $0.refreshControl = refreshController
     }
     

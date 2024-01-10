@@ -13,11 +13,6 @@ final class ProductListViewController: BaseTableViewController {
         super.init()
     }
     
-    override func setupView() {
-        super.setupView()
-        title = "오픈 마켓"
-    }
-    
     override func setupBind() {
         super.setupBind()
         
@@ -41,8 +36,9 @@ final class ProductListViewController: BaseTableViewController {
         output.viewWillAppearCompleted
             .subscribe(
                 with: self,
-                onNext: { owner, data in
+                onNext: { owner, _ in
                     owner.tabBarController?.tabBar.isHidden = false
+                    owner.title = "오픈마켓"
                 }
             )
             .disposed(by: disposeBag)
@@ -92,6 +88,15 @@ final class ProductListViewController: BaseTableViewController {
                     owner.tabBarController?.tabBar.isHidden = true
                     owner.navigationController?.pushViewController(productDetailViewController,
                                                                    animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(
+                with: self,
+                onNext: { owner, indexPath in
+                    owner.tableView.deselectRow(at: indexPath, animated: true)
                 }
             )
             .disposed(by: disposeBag)

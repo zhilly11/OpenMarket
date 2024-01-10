@@ -24,5 +24,6 @@ class BaseTabBarController: UITabBarController {
         
         tabBar.standardAppearance = appearance
         tabBar.scrollEdgeAppearance = appearance
+        tabBar.tintColor = .main
     }
 }
