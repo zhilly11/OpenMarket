@@ -16,12 +16,14 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
     // MARK: - ViewModel
         
     struct Input {
+        let viewWillAppearTrigger: Observable<Void>
         let fetchMoreDatas: PublishSubject<Void>
         let searchKeyword: ControlProperty<String>
         let refreshAction: ControlEvent<Void>
     }
     
     struct Output {
+        let viewWillAppearCompleted: PublishSubject<Void>
         let productList: BehaviorRelay<[Product]>
         let failAlertAction: Signal<String>
         let refreshCompleted: PublishSubject<Void>
@@ -31,6 +33,7 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
     
     func transform(input: Input) -> Output {
         let refreshCompleted: PublishSubject<Void> = .init()
+        let viewWillAppearCompleted: PublishSubject<Void> = .init()
         
         input.searchKeyword
             .debounce(RxTimeInterval.microseconds(5), scheduler: MainScheduler.instance)
@@ -42,9 +45,16 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
                     owner.searchKeyword = string
                     owner.productList.accept([])
                     
-                    Task {
-                        await owner.fetchProductPage()
-                    }
+                    Task { await owner.fetchProductPage() }
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        input.viewWillAppearTrigger
+            .subscribe(
+                with: self,
+                onNext: { owner, _ in
+                    viewWillAppearCompleted.onNext(())
                 }
             )
             .disposed(by: disposeBag)
@@ -73,6 +83,7 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
             .disposed(by: disposeBag)
         
         return Output(
+            viewWillAppearCompleted: viewWillAppearCompleted,
             productList: productList,
             failAlertAction: failAlertAction.asSignal(),
             refreshCompleted: refreshCompleted
@@ -87,6 +98,11 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
     @MainActor
     func fetchProductPage() async {
         do {
+            if searchKeyword.isEmpty || searchKeyword == "" {
+                self.productList.accept([])
+                return
+            }
+            
             let response: ProductList = try await APIService.inquiryProductList(
                 pageNumber: self.pageCounter,
                 itemsPerPage: 20,

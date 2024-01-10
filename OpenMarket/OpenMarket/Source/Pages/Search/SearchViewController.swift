@@ -29,7 +29,9 @@ final class SearchViewController: BaseTableViewController {
     override func setupBind() {
         super.setupBind()
         
+        let viewWillAppearTrigger = rx.methodInvoked(#selector(viewWillAppear)).map { _ in () }
         let input = SearchViewModel.Input(
+            viewWillAppearTrigger: viewWillAppearTrigger,
             fetchMoreDatas: PublishSubject<Void>(),
             searchKeyword: searchBar.rx.text.orEmpty,
             refreshAction: refreshController.rx.controlEvent(.valueChanged)
@@ -42,6 +44,15 @@ final class SearchViewController: BaseTableViewController {
                                          cellType: ProductCell.self)) { index, item, cell in
                 cell.configure(with: item)
             }.disposed(by: disposeBag)
+        
+        output.viewWillAppearCompleted
+            .subscribe(
+                with: self,
+                onNext: { owner, _ in
+                    owner.tabBarController?.tabBar.isHidden = false
+                }
+            )
+            .disposed(by: disposeBag)
         
         output.failAlertAction
             .emit(
@@ -83,9 +94,23 @@ final class SearchViewController: BaseTableViewController {
             .subscribe(
                 with: self,
                 onNext: { owner, element in
-                    let productDetailViewController = ProductDetailViewController(product: element)
-                    productDetailViewController.modalPresentationStyle = .popover
-                    owner.present(productDetailViewController, animated: true, completion: nil)
+                    let productID = element.id
+                    let productDetailViewController = ViewControllerFactory.make(
+                        .productDetail(id: productID)
+                    )
+                    
+                    owner.tabBarController?.tabBar.isHidden = true
+                    owner.navigationController?.pushViewController(productDetailViewController,
+                                                                   animated: true)
+                }
+            )
+            .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(
+                with: self,
+                onNext: { owner, indexPath in
+                    owner.tableView.deselectRow(at: indexPath, animated: true)
                 }
             )
             .disposed(by: disposeBag)
