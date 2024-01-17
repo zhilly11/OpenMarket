@@ -47,12 +47,40 @@ final class APIService {
         return try await request(Product.self, router: .inquiryProduct(id: id))
     }
     
-    static func createProduct() {
+    static func createProduct(_ item: ParamsProduct,
+                              _ images: [Data]) async -> Result<Data, OpenMarketAPIError> {
         
+        let jsonEncoder: JSONEncoder = .init()
+        guard let paramsData: Data = try? jsonEncoder.encode(item) else {
+            return .failure(OpenMarketAPIError.invalidData)
+        }
+        
+        let uploadRequest = AF.upload(multipartFormData: { formData in
+            formData.append(paramsData, withName: "params")
+            
+            images.forEach { data in
+                formData.append(data,
+                                withName: "images",
+                                fileName: "productImage.png",
+                                mimeType: "multipart/form-data")
+            }
+        }, with: APIRouter.createProduct)
+            .validate()
+        
+        return await withCheckedContinuation { continuation in
+            uploadRequest.responseData(completionHandler: { response in
+                switch response.result {
+                case .success(let data):
+                    continuation.resume(returning: .success(data))
+                case .failure(_):
+                    continuation.resume(returning: .failure(OpenMarketAPIError.responseFail))
+                }
+            })
+        }
     }
     
-    static func inquiryDeleteURI(id: Int) {
-
+    static func inquiryDeleteURI(id: Int) async throws -> String {
+        return try await request(String.self, router: .inquiryDeleteURI(id: id))
     }
     
     static func updateProduct(id: Int) {

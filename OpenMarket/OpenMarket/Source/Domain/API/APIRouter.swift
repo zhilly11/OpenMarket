@@ -109,7 +109,7 @@ enum APIRouter: URLRequestConvertible {
         case .inquiryProduct:
             break
         case .createProduct:
-            urlRequest.setValue(APIConstant.secret,
+            urlRequest.setValue(APIConstant.identifier,
                                 forHTTPHeaderField: HTTPHeaderField.identifier.rawValue)
             break
         case .inquiryDeleteURI:
