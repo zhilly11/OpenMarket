@@ -17,7 +17,11 @@ extension UIColor {
     }
     
     static var separator: UIColor {
-        return color(light: .systemGray5, dark: UIColor(named: "Separator") ?? .systemGray)
+        return color(light: .systemGray, dark: UIColor(named: "Separator") ?? .systemGray)
+    }
+    
+    static var customTextField: UIColor {
+        return UIColor(named: "TextFieldBoarder") ?? UIColor.systemGray
     }
     
     private static func color(light: UIColor, dark: UIColor) -> UIColor {
