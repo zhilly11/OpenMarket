@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9589F38EF4B95012F9DB2FEE /* Pods_OpenMarket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F5689292F30E5977E34D35 /* Pods_OpenMarket.framework */; };
+		B4266C4C2B4EB7E400525BA6 /* BaseTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4266C4B2B4EB7E400525BA6 /* BaseTextView.swift */; };
 		B4417F992B4503AD00A3A0F9 /* ProductListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4417F982B4503AD00A3A0F9 /* ProductListProvider.swift */; };
 		B4417F9B2B46EC0200A3A0F9 /* ProductDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4417F9A2B46EC0200A3A0F9 /* ProductDetailViewModel.swift */; };
 		B4417F9D2B47D94400A3A0F9 /* ProductDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4417F9C2B47D94400A3A0F9 /* ProductDetailView.swift */; };
@@ -54,6 +55,7 @@
 		B4A5A3C12B4D2575009F3400 /* Locale+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A5A3BF2B4D2575009F3400 /* Locale+.swift */; };
 		B4A5A3C22B4D2575009F3400 /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A5A3C02B4D2575009F3400 /* DateFormatter+.swift */; };
 		B4A5A3C62B4E7B27009F3400 /* TabBarFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A5A3C52B4E7B27009F3400 /* TabBarFactory.swift */; };
+		B4A5A3CD2B4E8A52009F3400 /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A5A3CC2B4E8A52009F3400 /* BaseTextField.swift */; };
 		B4A8038829DFF52D00C8A029 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A8038729DFF52D00C8A029 /* PreviewViewController.swift */; };
 		B4E6DD6D2B3FF56800E2DCD8 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E6DD6C2B3FF56800E2DCD8 /* BaseTableViewController.swift */; };
 		B4E6DD702B3FF7E600E2DCD8 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E6DD6F2B3FF7E600E2DCD8 /* BaseViewController.swift */; };
@@ -62,6 +64,7 @@
 /* Begin PBXFileReference section */
 		84F5822B036BCB10B6F6380F /* Pods-OpenMarket.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenMarket.release.xcconfig"; path = "Target Support Files/Pods-OpenMarket/Pods-OpenMarket.release.xcconfig"; sourceTree = "<group>"; };
 		93F5689292F30E5977E34D35 /* Pods_OpenMarket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenMarket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4266C4B2B4EB7E400525BA6 /* BaseTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextView.swift; sourceTree = "<group>"; };
 		B4417F982B4503AD00A3A0F9 /* ProductListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListProvider.swift; sourceTree = "<group>"; };
 		B4417F9A2B46EC0200A3A0F9 /* ProductDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewModel.swift; sourceTree = "<group>"; };
 		B4417F9C2B47D94400A3A0F9 /* ProductDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailView.swift; sourceTree = "<group>"; };
@@ -110,6 +113,7 @@
 		B4A5A3BF2B4D2575009F3400 /* Locale+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Locale+.swift"; sourceTree = "<group>"; };
 		B4A5A3C02B4D2575009F3400 /* DateFormatter+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+.swift"; sourceTree = "<group>"; };
 		B4A5A3C52B4E7B27009F3400 /* TabBarFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarFactory.swift; sourceTree = "<group>"; };
+		B4A5A3CC2B4E8A52009F3400 /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
 		B4A8038729DFF52D00C8A029 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		B4E6DD6C2B3FF56800E2DCD8 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		B4E6DD6F2B3FF7E600E2DCD8 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -376,6 +380,8 @@
 				B4E6DD6F2B3FF7E600E2DCD8 /* BaseViewController.swift */,
 				B4E6DD6C2B3FF56800E2DCD8 /* BaseTableViewController.swift */,
 				B4417FA72B4C204400A3A0F9 /* BaseTabBarController.swift */,
+				B4A5A3CC2B4E8A52009F3400 /* BaseTextField.swift */,
+				B4266C4B2B4EB7E400525BA6 /* BaseTextView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -502,6 +508,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4266C4C2B4EB7E400525BA6 /* BaseTextView.swift in Sources */,
 				B44936DB29CEF459001E5F20 /* SearchViewModel.swift in Sources */,
 				B44936EB29D68B1D001E5F20 /* ViewControllerFactory.swift in Sources */,
 				B4417FA82B4C204400A3A0F9 /* BaseTabBarController.swift in Sources */,
@@ -542,6 +549,7 @@
 				B4E6DD6D2B3FF56800E2DCD8 /* BaseTableViewController.swift in Sources */,
 				B4A5A3C62B4E7B27009F3400 /* TabBarFactory.swift in Sources */,
 				B4A5A3C12B4D2575009F3400 /* Locale+.swift in Sources */,
+				B4A5A3CD2B4E8A52009F3400 /* BaseTextField.swift in Sources */,
 				B466C76129CC0EC100E8745F /* ProductListViewModel.swift in Sources */,
 				B466C76329CC109200E8745F /* ProductCell.swift in Sources */,
 				B4417F992B4503AD00A3A0F9 /* ProductListProvider.swift in Sources */,
