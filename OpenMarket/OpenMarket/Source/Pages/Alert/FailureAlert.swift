@@ -5,7 +5,7 @@ import UIKit
 
 final class FailureAlert: UIAlertController {
     
-    let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+    let cancelAction = UIAlertAction(title: "확인", style: .cancel)
     
     override func viewDidLoad() {
         super.viewDidLoad()

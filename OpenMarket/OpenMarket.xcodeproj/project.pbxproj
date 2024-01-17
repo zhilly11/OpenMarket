@@ -57,6 +57,7 @@
 		B4A5A3C62B4E7B27009F3400 /* TabBarFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A5A3C52B4E7B27009F3400 /* TabBarFactory.swift */; };
 		B4A5A3CD2B4E8A52009F3400 /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A5A3CC2B4E8A52009F3400 /* BaseTextField.swift */; };
 		B4A8038829DFF52D00C8A029 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A8038729DFF52D00C8A029 /* PreviewViewController.swift */; };
+		B4C562502B582D2100281202 /* SuccessAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5624F2B582D2100281202 /* SuccessAlert.swift */; };
 		B4E6DD6D2B3FF56800E2DCD8 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E6DD6C2B3FF56800E2DCD8 /* BaseTableViewController.swift */; };
 		B4E6DD702B3FF7E600E2DCD8 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E6DD6F2B3FF7E600E2DCD8 /* BaseViewController.swift */; };
 /* End PBXBuildFile section */
@@ -115,6 +116,7 @@
 		B4A5A3C52B4E7B27009F3400 /* TabBarFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarFactory.swift; sourceTree = "<group>"; };
 		B4A5A3CC2B4E8A52009F3400 /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
 		B4A8038729DFF52D00C8A029 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		B4C5624F2B582D2100281202 /* SuccessAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessAlert.swift; sourceTree = "<group>"; };
 		B4E6DD6C2B3FF56800E2DCD8 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		B4E6DD6F2B3FF7E600E2DCD8 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		CA0831079275291B1137DCF5 /* Pods-OpenMarket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenMarket.debug.xcconfig"; path = "Target Support Files/Pods-OpenMarket/Pods-OpenMarket.debug.xcconfig"; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			children = (
 				B44936E529D414A9001E5F20 /* ExitAlert.swift */,
 				B44936E429D414A9001E5F20 /* FailureAlert.swift */,
+				B4C5624F2B582D2100281202 /* SuccessAlert.swift */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 				B4417FA62B4C08B800A3A0F9 /* UIColor+.swift in Sources */,
 				B44936DD29D0292F001E5F20 /* String+.swift in Sources */,
 				B4417F9D2B47D94400A3A0F9 /* ProductDetailView.swift in Sources */,
+				B4C562502B582D2100281202 /* SuccessAlert.swift in Sources */,
 				B45C6EEB29C5980D00739811 /* Currency.swift in Sources */,
 				B466C76529CC1CBB00E8745F /* ReusableView.swift in Sources */,
 				B4417FCC2B4CFEBC00A3A0F9 /* UIViewController+.swift in Sources */,

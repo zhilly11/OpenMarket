@@ -8,6 +8,7 @@ enum ViewControllerKind {
     case productList
     case productDetail(id: Int)
     case search
+    case register
 }
 
 final class ViewControllerFactory {
@@ -43,6 +44,12 @@ final class ViewControllerFactory {
             searchViewController.tabBarItem = TabBarItemFactory.make(.productSearch)
 
             return searchViewController
+            
+        case .register:
+            let registerViewModel: ProductRegisterViewModel = .init()
+            let registerViewController: ProductRegisterViewController = .init(viewModel: registerViewModel)
+            
+            return registerViewController
         }
     }
 }
