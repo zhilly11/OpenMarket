@@ -13,6 +13,11 @@ final class ProductListViewController: BaseTableViewController {
         super.init()
     }
     
+    override func setupView() {
+        super.setupView()
+        setupButtons()
+    }
+    
     override func setupBind() {
         super.setupBind()
         
@@ -100,6 +105,16 @@ final class ProductListViewController: BaseTableViewController {
                 }
             )
             .disposed(by: disposeBag)
+    }
+    
+    private func setupButtons() {
+        let addButton: UIBarButtonItem = .init(systemItem: .add, primaryAction: UIAction(handler: { _ in
+            let viewController = ViewControllerFactory.make(.register)
+            viewController.modalPresentationStyle = .fullScreen
+            self.present(viewController, animated: true)
+        }))
+        
+        self.navigationItem.rightBarButtonItem = addButton
     }
 }
 

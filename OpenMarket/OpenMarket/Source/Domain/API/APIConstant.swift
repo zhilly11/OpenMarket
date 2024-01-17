@@ -5,7 +5,7 @@ import Foundation
 
 struct APIConstant {
     static var baseURL: URL {
-        return URL(string: "https://openmarket.yagom-academy.kr")!
+        return URL(string: "http://openmarket.yagom-academy.kr")!
     }
     static let venderID = "zhilly"
     static let secret = "rzeyxdwzmjynnj3f"
