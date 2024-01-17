@@ -65,11 +65,6 @@ final class ProductRegisterViewController: BaseViewController {
         super.setupView()
         setupNavigationBar()
         setupButtons()
-        
-        Task {
-            let data = try! await APIService.inquiryDeleteURI(id: 2356)
-            print(data)
-        }
     }
     
     override func setupLayout() {
@@ -168,7 +163,8 @@ final class ProductRegisterViewController: BaseViewController {
                         if let converted = item.convertToUIImage() {
                             owner.registerView.pictureScrollView.addImageView(item: converted)
                         } else {
-                            print("image convert fail")
+                            let alert = AlertFactory.make(.failure(title: "image convert fail", message: nil))
+                            owner.present(alert, animated: true)
                         }
                     }
                 }
