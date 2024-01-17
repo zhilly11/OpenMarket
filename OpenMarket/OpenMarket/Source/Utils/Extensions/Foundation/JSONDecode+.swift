@@ -24,6 +24,7 @@ extension JSONDecoder {
         })
         
         var decodedData: T?
+        
         guard let dataAsset = NSDataAsset(name: name) else {
             return nil
         }
@@ -39,6 +40,10 @@ extension JSONDecoder {
     
     static func decodeData<T: Decodable>(data: Data, to type: T.Type) -> T? {
         let jsonDecoder = JSONDecoder()
+        
+        if type is String.Type {
+            return String(data: data, encoding: .utf8) as? T
+        }
         
         jsonDecoder.dateDecodingStrategy = .custom({ (decoder) -> Date in
             let container = try decoder.singleValueContainer()
