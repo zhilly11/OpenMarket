@@ -4,7 +4,7 @@
 import UIKit
 
 enum AlertKind {
-    case success(title: String?, message: String?)
+    case success(title: String?, message: String?, action: UIAlertAction? = nil)
     case failure(title: String?, message: String?)
     case exit
 }
@@ -18,8 +18,15 @@ final class AlertFactory {
     
     static func make(_ alertKind: AlertKind) -> UIAlertController {
         switch alertKind {
-        case .success(let title, let message):
-            return SuccessAlert(title: title, message: message, preferredStyle: .alert)
+        case .success(let title, let message, let action):
+            let alert = SuccessAlert(title: title, message: message, preferredStyle: .alert)
+            
+            if let action = action {
+                alert.addAction(action)
+                return alert
+            }
+            
+            return alert
         case .failure(let title, let message):
             return FailureAlert(title: title, message: message, preferredStyle: .alert)
         case .exit:

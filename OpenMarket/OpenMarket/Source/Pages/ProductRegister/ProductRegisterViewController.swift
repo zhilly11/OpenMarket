@@ -126,8 +126,12 @@ final class ProductRegisterViewController: BaseViewController {
             .subscribe(
                 with: self,
                 onNext: { owner, _ in
+                    let action = UIAlertAction(title: "확인", style: .default) { [unowned owner] _ in
+                        owner.dismiss(animated: true)
+                    }
                     let alert = AlertFactory.make(.success(title: "성공",
-                                                           message: "상품 등록에 성공했습니다."))
+                                                           message: "상품 등록에 성공했습니다.",
+                                                           action: action))
                     owner.present(alert, animated: true)
                 }
             )
