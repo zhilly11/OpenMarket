@@ -39,6 +39,10 @@ final class ProductRegisterViewController: BaseViewController {
         $0.backgroundColor = .customBackground
     }
     
+    private let loadingView = BaseLoadingView()
+    
+    // MARK: - Init
+
     init(viewModel: ViewModelType) {
         self.viewModel = viewModel
         super.init()
@@ -70,11 +74,21 @@ final class ProductRegisterViewController: BaseViewController {
     override func setupLayout() {
         super.setupLayout()
         
+        loadingView.isHidden = true
+        
         let safeArea = view.safeAreaLayoutGuide
         
-        [navigationBar, registerView, registerButtonBackground, registerButton].forEach(view.addSubview(_:))
+        [navigationBar,
+         registerView,
+         registerButtonBackground,
+         registerButton,
+         loadingView].forEach(view.addSubview(_:))
         
         registerButton.bringSubviewToFront(registerButtonBackground)
+        
+        loadingView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         
         navigationBar.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(safeArea)
@@ -120,6 +134,23 @@ final class ProductRegisterViewController: BaseViewController {
         // MARK: - Output
 
         let output: ViewModelType.Output = viewModel.transform(input: input)
+        
+        output.registerResume
+            .observe(on: MainScheduler.instance)
+            .subscribe(
+                with: self,
+                onNext: { owner, isResume in
+                    if isResume {
+                        owner.startRegister()
+                        print("Register resume...")
+                    } else {
+                        owner.endRegister()
+                        print("Register end resume...")
+                    }
+                    
+                }
+            )
+            .disposed(by: disposeBag)
         
         output.registerCompleted
             .observe(on: MainScheduler.instance)
@@ -255,6 +286,18 @@ extension ProductRegisterViewController: PHPickerViewControllerDelegate {
         
         self.selectedPictures.accept(newSelections)
         self.selectedAssetIdentifiers.accept(results.compactMap { $0.assetIdentifier })
+    }
+}
+
+extension ProductRegisterViewController {
+    private func startRegister() {
+        loadingView.loadingView.play()
+        loadingView.isHidden = false
+    }
+    
+    private func endRegister() {
+        loadingView.loadingView.stop()
+        loadingView.isHidden = true
     }
 }
 

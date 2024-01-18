@@ -23,6 +23,7 @@ final class ProductRegisterViewModel: ViewModel {
         let selectedAssetIdentifiers: BehaviorRelay<[String]> // 사용자가 선택하고 있는 사진의 식별자 목록
         let failAlertAction: Signal<String> // 경고 alert을 띄우기 위한 프로퍼티
         let registerCompleted: PublishSubject<Void> // 상품 등록 완료 알림
+        let registerResume: PublishSubject<Bool>
     }
     
     var disposeBag: DisposeBag = .init()
@@ -38,6 +39,7 @@ final class ProductRegisterViewModel: ViewModel {
     func transform(input: Input) -> Output {
         let selectedImages: BehaviorRelay<[NSItemProvider]> = .init(value: [])
         let registerCompleted: PublishSubject<Void> = .init()
+        let registerResume: PublishSubject<Bool> = .init()
         
         input.title.orEmpty
             .subscribe(
@@ -117,6 +119,8 @@ final class ProductRegisterViewModel: ViewModel {
             .subscribe(
                 with: self,
                 onNext: { owner, _ in
+                    // register start
+                    registerResume.onNext(true)
                     do {
                         let product = try owner.makeParamsProduct()
                         let imagesDatas = selectedImages.value.map { $0.convertToData()! }
@@ -125,13 +129,19 @@ final class ProductRegisterViewModel: ViewModel {
                             let result = await APIService.createProduct(product, imagesDatas)
                             switch result {
                             case .success(_):
+                                // TODO: register end
+                                registerResume.onNext(false)
                                 registerCompleted.onNext(())
                             case .failure(let error):
+                                // TODO: register end
+                                registerResume.onNext(false)
                                 owner.failAlertAction.accept(error.localizedDescription)
                             }
                         }
                         
                     } catch let error {
+                        // TODO: register end
+                        registerResume.onNext(false)
                         owner.failAlertAction.accept(error.localizedDescription)
                     }
                 }
@@ -142,7 +152,8 @@ final class ProductRegisterViewModel: ViewModel {
             selectedImages: selectedImages,
             selectedAssetIdentifiers: self.selectedAssetIdentifiers,
             failAlertAction: self.failAlertAction.asSignal(),
-            registerCompleted: registerCompleted
+            registerCompleted: registerCompleted,
+            registerResume: registerResume
         )
     }
 }
