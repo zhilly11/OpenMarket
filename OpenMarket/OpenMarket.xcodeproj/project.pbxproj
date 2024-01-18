@@ -68,6 +68,7 @@
 		B4C5624E2B57D39C00281202 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5624D2B57D39C00281202 /* UIImage+.swift */; };
 		B4C562502B582D2100281202 /* SuccessAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5624F2B582D2100281202 /* SuccessAlert.swift */; };
 		B4C562522B5831C300281202 /* RegisterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C562512B5831C300281202 /* RegisterError.swift */; };
+		B4C562562B593EBE00281202 /* LoadingLottie.json in Resources */ = {isa = PBXBuildFile; fileRef = B4C562552B593EBE00281202 /* LoadingLottie.json */; };
 		B4E6DD6D2B3FF56800E2DCD8 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E6DD6C2B3FF56800E2DCD8 /* BaseTableViewController.swift */; };
 		B4E6DD702B3FF7E600E2DCD8 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E6DD6F2B3FF7E600E2DCD8 /* BaseViewController.swift */; };
 /* End PBXBuildFile section */
@@ -137,6 +138,7 @@
 		B4C5624D2B57D39C00281202 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		B4C5624F2B582D2100281202 /* SuccessAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessAlert.swift; sourceTree = "<group>"; };
 		B4C562512B5831C300281202 /* RegisterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterError.swift; sourceTree = "<group>"; };
+		B4C562552B593EBE00281202 /* LoadingLottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LoadingLottie.json; sourceTree = "<group>"; };
 		B4E6DD6C2B3FF56800E2DCD8 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		B4E6DD6F2B3FF7E600E2DCD8 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		CA0831079275291B1137DCF5 /* Pods-OpenMarket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenMarket.debug.xcconfig"; path = "Target Support Files/Pods-OpenMarket/Pods-OpenMarket.debug.xcconfig"; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 		B45C6EE529C5913600739811 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				B4C562552B593EBE00281202 /* LoadingLottie.json */,
 				B45C6ED929C58DCD00739811 /* Assets.xcassets */,
 				B45C6EDB29C58DCD00739811 /* LaunchScreen.storyboard */,
 				B45C6EDE29C58DCD00739811 /* Info.plist */,
@@ -496,6 +499,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B45C6EDD29C58DCD00739811 /* LaunchScreen.storyboard in Resources */,
+				B4C562562B593EBE00281202 /* LoadingLottie.json in Resources */,
 				B45C6EDA29C58DCD00739811 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
