@@ -41,7 +41,7 @@ enum APIRouter: URLRequestConvertible {
         case .updateProduct(let id):
             return "api/products/\(id)"
         case .deleteProduct(let path):
-            return "api/products/\(path)"
+            return "\(path)"
         }
     }
     
@@ -122,6 +122,8 @@ enum APIRouter: URLRequestConvertible {
                                 forHTTPHeaderField: HTTPHeaderField.identifier.rawValue)
             break
         case .deleteProduct:
+            urlRequest.setValue(APIConstant.identifier,
+                                forHTTPHeaderField: HTTPHeaderField.identifier.rawValue)
             break
         }
         

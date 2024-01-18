@@ -80,14 +80,26 @@ final class APIService {
     }
     
     static func inquiryDeleteURI(id: Int) async throws -> String {
-        return try await request(String.self, router: .inquiryDeleteURI(id: id))
+        return try await request(String.self, router: .inquiryDeleteURI(id: id)).trimmingCharacters(in: ["\""])
     }
     
     static func updateProduct(id: Int) {
         
     }
     
-    static func deleteProduct(path: String) {
+    static func deleteProduct(path: String) async -> Result<Bool, OpenMarketAPIError> {
+       
+        let response = AF.request(APIRouter.deleteProduct(path: path))
         
+        return await withCheckedContinuation { continuation in
+            response.responseData(completionHandler: { response in
+                switch response.result {
+                case .success:
+                    continuation.resume(returning: .success(true))
+                case .failure:
+                    continuation.resume(returning: .failure(OpenMarketAPIError.responseFail))
+                }
+            })
+        }
     }
 }
