@@ -108,11 +108,20 @@ final class ProductListViewController: BaseTableViewController {
     }
     
     private func setupButtons() {
-        let addButton: UIBarButtonItem = .init(systemItem: .add, primaryAction: UIAction(handler: { _ in
-            let viewController = ViewControllerFactory.make(.register)
-            viewController.modalPresentationStyle = .fullScreen
-            self.present(viewController, animated: true)
-        }))
+        let presentAction: UIAction = .init(
+            handler: { [weak self] _ in
+                guard let self = self else { return }
+                let registerViewController: UIViewController = ViewControllerFactory.make(.register)
+                
+                registerViewController.modalPresentationStyle = .fullScreen
+                self.present(registerViewController, animated: true)
+            }
+        )
+        
+        let addButton: UIBarButtonItem = .init(
+            systemItem: .add,
+            primaryAction: presentAction
+        )
         
         self.navigationItem.rightBarButtonItem = addButton
     }

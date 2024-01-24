@@ -45,7 +45,7 @@ final class ProductCell: UITableViewCell, ReusableView {
     }
     
     // MARK: - Initialize
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -63,11 +63,11 @@ final class ProductCell: UITableViewCell, ReusableView {
     }
     
     // MARK: - Setup
-
+    
     private func setupViews() {
         self.backgroundColor = .customBackground
         
-        [nameLabel, priceLabel, stockLabel].forEach(labelStackView.addArrangedSubview(_:))
+        [nameLabel, createdAtLabel ,priceLabel].forEach(labelStackView.addArrangedSubview(_:))
         [thumbnail, labelStackView].forEach(contentStackView.addArrangedSubview(_:))
         [contentStackView].forEach(contentView.addSubview(_:))
         

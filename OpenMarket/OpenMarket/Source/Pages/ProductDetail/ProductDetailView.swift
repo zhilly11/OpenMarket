@@ -147,8 +147,10 @@ final class ProductDetailView: BaseView {
                                      width: imageScrollView.bounds.width,
                                      height: imageScrollView.bounds.height)
             
-            imageScrollView.addSubview(imageView)
-            imageScrollView.contentSize.width = imageView.frame.width * CGFloat(i + 1)
+            imageScrollView.do {
+                $0.addSubview(imageView)
+                $0.contentSize.width = imageView.frame.width * CGFloat(i + 1)
+            }
         }
     }
     
