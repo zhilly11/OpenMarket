@@ -11,8 +11,6 @@ protocol ProductSearchable {
 
 final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
     
-    private let failAlertAction = PublishRelay<String>()
-    
     // MARK: - ViewModel
         
     struct Input {
@@ -29,7 +27,9 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
         let refreshCompleted: PublishSubject<Void>
     }
     
-    var disposeBag = DisposeBag()
+    var disposeBag: DisposeBag = .init()
+    
+    private let failAlertAction: PublishRelay<String> = .init()
     
     func transform(input: Input) -> Output {
         let refreshCompleted: PublishSubject<Void> = .init()
@@ -41,7 +41,7 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
             .subscribe(
                 with: self,
                 onNext: { owner, string in
-                    owner.pageCounter = 1
+                    owner.pageCounter = APIConstant.startPage
                     owner.searchKeyword = string
                     owner.productList.accept([])
                     
@@ -53,7 +53,7 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
         input.viewWillAppearTrigger
             .subscribe(
                 with: self,
-                onNext: { owner, _ in
+                onNext: { _, _ in
                     viewWillAppearCompleted.onNext(())
                 }
             )
@@ -63,9 +63,7 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
             .subscribe(
                 with: self,
                 onNext: { owner, _ in
-                    Task {
-                        await owner.fetchProductPage()
-                    }
+                    Task { await owner.fetchProductPage() }
                 }
             )
             .disposed(by: disposeBag)
@@ -74,7 +72,7 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
             .subscribe(
                 with: self,
                 onNext: { owner, _ in
-                    owner.pageCounter = 1
+                    owner.pageCounter = APIConstant.startPage
                     owner.productList.accept([])
                     input.fetchMoreDatas.onNext(())
                     refreshCompleted.onNext(())
@@ -92,7 +90,7 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
     
     // MARK: - ProductListProvider
     
-    var productList = BehaviorRelay<[Product]>(value: [])
+    var productList: BehaviorRelay<[Product]> = .init(value: [])
     var pageCounter: Int = 1
     
     @MainActor
@@ -102,13 +100,13 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
             return
         }
         
-        let productListResponse = await APIService.inquiryProductList(
+        let response: Result<ProductList, OpenMarketAPIError> = await APIService.inquiryProductList(
             pageNumber: self.pageCounter,
-            itemsPerPage: 20,
+            itemsPerPage: APIConstant.itemPerPage,
             searchValue: self.searchKeyword
         )
         
-        switch productListResponse {
+        switch response {
         case .success(let productList):
             let newData = productList.pages
             let oldData = self.productList.value

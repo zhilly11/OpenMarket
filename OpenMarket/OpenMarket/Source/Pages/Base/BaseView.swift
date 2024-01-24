@@ -19,8 +19,6 @@ class BaseView: UIView {
         backgroundColor = .customBackground
     }
     
-    func setupLayout() {
-        
-    }
+    func setupLayout() { }
 }
 

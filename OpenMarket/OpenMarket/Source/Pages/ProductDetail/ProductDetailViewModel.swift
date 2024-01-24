@@ -19,12 +19,12 @@ final class ProductDetailViewModel: ViewModel {
         let deleteCompleted: Signal<String>
     }
     
-    var disposeBag = DisposeBag()
+    var disposeBag: DisposeBag = .init()
     
     private let productID: Int
     private let product: BehaviorRelay<Product?> = .init(value: nil)
-    private let failAlertAction = PublishRelay<String>()
-    private let deleteCompleted = PublishRelay<String>()
+    private let failAlertAction: PublishRelay<String> = .init()
+    private let deleteCompleted: PublishRelay<String> = .init()
     
     init(productID: Int) {
         self.productID = productID
@@ -38,7 +38,7 @@ final class ProductDetailViewModel: ViewModel {
                 with: self,
                 onNext: { owner, _ in
                     Task {
-                        let fetchedProduct = await owner.fetchProduct(id: owner.productID)
+                        let fetchedProduct: Product? = await owner.fetchProduct(id: owner.productID)
                         self.product.accept(fetchedProduct)
                         fetchCompleted.onNext(())
                     }
@@ -51,15 +51,15 @@ final class ProductDetailViewModel: ViewModel {
                 with: self,
                 onNext: { owner, _ in
                     Task {
-                        let deleteURLResponse = await APIService.inquiryDeleteURI(id: owner.productID)
+                        let response: Result<String, OpenMarketAPIError> = await APIService.inquiryDeleteURI(id: owner.productID)
                         
-                        switch deleteURLResponse {
+                        switch response {
                         case .success(let deleteURL):
-                            let result = await APIService.deleteProduct(path: deleteURL)
+                            let result: Result<Bool, OpenMarketAPIError> = await APIService.deleteProduct(path: deleteURL)
                             
                             switch result {
                             case .success:
-                                owner.deleteCompleted.accept("상품 삭제 성공")
+                                owner.deleteCompleted.accept(Constant.Message.deleteCompleted)
                             case .failure(let error):
                                 owner.failAlertAction.accept(error.localizedDescription)
                             }

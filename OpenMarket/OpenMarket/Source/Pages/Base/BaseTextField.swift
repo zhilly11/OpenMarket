@@ -8,8 +8,8 @@ import Then
 
 class BaseTextField: BaseView {
     private let titleLabel: UILabel = .init().then {
-        let preferredFont = UIFont.preferredFont(forTextStyle: .subheadline)
-        let boldFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
+        let preferredFont: UIFont = UIFont.preferredFont(forTextStyle: .subheadline)
+        let boldFont: UIFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
         
         $0.font = boldFont
         $0.text = "Title"
@@ -48,7 +48,7 @@ class BaseTextField: BaseView {
     }
     
     private func setupTextField() {
-        let trait = textField.traitCollection
+        let trait: UITraitCollection = textField.traitCollection
         
         trait.performAsCurrent {
             textField.layer.borderColor = UIColor.customTextField.cgColor

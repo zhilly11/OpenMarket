@@ -8,17 +8,22 @@ import RxSwift
 import SnapKit
 
 final class ProductDetailViewController: BaseViewController {
-    typealias ViewModelType = ProductDetailViewModel
     
-    private let viewModel: ViewModelType
+    typealias ViewModel = ProductDetailViewModel
     
+    private let viewModel: ViewModel
+    
+    // MARK: - UI
+
     private let productDetailView = ProductDetailView()
     private let menubarItem: UIBarButtonItem = .init(image: UIImage(systemName: "ellipsis"), menu: nil)
     
+    // MARK: - Input Properties
+
     private let deleteAction: PublishSubject<Void> = .init()
     private let editAction: PublishSubject<Void> = .init()
     
-    init(viewModel: ViewModelType) {
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
         super.init()
     }
@@ -42,13 +47,18 @@ final class ProductDetailViewController: BaseViewController {
     override func setupBind() {
         super.setupBind()
         
+        // MARK: - Input
+
         let viewDidLoadTrigger: Observable<Void> = Observable.just(Void())
-        let input: ViewModelType.Input = ViewModelType.Input(
+        let input: ViewModel.Input = .init(
             viewDidLoadTrigger: viewDidLoadTrigger,
             deleteAction: self.deleteAction,
             editAction: self.editAction
         )
-        let output: ViewModelType.Output = viewModel.transform(input: input)
+        
+        // MARK: - Output
+
+        let output: ViewModel.Output = viewModel.transform(input: input)
         let product: Observable<Product> = output.product.compactMap { $0 }
         
         // MARK: - ImageViews
@@ -125,12 +135,20 @@ final class ProductDetailViewController: BaseViewController {
             .subscribe(
                 with: self,
                 onNext: { owner, _ in
-                    let action: UIAlertAction = .init(title: "확인", style: .default) { [unowned owner] _ in
-                        owner.dismiss(animated: true)
-                    }
-                    let alert: UIAlertController = AlertFactory.make(.success(title: "성공",
-                                                                              message: "상품 삭제 성공!",
-                                                                              action: action))
+                    let action: UIAlertAction = .init(
+                        title: Constant.Button.check,
+                        style: .default,
+                        handler: { [unowned owner] _ in
+                            owner.dismiss(animated: true)
+                        }
+                    )
+                    
+                    let alert: UIAlertController = AlertFactory.make(
+                        .success(title: Constant.Message.success,
+                                 message: Constant.Message.deleteCompleted,
+                                 action: action)
+                    )
+                    
                     owner.present(alert, animated: true)
                 }
             )
@@ -141,8 +159,8 @@ final class ProductDetailViewController: BaseViewController {
         navigationController?.navigationBar.topItem?.title = .init()
         
         let deleteAction: UIAction = .init(
-            title: "삭제",
-            image: UIImage(systemName: "trash.fill"),
+            title: Constant.Button.delete,
+            image: Constant.Image.delete,
             attributes: .destructive,
             handler: { [weak self] _ in
                 guard let self = self else { return }
@@ -150,8 +168,8 @@ final class ProductDetailViewController: BaseViewController {
             }
         )
         let editAction: UIAction = .init(
-            title: "수정",
-            image: UIImage(systemName: "pencil"),
+            title: Constant.Button.edit,
+            image: Constant.Image.edit,
             handler: { [weak self] _ in
                 guard let self = self else { return }
                 self.editAction.onNext(())

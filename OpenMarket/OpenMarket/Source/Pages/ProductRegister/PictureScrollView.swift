@@ -61,14 +61,14 @@ final class PictureScrollView: BaseView {
     }
     
     private func setupButton() {
-        var configuration = UIButton.Configuration.filled()
-        let imageConfig = UIImage.SymbolConfiguration(font: .preferredFont(forTextStyle: .title2))
-
-        configuration.image = UIImage(systemName: "camera.fill")
-        configuration.preferredSymbolConfigurationForImage = imageConfig
-        configuration.baseBackgroundColor = .clear
-        configuration.baseForegroundColor = .systemGray2
-        configuration.buttonSize = .large
+        let imageConfig: UIImage.SymbolConfiguration = .init(font: .preferredFont(forTextStyle: .title2))
+        let configuration: UIButton.Configuration = .filled().with {
+            $0.image = Constant.Image.camera
+            $0.preferredSymbolConfigurationForImage = imageConfig
+            $0.baseBackgroundColor = .clear
+            $0.baseForegroundColor = .systemGray2
+            $0.buttonSize = .large
+        }
         
         pictureSelectButton.configuration = configuration
     }

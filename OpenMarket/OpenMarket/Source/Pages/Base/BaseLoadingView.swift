@@ -4,8 +4,8 @@
 import UIKit
 
 import Lottie
-import Then
 import SnapKit
+import Then
 
 class BaseLoadingView: BaseView {
     private let loadingAnimation: LottieAnimation? = LottieAnimation.named("LoadingLottie")

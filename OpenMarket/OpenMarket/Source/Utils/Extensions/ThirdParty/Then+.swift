@@ -6,4 +6,9 @@ import Then
 // MARK: - PHPicker
 import PhotosUI.PHPicker
 
-extension PHPickerConfiguration: Then {}
+extension PHPickerConfiguration: Then { }
+
+// MARK: - UIButton Configuration
+import UIKit.UIButton
+
+extension UIButton.Configuration: Then { }

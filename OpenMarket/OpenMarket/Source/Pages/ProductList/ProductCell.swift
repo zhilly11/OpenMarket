@@ -10,42 +10,42 @@ final class ProductCell: UITableViewCell, ReusableView {
     
     // MARK: - UI Component
     
-    private let thumbnail = UIImageView().then {
-        $0.image = UIImage(systemName: "rays")
+    private let thumbnail: UIImageView = .init().then {
+        $0.image = Constant.Image.empty
         $0.tintColor = .systemGray
         $0.layer.cornerRadius = 10
         $0.clipsToBounds = true
     }
     
-    private let nameLabel = UILabel().then {
+    private let nameLabel: UILabel = .init().then {
         $0.textAlignment = .left
         $0.font = .preferredFont(forTextStyle: .title1)
     }
     
-    private let priceLabel = UILabel().then {
+    private let priceLabel: UILabel = .init().then {
         $0.textAlignment = .left
         $0.font = .preferredFont(forTextStyle: .body)
     }
     
-    private let stockLabel = UILabel().then {
+    private let stockLabel: UILabel = .init().then {
         $0.textAlignment = .left
         $0.font = .preferredFont(forTextStyle: .body)
     }
     
-    private let contentStackView = UIStackView().then {
+    private let contentStackView: UIStackView = .init().then {
         $0.axis = .horizontal
         $0.spacing = 10
         $0.distribution = .fillProportionally
         $0.alignment = .center
     }
     
-    private let labelStackView = UIStackView().then {
+    private let labelStackView: UIStackView = .init().then {
         $0.axis = .vertical
         $0.distribution = .fillEqually
     }
     
     private let createdAtLabel: UILabel = .init().then {
-        let text: String = "2023-08-15"
+        let text: String = .init()
         let attributeString: NSMutableAttributedString = .init(string: text)
         
         $0.attributedText = attributeString
@@ -67,7 +67,7 @@ final class ProductCell: UITableViewCell, ReusableView {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        thumbnail.image = UIImage(systemName: "rays")
+        thumbnail.image = Constant.Image.empty
         stockLabel.textColor = .label
     }
     
@@ -117,7 +117,7 @@ final class ProductCell: UITableViewCell, ReusableView {
             return
         }
         
-        priceLabel.text = priceText + "  " + bargainText
+        priceLabel.text = priceText + " → " + bargainText
         priceLabel.attributedText = priceLabel.text?.strikeThrough(length: priceText.count, color: .red)
     }
 }

@@ -8,26 +8,24 @@ import Then
 
 final class ProfileView: BaseView {
     
-    let profileImage = UIImageView().then {
-        $0.image = UIImage(systemName: "person.crop.circle.fill")
+    let profileImage: UIImageView = .init().then {
+        $0.image = Constant.Image.profile
         $0.tintColor = .systemGray
     }
     
-    let nameLabel = UILabel().then {
-        let preferredFont = UIFont.preferredFont(forTextStyle: .headline)
-        let boldFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
+    let nameLabel: UILabel = .init().then {
+        let preferredFont: UIFont = UIFont.preferredFont(forTextStyle: .headline)
+        let boldFont: UIFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
         
         $0.font = boldFont
-        $0.text = "질리"
     }
     
-    let venderIDLabel = UILabel().then {
+    let venderIDLabel: UILabel = .init().then {
         $0.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        $0.text = "ID: 11"
         $0.textColor = .systemGray
     }
     
-    private let bottomSeparatorView = UIView().then {
+    private let bottomSeparatorView: UIView = .init().then {
         $0.backgroundColor = .separator
     }
     

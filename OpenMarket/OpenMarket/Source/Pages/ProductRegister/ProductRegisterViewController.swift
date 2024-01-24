@@ -11,9 +11,9 @@ import Then
 
 final class ProductRegisterViewController: BaseViewController {
     
-    typealias ViewModelType = ProductRegisterViewModel
+    typealias ViewModel = ProductRegisterViewModel
     
-    private let viewModel: ViewModelType
+    private let viewModel: ViewModel
     
     // MARK: - UI Component
 
@@ -24,13 +24,12 @@ final class ProductRegisterViewController: BaseViewController {
     
     private let registerView: ProductRegisterView = .init()
     private let registerButton: UIButton = .init().then {
-        let preferredFont = UIFont.preferredFont(forTextStyle: .title3)
-        let boldFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
+        let preferredFont: UIFont = UIFont.preferredFont(forTextStyle: .title3)
+        let boldFont: UIFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
         
         $0.titleLabel?.font = boldFont
-        $0.setTitle("작성 완료", for: .normal)
+        $0.setTitle(Constant.Button.editSuccess, for: .normal)
         $0.setTitleColor(.white, for: .normal)
-        
         $0.layer.cornerRadius = 7
         $0.backgroundColor = .main
     }
@@ -43,7 +42,7 @@ final class ProductRegisterViewController: BaseViewController {
     
     // MARK: - Init
 
-    init(viewModel: ViewModelType) {
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
         super.init()
     }
@@ -76,7 +75,7 @@ final class ProductRegisterViewController: BaseViewController {
         
         loadingView.isHidden = true
         
-        let safeArea = view.safeAreaLayoutGuide
+        let safeArea: UILayoutGuide = view.safeAreaLayoutGuide
         
         [navigationBar,
          registerView,
@@ -115,13 +114,13 @@ final class ProductRegisterViewController: BaseViewController {
     override func setupBind() {
         // MARK: - Input
 
-        let titleInput = registerView.nameTextField.textField.rx.text
-        let priceInput = registerView.priceTextField.textField.rx.text
-        let stockInput = registerView.stockTextField.textField.rx.text
-        let descriptionInput = registerView.descriptionView.textView.rx.text
-        let registerAction = registerButton.rx.tap
+        let titleInput: ControlProperty<String?> = registerView.nameTextField.textField.rx.text
+        let priceInput: ControlProperty<String?> = registerView.priceTextField.textField.rx.text
+        let stockInput: ControlProperty<String?> = registerView.stockTextField.textField.rx.text
+        let descriptionInput: ControlProperty<String?> = registerView.descriptionView.textView.rx.text
+        let registerAction: ControlEvent<Void> = registerButton.rx.tap
         
-        let input: ViewModelType.Input = .init(
+        let input: ViewModel.Input = .init(
             title: titleInput,
             price: priceInput,
             stock: stockInput,
@@ -133,21 +132,14 @@ final class ProductRegisterViewController: BaseViewController {
         
         // MARK: - Output
 
-        let output: ViewModelType.Output = viewModel.transform(input: input)
+        let output: ViewModel.Output = viewModel.transform(input: input)
         
         output.registerResume
             .observe(on: MainScheduler.instance)
             .subscribe(
                 with: self,
                 onNext: { owner, isResume in
-                    if isResume {
-                        owner.startRegister()
-                        print("Register resume...")
-                    } else {
-                        owner.endRegister()
-                        print("Register end resume...")
-                    }
-                    
+                    isResume ? owner.startRegister() : owner.endRegister()
                 }
             )
             .disposed(by: disposeBag)
@@ -157,12 +149,19 @@ final class ProductRegisterViewController: BaseViewController {
             .subscribe(
                 with: self,
                 onNext: { owner, _ in
-                    let action = UIAlertAction(title: "확인", style: .default) { [unowned owner] _ in
-                        owner.dismiss(animated: true)
-                    }
-                    let alert = AlertFactory.make(.success(title: "성공",
-                                                           message: "상품 등록에 성공했습니다.",
-                                                           action: action))
+                    let action: UIAlertAction = .init(
+                        title: Constant.Button.check,
+                        style: .default,
+                        handler: { [unowned owner] _ in
+                            owner.dismiss(animated: true)
+                        }
+                    )
+                    let alert: UIAlertController = AlertFactory.make(
+                        .success(title: Constant.Message.success,
+                                 message: Constant.Message.registerCompleted,
+                                 action: action)
+                    )
+                    
                     owner.present(alert, animated: true)
                 }
             )
@@ -172,7 +171,7 @@ final class ProductRegisterViewController: BaseViewController {
             .emit(
                 with: self,
                 onNext: { owner, title in
-                    let alert = AlertFactory.make(.failure(title: title, message: nil))
+                    let alert: UIAlertController = AlertFactory.make(.failure(title: title, message: nil))
                     owner.present(alert, animated: true)
                 }
             )
@@ -236,14 +235,14 @@ final class ProductRegisterViewController: BaseViewController {
     }
     
     private func setupNavigationBar() {
-        let title: UINavigationItem = .init(title: "내 물건 팔기")
+        let title: UINavigationItem = .init(title: Constant.Title.productRegister)
         let dismissAction: UIAction = .init() { [weak self] _ in
             guard let self = self else { return }
             self.dismiss(animated: true)
         }
         
         let dismissButton: UIBarButtonItem = .init(
-            image: UIImage(systemName: "xmark"),
+            image: Constant.Image.xMark,
             primaryAction: dismissAction
         )
                                                 
@@ -254,11 +253,15 @@ final class ProductRegisterViewController: BaseViewController {
     }
     
     private func setupButtons() {
-        registerView.pictureScrollView.pictureSelectButton.addAction(
-            UIAction(handler: { [weak self] _ in
+        let pictureChangeAction: UIAction = .init(
+            handler: { [weak self] _ in
                 guard let self = self else { return }
                 self.changePictures()
-            }),
+            }
+        )
+        
+        registerView.pictureScrollView.pictureSelectButton.addAction(
+            pictureChangeAction,
             for: .touchUpInside
         )
     }

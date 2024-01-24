@@ -16,14 +16,14 @@ final class ViewControllerFactory {
     static func make(_ kind: ViewControllerKind) -> UIViewController {
         switch kind {
         case .tabBarController(let child):
-            let tabBarController = BaseTabBarController()
+            let tabBarController: BaseTabBarController = .init()
             
             tabBarController.setViewControllers(child, animated: true)
             
             return tabBarController
         case .productList:
-            let productListViewModel = ProductListViewModel()
-            let productListViewController = UINavigationController(
+            let productListViewModel: ProductListViewModel = .init()
+            let productListViewController: UINavigationController = .init(
                 rootViewController: ProductListViewController(viewModel: productListViewModel)
             )
             productListViewController.tabBarItem = TabBarItemFactory.make(.productList)
@@ -31,16 +31,17 @@ final class ViewControllerFactory {
             return productListViewController
             
         case .productDetail(let id):
-            let productDetailViewModel = ProductDetailViewModel(productID: id)
-            let productDetailViewController = ProductDetailViewController(viewModel: productDetailViewModel)
+            let productDetailViewModel: ProductDetailViewModel = .init(productID: id)
+            let productDetailViewController: ProductDetailViewController = .init(viewModel: productDetailViewModel)
             
             return productDetailViewController
             
         case .search:
-            let searchViewModel = SearchViewModel()
-            let searchViewController = UINavigationController(
+            let searchViewModel: SearchViewModel = .init()
+            let searchViewController: UINavigationController = .init(
                 rootViewController: SearchViewController(viewModel: searchViewModel)
             )
+            
             searchViewController.tabBarItem = TabBarItemFactory.make(.productSearch)
 
             return searchViewController

@@ -3,19 +3,22 @@
 
 import UIKit
 
+import Then
 import RxCocoa
 import RxSwift
 
 final class SearchViewController: BaseTableViewController {
     
-    private let viewModel: SearchViewModel
+    typealias ViewModel = SearchViewModel
     
-    private let searchBar = UISearchBar().then {
-        $0.placeholder = "상품명을 입력하세요."
+    private let viewModel: ViewModel
+    
+    private let searchBar: UISearchBar = .init().then {
+        $0.placeholder = Constant.Placeholder.searchProduct
         $0.showsCancelButton = false
     }
     
-    init(viewModel: SearchViewModel) {
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
         super.init()
     }
@@ -29,19 +32,19 @@ final class SearchViewController: BaseTableViewController {
     override func setupBind() {
         super.setupBind()
         
-        let viewWillAppearTrigger = rx.methodInvoked(#selector(viewWillAppear)).map { _ in () }
-        let input = SearchViewModel.Input(
+        let viewWillAppearTrigger: Observable<()> = rx.methodInvoked(#selector(viewWillAppear)).map { _ in () }
+        let input: ViewModel.Input = .init(
             viewWillAppearTrigger: viewWillAppearTrigger,
             fetchMoreDatas: PublishSubject<Void>(),
             searchKeyword: searchBar.rx.text.orEmpty,
             refreshAction: refreshController.rx.controlEvent(.valueChanged)
         )
-        let output = viewModel.transform(input: input)
+        let output: ViewModel.Output = viewModel.transform(input: input)
         
         output.productList
             .observe(on: MainScheduler.instance)
             .bind(to: tableView.rx.items(cellIdentifier: ProductCell.reuseIdentifier,
-                                         cellType: ProductCell.self)) { index, item, cell in
+                                         cellType: ProductCell.self)) { _, item, cell in
                 cell.configure(with: item)
             }.disposed(by: disposeBag)
         
@@ -57,8 +60,8 @@ final class SearchViewController: BaseTableViewController {
         output.failAlertAction
             .emit(
                 with: self,
-                onNext: { owner, title in
-                    let alert = AlertFactory.make(.exit)
+                onNext: { owner, _ in
+                    let alert: UIAlertController = AlertFactory.make(.exit)
                     owner.present(alert, animated: true)
                 }
             )
@@ -67,7 +70,7 @@ final class SearchViewController: BaseTableViewController {
         output.refreshCompleted
             .subscribe(
                 with: self,
-                onNext: { owner, data in
+                onNext: { owner, _ in
                     owner.refreshController.endRefreshing()
                 }
             )
@@ -94,8 +97,8 @@ final class SearchViewController: BaseTableViewController {
             .subscribe(
                 with: self,
                 onNext: { owner, element in
-                    let productID = element.id
-                    let productDetailViewController = ViewControllerFactory.make(
+                    let productID: Int = element.id
+                    let productDetailViewController: UIViewController = ViewControllerFactory.make(
                         .productDetail(id: productID)
                     )
                     

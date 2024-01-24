@@ -25,7 +25,7 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
     
     var disposeBag: DisposeBag = .init()
     
-    private let failAlertAction = PublishRelay<String>()
+    private let failAlertAction: PublishRelay<String> = .init()
     
     func transform(input: Input) -> Output {
         let refreshCompleted: PublishSubject<Void> = .init()
@@ -36,11 +36,12 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
                 with: self,
                 onNext: { owner, _ in
                     Task {
-                        if await owner.isServerOnline() {
-                            await owner.fetchProductPage()
-                        } else {
+                        guard await owner.isServerOnline() else {
                             owner.failAlertAction.accept(OpenMarketAPIError.failHealthChecker.localizedDescription)
+                            return
                         }
+                        
+                        await owner.fetchProductPage()
                     }
                 }
             )
@@ -49,7 +50,7 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
         input.viewWillAppearTrigger
             .subscribe(
                 with: self,
-                onNext: { owner, _ in
+                onNext: { _, _ in
                     viewWillAppearCompleted.onNext(())
                 }
             )
@@ -70,8 +71,7 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
             .subscribe(
                 with: self,
                 onNext: { owner, _ in
-                    print("refresh!")
-                    owner.pageCounter = 1
+                    owner.pageCounter = APIConstant.startPage
                     owner.productList.accept([])
                     input.fetchMoreDatas.onNext(())
                     refreshCompleted.onNext(())
@@ -89,20 +89,20 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
     
     // MARK: - ProductListProvider
     
-    var productList = BehaviorRelay<[Product]>(value: [])
-    var pageCounter: Int = 1
+    var productList: BehaviorRelay<[Product]> = .init(value: [])
+    var pageCounter: Int = APIConstant.startPage
     
     @MainActor
     func fetchProductPage() async {
-        let productListResponse = await APIService.inquiryProductList(
+        let response: Result<ProductList, OpenMarketAPIError> = await APIService.inquiryProductList(
             pageNumber: self.pageCounter,
-            itemsPerPage: 20
+            itemsPerPage: APIConstant.itemPerPage
         )
         
-        switch productListResponse {
+        switch response {
         case .success(let productList):
-            let newData = productList.pages
-            let oldData = self.productList.value
+            let newData: [Product] = productList.pages
+            let oldData: [Product] = self.productList.value
             
             self.productList.accept(oldData + newData)
             self.pageCounter += 1

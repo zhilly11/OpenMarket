@@ -122,11 +122,11 @@ final class ProductRegisterViewModel: ViewModel {
                     // register start
                     registerResume.onNext(true)
                     do {
-                        let product = try owner.makeParamsProduct()
-                        let imagesDatas = selectedImages.value.map { $0.convertToData()! }
+                        let product: ParamsProduct = try owner.makeParamsProduct()
+                        let imagesDatas: [Data] = selectedImages.value.map { $0.convertToData()! }
                         
                         Task {
-                            let result = await APIService.createProduct(product, imagesDatas)
+                            let result: Result<Data, OpenMarketAPIError> = await APIService.createProduct(product, imagesDatas)
                             switch result {
                             case .success(_):
                                 // TODO: register end

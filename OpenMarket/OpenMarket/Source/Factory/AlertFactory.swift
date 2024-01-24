@@ -10,28 +10,25 @@ enum AlertKind {
 }
 
 final class AlertFactory {
-    
-    private enum Constant {
-        static let exitAlertTitle = "종료"
-        static let exitAlertMessage = "오픈마켓 서버에 연결을 실패하여 앱을 종료합니다."
-    }
-    
     static func make(_ alertKind: AlertKind) -> UIAlertController {
         switch alertKind {
         case .success(let title, let message, let action):
-            let alert = SuccessAlert(title: title, message: message, preferredStyle: .alert)
+            let alert: SuccessAlert = SuccessAlert(title: title,
+                                                   message: message,
+                                                   preferredStyle: .alert)
             
             if let action = action {
                 alert.addAction(action)
-                return alert
             }
             
             return alert
         case .failure(let title, let message):
-            return FailureAlert(title: title, message: message, preferredStyle: .alert)
+            return FailureAlert(title: title,
+                                message: message,
+                                preferredStyle: .alert)
         case .exit:
-            return ExitAlert(title: Constant.exitAlertTitle,
-                             message: Constant.exitAlertMessage,
+            return ExitAlert(title: Constant.Message.exit,
+                             message: Constant.Message.exitAlertContent,
                              preferredStyle: .alert)
         }
     }

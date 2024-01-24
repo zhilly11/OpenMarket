@@ -9,7 +9,7 @@ class BaseViewController: UIViewController {
 
     // MARK: - Property
     
-    let disposeBag = DisposeBag()
+    let disposeBag: DisposeBag = .init()
     
     // MARK: - Init
 

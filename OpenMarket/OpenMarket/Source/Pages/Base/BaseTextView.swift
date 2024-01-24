@@ -7,15 +7,15 @@ import SnapKit
 import Then
 
 class BaseTextView: BaseView {
-    private let titleLabel = UILabel().then {
-        let preferredFont = UIFont.preferredFont(forTextStyle: .subheadline)
-        let boldFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
+    private let titleLabel: UILabel = .init().then {
+        let preferredFont: UIFont = UIFont.preferredFont(forTextStyle: .subheadline)
+        let boldFont: UIFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
         
         $0.font = boldFont
         $0.text = "Title"
     }
     
-    let textView = UITextView().then {
+    let textView: UITextView = .init().then {
         $0.isScrollEnabled = false
         $0.text = Constant.Placeholder.description
         $0.textColor = .customTextField
@@ -26,7 +26,7 @@ class BaseTextView: BaseView {
         $0.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
     }
     
-    private let contentStackView = UIStackView().then {
+    private let contentStackView: UIStackView = .init().then {
         $0.axis = .vertical
         $0.spacing = 10
     }
@@ -48,7 +48,7 @@ class BaseTextView: BaseView {
     }
     
     private func setupTextField() {
-        let trait = textView.traitCollection
+        let trait: UITraitCollection = textView.traitCollection
         
         trait.performAsCurrent {
             textView.layer.borderColor = UIColor.customTextField.cgColor

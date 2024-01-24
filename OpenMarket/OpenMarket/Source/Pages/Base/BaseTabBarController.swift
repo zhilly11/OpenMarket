@@ -3,6 +3,8 @@
 
 import UIKit
 
+import Then
+
 class BaseTabBarController: UITabBarController {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -17,13 +19,15 @@ class BaseTabBarController: UITabBarController {
     }
     
     func setupView() {
-        let appearance = UITabBarAppearance()
+        let appearance: UITabBarAppearance = .init().then {
+            $0.configureWithOpaqueBackground()
+            $0.backgroundColor = .customBackground
+        }
         
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .customBackground
-        
-        tabBar.standardAppearance = appearance
-        tabBar.scrollEdgeAppearance = appearance
-        tabBar.tintColor = .main
+        tabBar.do {
+            $0.standardAppearance = appearance
+            $0.scrollEdgeAppearance = appearance
+            $0.tintColor = .main
+        }
     }
 }

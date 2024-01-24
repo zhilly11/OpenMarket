@@ -2,16 +2,17 @@
 //  Created by zhilly on 2023/04/07
 
 import UIKit
+
 import SnapKit
+import Then
 
 final class PreviewViewController: UIViewController {
     
     private let imageThumbnail: String
-    private let imageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
+    private let imageView: UIImageView = .init().then {
+        $0.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+        $0.contentMode = .scaleAspectFit
+    }
     
     init(thumbnailURL: String) {
         self.imageThumbnail = thumbnailURL

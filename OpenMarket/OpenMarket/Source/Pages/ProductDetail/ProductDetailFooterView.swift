@@ -8,61 +8,60 @@ import Then
 
 final class ProductDetailFooterView: BaseView {
     
-    let heartButton = UIButton().then {
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .light)
-        let heartImage = UIImage(systemName: "heart", withConfiguration: imageConfig)
+    let heartButton: UIButton = .init().then {
+        let imageConfiguration: UIImage.Configuration = UIImage.SymbolConfiguration(pointSize: 25,
+                                                                                    weight: .light)
+        let heartImage: UIImage = Constant.Image.heart.withConfiguration(imageConfiguration)
         
         $0.setImage(heartImage, for: .normal)
         $0.tintColor = .systemGray
     }
     
-    let priceLabel = UILabel().then {
-        let preferredFont = UIFont.preferredFont(forTextStyle: .title3)
-        let boldFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
+    let priceLabel: UILabel = .init().then {
+        let preferredFont: UIFont = UIFont.preferredFont(forTextStyle: .title3)
+        let boldFont: UIFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
 
         $0.font = boldFont
-        $0.text = "00,000원"
     }
     
-    let stockLabel = UILabel().then {
-        let preferredFont = UIFont.preferredFont(forTextStyle: .subheadline)
-        let boldFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
+    let stockLabel: UILabel = .init().then {
+        let preferredFont: UIFont = UIFont.preferredFont(forTextStyle: .subheadline)
+        let boldFont: UIFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
         
         $0.font = boldFont
-        $0.text = "재고 :"
         $0.textColor = .systemGray
     }
     
-    let chatButton = UIButton().then {
-        let preferredFont = UIFont.preferredFont(forTextStyle: .headline)
-        let boldFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
+    let chatButton: UIButton = .init().then {
+        let preferredFont: UIFont = UIFont.preferredFont(forTextStyle: .headline)
+        let boldFont: UIFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
         
         $0.titleLabel?.font = boldFont
-        $0.setTitle("채팅하기", for: .normal)
+        $0.setTitle(Constant.Button.chat, for: .normal)
         $0.backgroundColor = .main
         $0.layer.masksToBounds = true
         $0.layer.cornerRadius = 7
     }
     
-    private let priceStackView = UIStackView().then {
+    private let priceStackView: UIStackView = .init().then {
         $0.distribution = .equalCentering
         $0.axis = .vertical
         $0.alignment = .leading
         $0.spacing = 8
     }
     
-    private let separatorView = UIView().then {
+    private let separatorView: UIView = .init().then {
         $0.backgroundColor = .separator
     }
     
-    private let topSeparatorView = UIView().then {
+    private let topSeparatorView: UIView = .init().then {
         $0.backgroundColor = .separator
     }
 
     override func setupLayout() {
         super.setupLayout()
         
-        let safeArea = safeAreaLayoutGuide
+        let safeArea: UILayoutGuide = safeAreaLayoutGuide
         
         [priceLabel,
          stockLabel].forEach(priceStackView.addArrangedSubview(_:))

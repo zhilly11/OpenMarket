@@ -16,15 +16,15 @@ final class TabBarItemFactory {
         switch kind {
         case .productList:
             return UITabBarItem().then {
-                $0.title = "홈"
-                $0.image = UIImage(systemName: "house")
-                $0.selectedImage = UIImage(systemName: "house.fill")
+                $0.title = Constant.TabBar.Title.home
+                $0.image = Constant.TabBar.Image.home
+                $0.selectedImage = Constant.TabBar.SelectedImage.home
             }
         case .productSearch:
             return UITabBarItem().then {
-                $0.title = "검색"
-                $0.image = UIImage(systemName: "magnifyingglass.circle")
-                $0.selectedImage = UIImage(systemName: "magnifyingglass.circle.fill")
+                $0.title = Constant.TabBar.Title.search
+                $0.image = Constant.TabBar.Image.search
+                $0.selectedImage = Constant.TabBar.SelectedImage.search
             }
         }
     }

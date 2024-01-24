@@ -8,41 +8,41 @@ import Then
 
 final class ProductDetailView: BaseView {
     
-    private let contentScrollView = UIScrollView().then { make in
-        make.isScrollEnabled = true
-        make.backgroundColor = .customBackground
-        make.contentInsetAdjustmentBehavior = .never
+    private let contentScrollView: UIScrollView = .init().then {
+        $0.isScrollEnabled = true
+        $0.backgroundColor = .customBackground
+        $0.contentInsetAdjustmentBehavior = .never
     }
     
-    let imageScrollView = UIScrollView().then {
+    let imageScrollView: UIScrollView = .init().then {
         $0.backgroundColor = .clear
         $0.isScrollEnabled = true
         $0.isPagingEnabled = true
         $0.showsHorizontalScrollIndicator = false
     }
     
-    private let pageControl = UIPageControl().then {
+    private let pageControl: UIPageControl = .init().then {
         $0.tintColor = .white
         $0.numberOfPages = 5
         $0.currentPage = 2
         $0.backgroundColor = .clear
     }
     
-    private var imageViews = [UIImageView]()
+    private var imageViews: [UIImageView] = []
     
-    let profileView = ProfileView()
+    let profileView: ProfileView = .init()
     
-    let nameLabel = UILabel().then {
-        let preferredFont = UIFont.preferredFont(forTextStyle: .title3)
-        let boldFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
+    let nameLabel: UILabel = .init().then {
+        let preferredFont: UIFont = UIFont.preferredFont(forTextStyle: .title3)
+        let boldFont: UIFont = UIFont.boldSystemFont(ofSize: preferredFont.pointSize)
         
         $0.font = boldFont
-        $0.text = "상품명"
+        $0.text = Constant.LabelTitle.productName
     }
     
-    let createdAtLabel = UILabel().then {
-        let text = "2023-08-15"
-        let attributeString = NSMutableAttributedString(string: text)
+    let createdAtLabel: UILabel = .init().then {
+        let text: String = .init()
+        let attributeString: NSMutableAttributedString = .init(string: text)
         
         attributeString.addAttribute(.underlineStyle,
                                      value: 1,
@@ -53,20 +53,20 @@ final class ProductDetailView: BaseView {
         $0.textColor = .systemGray
     }
     
-    let descriptionLabel = UILabel().then {
-        $0.text = "상품 설명"
+    let descriptionLabel: UILabel = .init().then {
+        $0.text = Constant.LabelTitle.productDescription
         $0.font = .preferredFont(forTextStyle: .body)
         $0.numberOfLines = 0
         $0.lineBreakMode = .byWordWrapping
     }
     
-    let footerView = ProductDetailFooterView()
+    let footerView: ProductDetailFooterView = .init()
     
-    private let contentStackView = UIStackView().then {
+    private let contentStackView: UIStackView = .init().then {
         $0.axis = .vertical
     }
     
-    private let descriptionStackView = UIStackView().then {
+    private let descriptionStackView: UIStackView = .init().then {
         $0.axis = .vertical
         $0.spacing = 8
         $0.layoutMargins = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
@@ -76,7 +76,7 @@ final class ProductDetailView: BaseView {
     override func setupLayout() {
         super.setupLayout()
         
-        let safeArea = self.safeAreaLayoutGuide
+        let safeArea: UILayoutGuide = self.safeAreaLayoutGuide
         
         [contentScrollView, footerView, pageControl].forEach(addSubview(_:))
         
@@ -87,7 +87,7 @@ final class ProductDetailView: BaseView {
         [nameLabel,
          createdAtLabel,
          descriptionLabel].forEach(descriptionStackView.addArrangedSubview(_:))
-                
+        
         [contentStackView].forEach(contentScrollView.addSubview(_:))
         
         pageControl.bringSubviewToFront(imageScrollView)
@@ -116,7 +116,7 @@ final class ProductDetailView: BaseView {
             $0.leading.trailing.bottom.equalTo(imageScrollView)
             $0.height.equalTo(25)
         }
-
+        
         profileView.snp.makeConstraints {
             $0.height.equalTo(75)
             $0.leading.trailing.equalTo(contentStackView)
@@ -128,9 +128,9 @@ final class ProductDetailView: BaseView {
     }
     
     func setupImages(items: [Image]) {
-        items.forEach { Image in
-            let imageView = UIImageView()
-            imageView.setImageUrl(Image.url)
+        items.forEach { item in
+            let imageView: UIImageView = .init()
+            imageView.setImageUrl(item.url)
             self.imageViews.append(imageView)
         }
         
@@ -140,8 +140,8 @@ final class ProductDetailView: BaseView {
     
     private func addContentScrollView()  {
         for i in 0..<imageViews.count {
-            let imageView = self.imageViews[safe: i] ?? UIImageView()
-            let xPos = imageScrollView.frame.width * CGFloat(i)
+            let imageView: UIImageView = self.imageViews[safe: i] ?? UIImageView()
+            let xPos: CGFloat = imageScrollView.frame.width * CGFloat(i)
             imageView.frame = CGRect(x: xPos,
                                      y: 0,
                                      width: imageScrollView.bounds.width,
@@ -159,8 +159,8 @@ final class ProductDetailView: BaseView {
     }
     
     func setPageControlSelectedPage(currentX: CGFloat) {
-        let currentX = currentX / imageScrollView.frame.size.width
-        var currentPage = 0
+        let currentX: CGFloat = currentX / imageScrollView.frame.size.width
+        var currentPage: Int = .zero
         
         if !currentX.isNaN && !currentX.isInfinite {
             currentPage = Int(round(currentX))

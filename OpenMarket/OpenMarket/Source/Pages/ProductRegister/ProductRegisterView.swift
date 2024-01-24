@@ -8,11 +8,11 @@ import Then
 
 final class ProductRegisterView: BaseView {
     
-    let pictureScrollView = PictureScrollView()
-    let nameTextField = BaseTextField()
-    let priceTextField = BaseTextField()
-    let stockTextField = BaseTextField()
-    let descriptionView = BaseTextView()
+    let pictureScrollView: PictureScrollView = .init()
+    let nameTextField: BaseTextField = .init()
+    let priceTextField: BaseTextField = .init()
+    let stockTextField: BaseTextField = .init()
+    let descriptionView: BaseTextView = .init()
     
     private let contentScrollView: UIScrollView = .init().then {
         $0.isScrollEnabled = true
@@ -28,24 +28,24 @@ final class ProductRegisterView: BaseView {
         super.setupView()
         
         nameTextField.do {
-            $0.setTitle("제목")
-            $0.textField.placeholder = "제목"
+            $0.setTitle(Constant.LabelTitle.title)
+            $0.textField.placeholder = Constant.Placeholder.title
         }
         
         priceTextField.do {
-            $0.setTitle("가격")
-            $0.textField.placeholder = "￦ 가격을 입력해주세요."
+            $0.setTitle(Constant.LabelTitle.price)
+            $0.textField.placeholder = Constant.Placeholder.price
             $0.textField.keyboardType = .numberPad
         }
         
         stockTextField.do {
-            $0.setTitle("재고")
-            $0.textField.placeholder = "판매 수량을 입력해주세요."
+            $0.setTitle(Constant.LabelTitle.stock)
+            $0.textField.placeholder = Constant.Placeholder.stock
             $0.textField.keyboardType = .numberPad
         }
         
         descriptionView.do {
-            $0.setTitle("자세한 설명")
+            $0.setTitle(Constant.LabelTitle.description)
         }
     }
     

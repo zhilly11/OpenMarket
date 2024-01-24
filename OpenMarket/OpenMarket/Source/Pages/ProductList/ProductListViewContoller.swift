@@ -6,9 +6,11 @@ import RxSwift
 
 final class ProductListViewController: BaseTableViewController {
     
-    private let viewModel: ProductListViewModel
+    typealias ViewModel = ProductListViewModel
     
-    init(viewModel: ProductListViewModel) {
+    private let viewModel: ViewModel
+    
+    init(viewModel: ViewModel) {
         self.viewModel = viewModel
         super.init()
     }
@@ -21,20 +23,27 @@ final class ProductListViewController: BaseTableViewController {
     override func setupBind() {
         super.setupBind()
         
-        let viewDidLoadTrigger = Observable.just(Void())
-        let viewWillAppearTrigger = rx.methodInvoked(#selector(viewWillAppear)).map { _ in () }
-        let input = ProductListViewModel.Input(
+        // MARK: - Input
+
+        let viewDidLoadTrigger: Observable<()> = Observable.just(Void())
+        let viewWillAppearTrigger: Observable<()> = rx.methodInvoked(#selector(viewWillAppear)).map { _ in () }
+        let input: ViewModel.Input = .init(
             viewDidLoadTrigger: viewDidLoadTrigger,
             viewWillAppearTrigger: viewWillAppearTrigger,
             fetchMoreDatas: PublishSubject<Void>(),
             refreshAction: refreshController.rx.controlEvent(.valueChanged)
         )
-        let output = viewModel.transform(input: input)
         
+        // MARK: - Output
+
+        let output: ViewModel.Output = viewModel.transform(input: input)
+        
+        // MARK: - Binding
+
         output.productList
             .observe(on: MainScheduler.instance)
             .bind(to: tableView.rx.items(cellIdentifier: ProductCell.reuseIdentifier,
-                                         cellType: ProductCell.self)) { index, item, cell in
+                                         cellType: ProductCell.self)) { _, item, cell in
                 cell.configure(with: item)
             }.disposed(by: disposeBag)
         
@@ -43,7 +52,7 @@ final class ProductListViewController: BaseTableViewController {
                 with: self,
                 onNext: { owner, _ in
                     owner.tabBarController?.tabBar.isHidden = false
-                    owner.title = "오픈마켓"
+                    owner.title = Constant.Title.productList
                 }
             )
             .disposed(by: disposeBag)
@@ -51,8 +60,8 @@ final class ProductListViewController: BaseTableViewController {
         output.failAlertAction
             .emit(
                 with: self,
-                onNext: { owner, title in
-                    let alert = AlertFactory.make(.exit)
+                onNext: { owner, _ in
+                    let alert: UIAlertController = AlertFactory.make(.exit)
                     owner.present(alert, animated: true)
                 }
             )
@@ -61,7 +70,7 @@ final class ProductListViewController: BaseTableViewController {
         output.refreshCompleted
             .subscribe(
                 with: self,
-                onNext: { owner, data in
+                onNext: { owner, _ in
                     owner.refreshController.endRefreshing()
                 }
             )
@@ -85,8 +94,8 @@ final class ProductListViewController: BaseTableViewController {
             .subscribe(
                 with: self,
                 onNext: { owner, element in
-                    let productID = element.id
-                    let productDetailViewController = ViewControllerFactory.make(
+                    let productID: Int = element.id
+                    let productDetailViewController: UIViewController = ViewControllerFactory.make(
                         .productDetail(id: productID)
                     )
                     
@@ -123,7 +132,7 @@ final class ProductListViewController: BaseTableViewController {
             primaryAction: presentAction
         )
         
-        self.navigationItem.rightBarButtonItem = addButton
+        navigationItem.rightBarButtonItem = addButton
     }
 }
 
