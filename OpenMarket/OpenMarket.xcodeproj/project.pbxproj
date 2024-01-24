@@ -30,7 +30,6 @@
 		B44936EB29D68B1D001E5F20 /* ViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44936EA29D68B1D001E5F20 /* ViewControllerFactory.swift */; };
 		B44936ED29D68BA0001E5F20 /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44936EC29D68BA0001E5F20 /* Double+.swift */; };
 		B44936F029DB0528001E5F20 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44936EF29DB0528001E5F20 /* ProductDetailViewController.swift */; };
-		B455B0C929C599A50062D612 /* OpenMarketAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0C829C599A50062D612 /* OpenMarketAPI.swift */; };
 		B455B0CB29C59A100062D612 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0CA29C59A100062D612 /* APIService.swift */; };
 		B455B0CE29C59F3E0062D612 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0CD29C59F3E0062D612 /* APIRouter.swift */; };
 		B455B0D229C5CA2E0062D612 /* JSONDecode+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B455B0D129C5CA2E0062D612 /* JSONDecode+.swift */; };
@@ -100,7 +99,6 @@
 		B44936EA29D68B1D001E5F20 /* ViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactory.swift; sourceTree = "<group>"; };
 		B44936EC29D68BA0001E5F20 /* Double+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
 		B44936EF29DB0528001E5F20 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
-		B455B0C829C599A50062D612 /* OpenMarketAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMarketAPI.swift; sourceTree = "<group>"; };
 		B455B0CA29C59A100062D612 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		B455B0CD29C59F3E0062D612 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
 		B455B0D129C5CA2E0062D612 /* JSONDecode+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecode+.swift"; sourceTree = "<group>"; };
@@ -207,7 +205,6 @@
 				B455B0D629C5E6950062D612 /* APIConstant.swift */,
 				B455B0CD29C59F3E0062D612 /* APIRouter.swift */,
 				B455B0CA29C59A100062D612 /* APIService.swift */,
-				B455B0C829C599A50062D612 /* OpenMarketAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -576,7 +573,6 @@
 				B4E6DD702B3FF7E600E2DCD8 /* BaseViewController.swift in Sources */,
 				B45C6EF029C5982900739811 /* Image.swift in Sources */,
 				B4266C4A2B4E986900525BA6 /* UITextField+.swift in Sources */,
-				B455B0C929C599A50062D612 /* OpenMarketAPI.swift in Sources */,
 				B4A5A3C22B4D2575009F3400 /* DateFormatter+.swift in Sources */,
 				B464BAAE2B195FB3001EAF1F /* ImageCacheManager.swift in Sources */,
 				B4C5624A2B566FEE00281202 /* ParamsProduct.swift in Sources */,
