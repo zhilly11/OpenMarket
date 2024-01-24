@@ -72,6 +72,7 @@
 		B4C562562B593EBE00281202 /* LoadingLottie.json in Resources */ = {isa = PBXBuildFile; fileRef = B4C562552B593EBE00281202 /* LoadingLottie.json */; };
 		B4E6DD6D2B3FF56800E2DCD8 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E6DD6C2B3FF56800E2DCD8 /* BaseTableViewController.swift */; };
 		B4E6DD702B3FF7E600E2DCD8 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E6DD6F2B3FF7E600E2DCD8 /* BaseViewController.swift */; };
+		B4FDC00E2B60E8560043DC5A /* Then+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FDC00D2B60E8560043DC5A /* Then+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -143,6 +144,7 @@
 		B4C562552B593EBE00281202 /* LoadingLottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LoadingLottie.json; sourceTree = "<group>"; };
 		B4E6DD6C2B3FF56800E2DCD8 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		B4E6DD6F2B3FF7E600E2DCD8 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		B4FDC00D2B60E8560043DC5A /* Then+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Then+.swift"; sourceTree = "<group>"; };
 		CA0831079275291B1137DCF5 /* Pods-OpenMarket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenMarket.debug.xcconfig"; path = "Target Support Files/Pods-OpenMarket/Pods-OpenMarket.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -352,6 +354,7 @@
 			children = (
 				B4A5A3C42B4D2596009F3400 /* Foundation */,
 				B4A5A3C32B4D2580009F3400 /* UI */,
+				B4FDC00C2B60E8260043DC5A /* ThirdParty */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -431,6 +434,14 @@
 				B4C562532B593D5E00281202 /* BaseLoadingView.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		B4FDC00C2B60E8260043DC5A /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				B4FDC00D2B60E8560043DC5A /* Then+.swift */,
+			);
+			path = ThirdParty;
 			sourceTree = "<group>";
 		};
 		E66A1EACF6086D1B21B7D426 /* Frameworks */ = {
@@ -600,6 +611,7 @@
 				B40FF9EB2B4FB091000AB03A /* ProductRegisterViewModel.swift in Sources */,
 				B4C562522B5831C300281202 /* RegisterError.swift in Sources */,
 				B4417FA12B4BEB5000A3A0F9 /* BaseView.swift in Sources */,
+				B4FDC00E2B60E8560043DC5A /* Then+.swift in Sources */,
 				B455B0E029C875F60062D612 /* SearchViewController.swift in Sources */,
 				B45C6ED129C58DCC00739811 /* AppDelegate.swift in Sources */,
 				B4A8038829DFF52D00C8A029 /* PreviewViewController.swift in Sources */,

@@ -300,5 +300,3 @@ extension ProductRegisterViewController {
         loadingView.isHidden = true
     }
 }
-
-extension PHPickerConfiguration: Then {}
