@@ -9,7 +9,7 @@ import Then
 final class ProductCell: UITableViewCell, ReusableView {
     
     // MARK: - UI Component
-
+    
     private let thumbnail = UIImageView().then {
         $0.image = UIImage(systemName: "rays")
         $0.tintColor = .systemGray
@@ -42,6 +42,15 @@ final class ProductCell: UITableViewCell, ReusableView {
     private let labelStackView = UIStackView().then {
         $0.axis = .vertical
         $0.distribution = .fillEqually
+    }
+    
+    private let createdAtLabel: UILabel = .init().then {
+        let text: String = "2023-08-15"
+        let attributeString: NSMutableAttributedString = .init(string: text)
+        
+        $0.attributedText = attributeString
+        $0.font = .preferredFont(forTextStyle: .subheadline)
+        $0.textColor = .systemGray
     }
     
     // MARK: - Initialize
@@ -83,26 +92,25 @@ final class ProductCell: UITableViewCell, ReusableView {
     
     func configure(with item: Product) {
         nameLabel.text = "\(item.name)"
+        createdAtLabel.text = "\(item.createdAt.relativeTime_abbreviated)"
         displayPrice(currency: item.currency, price: item.price, bargainPrice: item.bargainPrice)
-        displayStock(stock: item.stock)
         thumbnail.setImageUrl(item.thumbnail)
     }
     
     // MARK: - Methods
-
-    private func displayStock(stock: Int) {
-        if stock > 0 {
-            stockLabel.text = "잔여수량 : \(stock)"
-            return
-        }
-        
-        stockLabel.text = "품절"
-        stockLabel.textColor = .systemOrange
-    }
     
     private func displayPrice(currency: Currency, price: Double, bargainPrice: Double) {
-        let priceText: String = currency.symbol + " " + price.convertNumberFormat()
-        let bargainText: String = currency.symbol + " " + bargainPrice.convertNumberFormat()
+        var priceText: String = .init()
+        var bargainText: String = .init()
+        
+        switch currency {
+        case .KRWString:
+            priceText = "\(price.convertNumberFormat())원"
+            bargainText = "\(bargainPrice.convertNumberFormat())원"
+        default:
+            priceText = currency.symbol + " " + price.convertNumberFormat()
+            bargainText = currency.symbol + " " + bargainPrice.convertNumberFormat()
+        }
         
         if priceText == bargainText {
             priceLabel.text = priceText
