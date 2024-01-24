@@ -7,12 +7,14 @@ protocol ProductListProvider {
     var productList: BehaviorRelay<[Product]> { get set }
     var pageCounter: Int { get set }
     
-    func checkServer() throws
     func fetchProductPage() async
 }
 
 extension ProductListProvider {
-    func checkServer() throws {
-        Task { try await APIService.healthCheck() }
+    func isServerOnline() async -> Bool {
+        switch await APIService.healthCheck() {
+        case .success: return true
+        case .failure: return false
+        }
     }
 }

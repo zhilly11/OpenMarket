@@ -120,7 +120,9 @@ final class ProductDetailViewController: BaseViewController {
         // MARK: - Delete
         
         output.deleteCompleted
-            .emit(
+            .asObservable()
+            .observe(on: MainScheduler.instance)
+            .subscribe(
                 with: self,
                 onNext: { owner, _ in
                     let action: UIAlertAction = .init(title: "확인", style: .default) { [unowned owner] _ in

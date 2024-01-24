@@ -97,25 +97,25 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
     
     @MainActor
     func fetchProductPage() async {
-        do {
-            if searchKeyword.isEmpty || searchKeyword == "" {
-                self.productList.accept([])
-                return
-            }
-            
-            let response: ProductList = try await APIService.inquiryProductList(
-                pageNumber: self.pageCounter,
-                itemsPerPage: 20,
-                searchValue: self.searchKeyword
-            )
-            let newData = response.pages
+        if searchKeyword.isEmpty || searchKeyword == "" {
+            self.productList.accept([])
+            return
+        }
+        
+        let productListResponse = await APIService.inquiryProductList(
+            pageNumber: self.pageCounter,
+            itemsPerPage: 20,
+            searchValue: self.searchKeyword
+        )
+        
+        switch productListResponse {
+        case .success(let productList):
+            let newData = productList.pages
             let oldData = self.productList.value
             
             self.productList.accept(oldData + newData)
             self.pageCounter += 1
-        } catch OpenMarketAPIError.invalidData {
-            print("더 이상 데이터가 없습니다.")
-        } catch let error {
+        case .failure(let error):
             self.failAlertAction.accept(error.localizedDescription)
         }
     }

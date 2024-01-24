@@ -6,45 +6,62 @@ import RxSwift
 
 final class APIService {
     
-    static func request<T>(_ object: T.Type, router: APIRouter) async throws -> T where T: Decodable {
+    static func request<T>(_ object: T.Type, router: APIRouter) async -> Result<T, OpenMarketAPIError> where T: Decodable {
         let dataTask = AF.request(router).serializingData(automaticallyCancelling: true)
         
         switch await dataTask.result {
         case .success(let data):
             guard let response = await dataTask.response.response,
                   (200..<300).contains(response.statusCode) else {
-                throw OpenMarketAPIError.responseFail
+                return .failure(.responseFail)
             }
             
-            guard let decodedDate = JSONDecoder.decodeData(data: data, to: object) else {
-                throw OpenMarketAPIError.invalidData
+            guard let decodedData = JSONDecoder.decodeData(data: data, to: object) else {
+                return .failure(.invalidData)
             }
             
-            return decodedDate
+            return .success(decodedData)
         case .failure:
-            throw OpenMarketAPIError.invalidData
+            return .failure(.responseFail)
         }
     }
     
-    static func healthCheck() async throws -> Bool {
-        let response = try await request(String.self, router: .healthChecker)
+    static func healthCheck() async -> Result<Bool, OpenMarketAPIError> {
+        let result = await request(String.self, router: .healthChecker)
         
-        return response.trimmingCharacters(in: ["\""]) == "OK" ? true : false
+        switch result {
+        case .success(let result):
+           return result.trimmingCharacters(in: ["\""]) == "OK" ? .success(true) : .failure(.failHealthChecker)
+        case .failure(let error):
+            return .failure(error)
+        }
     }
     
     static func inquiryProductList(pageNumber: Int,
                                    itemsPerPage: Int,
-                                   searchValue: String? = nil) async throws -> ProductList {
-        return try await request(
+                                   searchValue: String? = nil) async -> Result<ProductList, OpenMarketAPIError> {
+        let result = await request(
             ProductList.self,
-            router: .inquiryProductList(pageNumber: pageNumber,
-                                        itemsPerPage: 20,
-                                        searchValue: searchValue)
+            router: .inquiryProductList(pageNumber: pageNumber, itemsPerPage: 20, searchValue: searchValue)
         )
+         
+        switch result {
+        case .success(let productList):
+            return .success(productList)
+        case .failure(let error):
+            return .failure(error)
+        }
     }
     
-    static func fetchProduct(id: Int) async throws -> Product {
-        return try await request(Product.self, router: .inquiryProduct(id: id))
+    static func fetchProduct(id: Int) async -> Result<Product, OpenMarketAPIError> {
+        let result = await request(Product.self, router: .inquiryProduct(id: id))
+        
+        switch result {
+        case .success(let product):
+            return .success(product)
+        case .failure(let error):
+            return .failure(error)
+        }
     }
     
     static func createProduct(_ item: ParamsProduct,
@@ -79,8 +96,15 @@ final class APIService {
         }
     }
     
-    static func inquiryDeleteURI(id: Int) async throws -> String {
-        return try await request(String.self, router: .inquiryDeleteURI(id: id)).trimmingCharacters(in: ["\""])
+    static func inquiryDeleteURI(id: Int) async -> Result<String, OpenMarketAPIError> {
+        let result = await request(String.self, router: .inquiryDeleteURI(id: id))
+        
+        switch result {
+        case .success(let data):
+            return .success(data.trimmingCharacters(in: ["\""]))
+        case .failure(let error):
+            return .failure(error)
+        }
     }
     
     static func updateProduct(id: Int) {
@@ -88,7 +112,6 @@ final class APIService {
     }
     
     static func deleteProduct(path: String) async -> Result<Bool, OpenMarketAPIError> {
-       
         let response = AF.request(APIRouter.deleteProduct(path: path))
         
         return await withCheckedContinuation { continuation in

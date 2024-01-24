@@ -35,13 +35,12 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
             .subscribe(
                 with: self,
                 onNext: { owner, _ in
-                    do {
-                        try owner.checkServer()
-                        Task {
+                    Task {
+                        if await owner.isServerOnline() {
                             await owner.fetchProductPage()
+                        } else {
+                            owner.failAlertAction.accept(OpenMarketAPIError.failHealthChecker.localizedDescription)
                         }
-                    } catch let error {
-                        owner.failAlertAction.accept(error.localizedDescription)
                     }
                 }
             )
@@ -94,18 +93,21 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
     var pageCounter: Int = 1
     
     @MainActor
-    func fetchProductPage() async {        
-        do {
-            let response: ProductList = try await APIService.inquiryProductList(
-                pageNumber: self.pageCounter,
-                itemsPerPage: 20
-            )
-            let newData = response.pages
+    func fetchProductPage() async {
+        let productListResponse = await APIService.inquiryProductList(
+            pageNumber: self.pageCounter,
+            itemsPerPage: 20
+        )
+        
+        switch productListResponse {
+        case .success(let productList):
+            let newData = productList.pages
             let oldData = self.productList.value
             
             self.productList.accept(oldData + newData)
             self.pageCounter += 1
-        } catch let error {
+            return
+        case .failure(let error):
             self.failAlertAction.accept(error.localizedDescription)
         }
     }

@@ -51,8 +51,10 @@ final class ProductDetailViewModel: ViewModel {
                 with: self,
                 onNext: { owner, _ in
                     Task {
-                        do {
-                            let deleteURL = try await APIService.inquiryDeleteURI(id: owner.productID)
+                        let deleteURLResponse = await APIService.inquiryDeleteURI(id: owner.productID)
+                        
+                        switch deleteURLResponse {
+                        case .success(let deleteURL):
                             let result = await APIService.deleteProduct(path: deleteURL)
                             
                             switch result {
@@ -61,7 +63,7 @@ final class ProductDetailViewModel: ViewModel {
                             case .failure(let error):
                                 owner.failAlertAction.accept(error.localizedDescription)
                             }
-                        } catch let error {
+                        case .failure(let error):
                             owner.failAlertAction.accept(error.localizedDescription)
                         }
                     }
@@ -88,10 +90,12 @@ final class ProductDetailViewModel: ViewModel {
     
     @MainActor
     private func fetchProduct(id: Int) async -> Product? {
-        do {
-            let product = try await APIService.fetchProduct(id: id)
+        let productResult = await APIService.fetchProduct(id: id)
+        
+        switch productResult {
+        case .success(let product):
             return product
-        } catch let error {
+        case .failure(let error):
             self.failAlertAction.accept(error.localizedDescription)
             return nil
         }
