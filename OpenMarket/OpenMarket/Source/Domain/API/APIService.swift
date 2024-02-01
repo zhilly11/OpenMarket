@@ -16,7 +16,7 @@ final class APIService {
         case .success(let data):
             guard let response: HTTPURLResponse = await dataTask.response.response,
                   (200..<300) ~= response.statusCode else {
-                return .failure(.responseFail)
+                return .failure(.responseFail) 
             }
             
             guard let decodedData: T = JSONDecoder.decodeData(data: data, to: object) else {

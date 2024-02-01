@@ -32,8 +32,8 @@ final class ProductRegisterViewModel: ViewModel {
     private let failAlertAction: PublishRelay<String> = .init()
     
     private var title: String = .init()
-    private var price: Double = .init()
-    private var stock: Int = .init()
+    private var price: String = .init()
+    private var stock: String = .init()
     private var description: String = .init()
     
     func transform(input: Input) -> Output {
@@ -54,17 +54,7 @@ final class ProductRegisterViewModel: ViewModel {
             .subscribe(
                 with: self,
                 onNext: { owner, text in
-                    if text.isEmpty {
-                        owner.price = .zero
-                        return
-                    }
-                    
-                    if let price = Double(text) {
-                        owner.price = price
-                        return
-                    }
-
-                    owner.failAlertAction.accept(RegisterError.wrongPrice.localizedDescription)
+                    owner.price = text
                 }
             )
             .disposed(by: disposeBag)
@@ -73,17 +63,7 @@ final class ProductRegisterViewModel: ViewModel {
             .subscribe(
                 with: self,
                 onNext: { owner, text in
-                    if text.isEmpty {
-                        owner.stock = .zero
-                        return
-                    }
-                    
-                    if let stock = Int(text) {
-                        owner.stock = stock
-                        return
-                    }
-                    
-                    owner.failAlertAction.accept(RegisterError.wrongStock.localizedDescription)
+                    owner.stock = text
                 }
             )
             .disposed(by: disposeBag)
@@ -119,28 +99,27 @@ final class ProductRegisterViewModel: ViewModel {
             .subscribe(
                 with: self,
                 onNext: { owner, _ in
-                    // register start
                     registerResume.onNext(true)
-                    do {
-                        let product: ParamsProduct = try owner.makeParamsProduct()
+                    
+                    let result: Result<ParamsProduct, RegisterError> = owner.makeParamsProduct()
+                    
+                    switch result {
+                    case .success(let paramsProduct):
                         let imagesDatas: [Data] = selectedImages.value.map { $0.convertToData()! }
                         
                         Task {
-                            let result: Result<Data, OpenMarketAPIError> = await APIService.createProduct(product, imagesDatas)
+                            let result: Result<Data, OpenMarketAPIError> = await APIService.createProduct(paramsProduct, imagesDatas)
+                            
                             switch result {
                             case .success(_):
-                                // TODO: register end
                                 registerResume.onNext(false)
                                 registerCompleted.onNext(())
                             case .failure(let error):
-                                // TODO: register end
                                 registerResume.onNext(false)
                                 owner.failAlertAction.accept(error.localizedDescription)
                             }
                         }
-                        
-                    } catch let error {
-                        // TODO: register end
+                    case .failure(let error):
                         registerResume.onNext(false)
                         owner.failAlertAction.accept(error.localizedDescription)
                     }
@@ -159,25 +138,31 @@ final class ProductRegisterViewModel: ViewModel {
 }
 
 extension ProductRegisterViewModel {
-    private func isCorrectProduct() throws {
-        if !(1...5).contains(selectedAssetIdentifiers.value.count) { throw RegisterError.wrongImageCount }
-        if title.isEmpty { throw RegisterError.emptyTitle }
-        if price == 0.0 { throw RegisterError.emptyPrice }
-        if stock == 0 { throw RegisterError.emptyStock }
-        if description.isEmpty || description == Constant.Placeholder.description {
-            throw RegisterError.emptyDescription
+    private func makeParamsProduct() -> Result<ParamsProduct, RegisterError> {
+        do {
+            try isCorrect()
+            
+            let result: ParamsProduct = .init(
+                name: self.title,
+                description: self.description,
+                price: self.price.doubleValue,
+                currency: .KRWString,
+                secret: APIConstant.secret
+            )
+            
+            return .success(result)
+        } catch let error as RegisterError {
+            return .failure(error)
+        } catch {
+            return .failure(.unknown)
         }
     }
     
-    private func makeParamsProduct() throws -> ParamsProduct {
-        try isCorrectProduct()
-        
-        return ParamsProduct(name: self.title,
-                             description: self.description,
-                             price: self.price,
-                             currency: .KRWString,
-                             stock: self.stock,
-                             secret: APIConstant.secret)
+    private func isCorrect() throws {
+        if !(1...5).contains(selectedAssetIdentifiers.value.count) { throw RegisterError.wrongImageCount }
+        if title.isEmpty { throw RegisterError.emptyTitle }
+        if price.isEmpty || price.isContainsNonNumber() { throw RegisterError.wrongPrice }
+        if stock.isEmpty || stock.isContainsNonNumber() { throw RegisterError.emptyStock }
+        if description.isEmpty || description == Constant.Placeholder.description{ throw RegisterError.emptyDescription }
     }
 }
-

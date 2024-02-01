@@ -114,7 +114,13 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
             self.productList.accept(oldData + newData)
             self.pageCounter += 1
         case .failure(let error):
-            self.failAlertAction.accept(error.localizedDescription)
+            switch error {
+            case .invalidData:
+                // TODO: 검색결과 없음 표시
+                print("결과 없음")
+            default:
+                self.failAlertAction.accept(error.localizedDescription)
+            }
         }
     }
     

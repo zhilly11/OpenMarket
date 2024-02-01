@@ -67,11 +67,11 @@ enum Constant {
         
         struct Image {
             static let home: UIImage = .init(systemName: "house") ?? .init()
-            static let search: UIImage = .init(systemName: "house.fill") ?? .init()
+            static let search: UIImage = .init(systemName: "magnifyingglass.circle") ?? .init()
         }
         
         struct SelectedImage {
-            static let home: UIImage = .init(systemName: "magnifyingglass.circle") ?? .init()
+            static let home: UIImage = .init(systemName: "house.fill") ?? .init()
             static let search: UIImage = .init(systemName: "magnifyingglass.circle.fill") ?? .init()
         }
     }

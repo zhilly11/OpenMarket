@@ -4,6 +4,8 @@
 import Foundation
 
 enum RegisterError: Error {
+    case unknown
+    
     case emptyTitle
     case emptyPrice
     case emptyStock
@@ -40,6 +42,9 @@ extension RegisterError: LocalizedError {
             
         case .wrongImageCount:
             return "이미지는 최소 1장, 최대 5장입니다."
+            
+        default:
+            return ""
         }
     }
 }
