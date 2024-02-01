@@ -22,7 +22,7 @@
 
 1. [✨ 키워드](#✨-키워드)
 2. [🛠️ 구조](#🛠️-구조)
-3. [실행화면](#📱-실행화면)
+3. [📱 실행화면](#📱-실행화면)
 4. [🤔 기술적 도전 & 고민했던 부분](#🤔-기술적-도전--고민했던-부분)
 5. [🚀 트러블 슈팅](#🚀-트러블-슈팅)
 6. [추가적으로 구현하고 싶은 부분](#)
@@ -96,17 +96,13 @@ enum APIRouter: URLRequestConvertible {
 # 📱 실행화면
 
 ## 메인 화면
-| 테이블뷰 페이징 | 리프레쉬 |
-| :--: | :--: |
-| | |
+| 테이블뷰 페이징 | 리프레쉬 | 검색기능 |
+| :--: | :--: | :--: |
+| ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/Paging.gif) | ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/Refreshing.gif) |  ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/Searching.gif)
 
-| 등록기능 | API 응답 로딩 |
-| :--: | :--: |
-| | |
-
-| 검색기능 | 이미지 스크롤뷰 |
-| :--: | :--: |
-| | |
+| 등록기능 | API 응답 로딩 | 이미지 스크롤뷰 |
+| :--: | :--: | :--: |
+| ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/Register.gif) | ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/Loading.gif) | ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/ImageScroll.gif) |
 
 </br>
 
