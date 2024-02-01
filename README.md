@@ -26,7 +26,8 @@
 4. [🤔 기술적 도전 & 고민했던 부분](#🤔-기술적-도전--고민했던-부분)
 5. [🚀 트러블 슈팅](#🚀-트러블-슈팅)
 6. [추가적으로 구현하고 싶은 부분](#)
-   </br>
+   
+</br>
 
 # ✨ 키워드
 
@@ -37,7 +38,8 @@
 - Swift Councurrency(async, await)
 - TableView Pagination
 - Factory Pattern
-  </br>
+
+</br>
 
 # 🛠️ 구조
 
@@ -47,6 +49,7 @@
 
 - MVVM 구조를 구현할 때에는 표준이나 정해진 약속이 없어 개발자에 따라 다양한 방식으로 구현하게 됩니다.
 - `ViewModel`의 규칙을 정해 보다 규칙적인 코드를 작성하기 위해 `input-output` 패턴을 활용하여 MVVM 구조로 구현하였습니다.
+- `View`는 화면을 그리는 역할에만 충실하게 되고 서로의 `input`, `output`을 확실하게 정의 할 수 있었습니다.
 - 포스팅 : [zhilly - RxSwift와 Input Ouput을 활용한 MVVM 구현](https://zhilly11.tistory.com/entry/RxSwift와-Input-Output을-활용한-MVVM-구현)
   </br>
 
@@ -91,6 +94,19 @@ enum APIRouter: URLRequestConvertible {
 ###
 
 # 📱 실행화면
+
+## 메인 화면
+| 테이블뷰 페이징 | 리프레쉬 |
+| :--: | :--: |
+| | |
+
+| 등록기능 | API 응답 로딩 |
+| :--: | :--: |
+| | |
+
+| 검색기능 | 이미지 스크롤뷰 |
+| :--: | :--: |
+| | |
 
 </br>
 
