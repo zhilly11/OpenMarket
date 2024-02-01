@@ -36,6 +36,7 @@ enum Constant {
         static let profile: UIImage = .init(systemName: "person.crop.circle.fill") ?? .init()
         static let xMark: UIImage = .init(systemName: "xmark") ?? .init()
         static let camera: UIImage = .init(systemName: "camera.fill") ?? .init()
+        static let loadingFail: UIImage = .init(systemName: "exclamationmark.triangle.fill") ?? .init()
     }
     
     struct Placeholder {

@@ -73,17 +73,17 @@ final class PictureScrollView: BaseView {
         pictureSelectButton.configuration = configuration
     }
     
-    func addImageView(item: UIImage) {
+    func addImageView(imageData: Data) {
         Task {
             await MainActor.run { [weak self] in
                 guard let self = self else { return }
                 
-                let imageView: UIImageView = .init(image: item).then {
+                let imageView: UIImageView = .init().then {
                     $0.contentMode = .scaleAspectFill
                     $0.layer.cornerRadius = 10
                     $0.clipsToBounds = true
                 }
-                
+                imageView.image = imageView.downsample(imageData: imageData, width: 100, height: 100)
                 self.contentStackView.addArrangedSubview(imageView)
                 
                 imageView.snp.makeConstraints {

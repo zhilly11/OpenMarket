@@ -32,7 +32,7 @@ final class PreviewViewController: UIViewController {
     private func setupView() {
         view = imageView
         view.backgroundColor = .white
-        imageView.load(url: URL(string: imageThumbnail))
+//        imageView.load(url: URL(string: imageThumbnail))
         preferredContentSize = imageView.frame.size
     }
 }

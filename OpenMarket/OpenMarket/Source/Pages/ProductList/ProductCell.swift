@@ -11,7 +11,7 @@ final class ProductCell: UITableViewCell, ReusableView {
     // MARK: - UI Component
     
     private let thumbnail: UIImageView = .init().then {
-        $0.image = Constant.Image.empty
+//        $0.image = Constant.Image.empty
         $0.tintColor = .systemGray
         $0.layer.cornerRadius = 10
         $0.clipsToBounds = true
@@ -67,7 +67,7 @@ final class ProductCell: UITableViewCell, ReusableView {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        thumbnail.image = Constant.Image.empty
+//        thumbnail.image = Constant.Image.empty
         stockLabel.textColor = .label
     }
     
@@ -94,7 +94,7 @@ final class ProductCell: UITableViewCell, ReusableView {
         nameLabel.text = "\(item.name)"
         createdAtLabel.text = "\(item.createdAt.relativeTime_abbreviated)"
         displayPrice(currency: item.currency, price: item.price, bargainPrice: item.bargainPrice)
-        thumbnail.setImageUrl(item.thumbnail)
+        thumbnail.loadImage(item.thumbnail, width: 100, height: 100)
     }
     
     // MARK: - Methods

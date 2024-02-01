@@ -128,9 +128,11 @@ final class ProductDetailView: BaseView {
     }
     
     func setupImages(items: [Image]) {
+        let imageViewSize = self.safeAreaLayoutGuide.layoutFrame.size
+        
         items.forEach { item in
             let imageView: UIImageView = .init()
-            imageView.setImageUrl(item.url)
+            imageView.loadImage(item.url, width: imageViewSize.width, height: imageViewSize.height)
             self.imageViews.append(imageView)
         }
         

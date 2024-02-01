@@ -194,8 +194,8 @@ final class ProductRegisterViewController: BaseViewController {
                     owner.registerView.pictureScrollView.removeImageViews()
                     
                     items.forEach { item in
-                        if let converted = item.convertToUIImage() {
-                            owner.registerView.pictureScrollView.addImageView(item: converted)
+                        if let converted = item.convertToData() {
+                            owner.registerView.pictureScrollView.addImageView(imageData: converted)
                         } else {
                             let alert = AlertFactory.make(.failure(title: "image convert fail", message: nil))
                             owner.present(alert, animated: true)
