@@ -26,7 +26,7 @@
 4. [🤔 기술적 도전 & 고민했던 부분](#-기술적-도전--고민했던-부분)
 5. [🚀 트러블 슈팅](#-트러블-슈팅)
 6. [추가적으로 구현하고 싶은 부분](#)
-   
+
 </br>
 
 # ✨ 키워드
@@ -96,12 +96,13 @@ enum APIRouter: URLRequestConvertible {
 # 📱 실행화면
 
 ## 메인 화면
-| 테이블뷰 페이징 | 리프레쉬 | 검색기능 |
-| :--: | :--: | :--: |
-| ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/Paging.gif) | ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/Refreshing.gif) |  ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/Searching.gif)
 
-| 등록기능 | API 응답 로딩 | 이미지 스크롤뷰 |
-| :--: | :--: | :--: |
+|                             테이블뷰 페이징                             |                                  리프레쉬                                   |                                  검색기능                                  |
+| :---------------------------------------------------------------------: | :-------------------------------------------------------------------------: | :------------------------------------------------------------------------: |
+| ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/Paging.gif) | ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/Refreshing.gif) | ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/Searching.gif) |
+
+|                                 등록기능                                  |                              API 응답 로딩                               |                               이미지 스크롤뷰                                |
+| :-----------------------------------------------------------------------: | :----------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
 | ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/Register.gif) | ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/Loading.gif) | ![](https://github.com/zhilly11/OpenMarket/blob/main/Images/ImageScroll.gif) |
 
 </br>
@@ -183,6 +184,73 @@ enum APIRouter: URLRequestConvertible {
 # 🚀 트러블 슈팅
 
 </br>
+
+## UIImage 메모리 이슈
+
+### 메모리 이슈 해결 및 결론
+
+- 시뮬레이터에서 많은 이미지를 로드할 수록 메모리 사용량이 앱의 기능의 비해 많이 차지하는 문제가 발생했습니다.
+- NSCache 사용만으로 해결되지 않아 `UIImage의 다운샘플링` + `NSCache` 를 활용해 해결하였습니다.
+
+![](https://github.com/zhilly11/OpenMarket/blob/main/Images/TroubleShooting/Result.png)
+
+|                                           | 다운 샘플링 전 | 다운 샘플링 후 |
+| ----------------------------------------- | -------------- | -------------- |
+| 총 메모리캐시 사용량 (이미지 1339장)      | 약 2.4G        | 약 86MB        |
+| 이미지 한 장당 평균 메모리 사용량         | 약 1.8MB       | 약 0.06MB      |
+| 100MB의 메모리 캐시에 넣을 수 있는 이미지 | 약 55.5장      | 약 1666장      |
+| 다운샘플링 전후 개선율                    |                | 96.42%         |
+
+> 개선율(%) = (이전 상태의 메모리 사용량 − 개선된 상태의 메모리 사용량) / 이전 상태의 메모리 사용량 \* 100
+
+### 이슈 해결 과정
+
+<details>
+<summary>자세히 보기</summary>
+<div markdown="1">
+
+#### 1. 문제 발생
+
+- 메모리 누수를 확인하기 위해 테스트 중, 스크롤을 통해 많은 상품을 로드했을때 앱이 많은 메모리를 할당하고 있는 것을 확인했습니다.
+- 제가 사용하고 있는 아이폰 12의 경우 4GB 램을 탑재하고 있기 때문에 하나의 앱에서 2.4GB의 램을 사용하는 것은 문제가 된다고 생각하였습니다.
+
+#### 2. 해결방안 모색
+
+- 먼저 NSCache를 통해 이미지를 메모리 캐싱햇습니다.
+- 유의미한 성능 개선 효과를 확인할 수 없었습니다.
+- 따라서 이미지를 다운샘플링 하는 방법을 선택하였습니다.
+
+#### 3. 해결 과정
+
+- 관련 [WWDC - iOS Memory Deep Dive](https://developer.apple.com/videos/play/wwdc2018/416/) 영상을 참고하여 해경 방법을 찾을 수 있었습니다.
+- 애플에서는 Image 관련 메모리 문제 해결을 위해 2가지 방법을 제공합니다.
+- `UIGraphicsImageRenderer`: 이미지 데이터를 설정한 크기로 줄이고 디코딩후에 렌더링 할 수있게 도와준다.
+- `Downsampling`: GPU에서 이미지 데이터를 읽는 Decoding과정에서 메모리가 많이 사용되기 때문에 필요한 크기만큼 데이터를 축소하고, 썸네일로 캡처해 불필요한 Data Buffer를 제거한 채로 디코딩후에 작업을 한다.
+- 두 가지 방법 중 `Downsampling`의 방법이 많은 데이터들을 처리하기에 효율적인 방법이라고 생각해서 선택하였습니다.
+
+- `Data` 타입을 다운 샘플링 하는 메서드를 만들어 다운 샘플링 된 `UIImage`를 캐싱하는 방법으로 구현하였습니다. [코드 자세히보기](https://github.com/zhilly11/OpenMarket/blob/main/OpenMarket/OpenMarket/Source/Utils/Extensions/UI/UIImageView%2B.swift)
+
+```swift
+    func downsample(imageData: Data, width: CGFloat, height: CGFloat, scale: CGFloat = 1) -> UIImage {
+        let imageSourceOptions: CFDictionary = [kCGImageSourceShouldCache: false] as CFDictionary
+        let imageSource: CGImageSource = CGImageSourceCreateWithData(imageData as CFData, imageSourceOptions)!
+        let maxDimensionInPixels: CGFloat = max(width, height) * scale
+        let downsampleOptions: CFDictionary = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceShouldCacheImmediately: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxDimensionInPixels
+        ] as [CFString : Any] as CFDictionary
+
+        guard let downsampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downsampleOptions) else {
+            return Constant.Image.loadingFail
+        }
+        return UIImage(cgImage: downsampledImage)
+    }
+```
+
+</div>
+</details>
 
 ## DarkMode에서의 CGColor
 
