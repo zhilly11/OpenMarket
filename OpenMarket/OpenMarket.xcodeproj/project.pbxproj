@@ -69,6 +69,7 @@
 		B4C562522B5831C300281202 /* RegisterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C562512B5831C300281202 /* RegisterError.swift */; };
 		B4C562542B593D5E00281202 /* BaseLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C562532B593D5E00281202 /* BaseLoadingView.swift */; };
 		B4C562562B593EBE00281202 /* LoadingLottie.json in Resources */ = {isa = PBXBuildFile; fileRef = B4C562552B593EBE00281202 /* LoadingLottie.json */; };
+		B4D517532B73865C003E404A /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D517522B73865C003E404A /* ViewModelFactory.swift */; };
 		B4E6DD6D2B3FF56800E2DCD8 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E6DD6C2B3FF56800E2DCD8 /* BaseTableViewController.swift */; };
 		B4E6DD702B3FF7E600E2DCD8 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E6DD6F2B3FF7E600E2DCD8 /* BaseViewController.swift */; };
 		B4FDC00E2B60E8560043DC5A /* Then+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FDC00D2B60E8560043DC5A /* Then+.swift */; };
@@ -140,6 +141,7 @@
 		B4C562512B5831C300281202 /* RegisterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterError.swift; sourceTree = "<group>"; };
 		B4C562532B593D5E00281202 /* BaseLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLoadingView.swift; sourceTree = "<group>"; };
 		B4C562552B593EBE00281202 /* LoadingLottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = LoadingLottie.json; sourceTree = "<group>"; };
+		B4D517522B73865C003E404A /* ViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelFactory.swift; sourceTree = "<group>"; };
 		B4E6DD6C2B3FF56800E2DCD8 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		B4E6DD6F2B3FF7E600E2DCD8 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B4FDC00D2B60E8560043DC5A /* Then+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Then+.swift"; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				B44936E229D4149D001E5F20 /* AlertFactory.swift */,
+				B4D517522B73865C003E404A /* ViewModelFactory.swift */,
 				B44936EA29D68B1D001E5F20 /* ViewControllerFactory.swift */,
 				B4A5A3C52B4E7B27009F3400 /* TabBarFactory.swift */,
 			);
@@ -611,6 +614,7 @@
 				B455B0E029C875F60062D612 /* SearchViewController.swift in Sources */,
 				B45C6ED129C58DCC00739811 /* AppDelegate.swift in Sources */,
 				B4A8038829DFF52D00C8A029 /* PreviewViewController.swift in Sources */,
+				B4D517532B73865C003E404A /* ViewModelFactory.swift in Sources */,
 				B45C6EEF29C5982900739811 /* Vendor.swift in Sources */,
 				B4E6DD6D2B3FF56800E2DCD8 /* BaseTableViewController.swift in Sources */,
 				B4A5A3C62B4E7B27009F3400 /* TabBarFactory.swift in Sources */,
