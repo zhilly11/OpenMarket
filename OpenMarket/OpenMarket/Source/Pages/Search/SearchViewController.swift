@@ -99,7 +99,8 @@ final class SearchViewController: BaseTableViewController {
                 onNext: { owner, element in
                     let productID: Int = element.id
                     let productDetailViewController: UIViewController = ViewControllerFactory.make(
-                        .productDetail(id: productID)
+                        .productDetail(id: productID),
+                        dependency: .live
                     )
                     
                     owner.tabBarController?.tabBar.isHidden = true

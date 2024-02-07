@@ -96,7 +96,7 @@ final class ProductListViewController: BaseTableViewController {
                 onNext: { owner, element in
                     let productID: Int = element.id
                     let productDetailViewController: UIViewController = ViewControllerFactory.make(
-                        .productDetail(id: productID)
+                        .productDetail(id: productID), dependency: .live
                     )
                     
                     owner.tabBarController?.tabBar.isHidden = true
@@ -120,7 +120,7 @@ final class ProductListViewController: BaseTableViewController {
         let presentAction: UIAction = .init(
             handler: { [weak self] _ in
                 guard let self = self else { return }
-                let registerViewController: UIViewController = ViewControllerFactory.make(.register)
+                let registerViewController: UIViewController = ViewControllerFactory.make(.register, dependency: .live)
                 
                 registerViewController.modalPresentationStyle = .fullScreen
                 self.present(registerViewController, animated: true)
@@ -137,3 +137,14 @@ final class ProductListViewController: BaseTableViewController {
 }
 
 extension ProductListViewController: UITableViewDelegate { }
+
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
+
+struct ProductListViewControllerPreview: PreviewProvider {
+    static var previews: some View {
+        let viewController = ViewControllerFactory.make(.productList, dependency: .preview)
+        viewController.showPreview(.iPhone14)
+    }
+}
+#endif

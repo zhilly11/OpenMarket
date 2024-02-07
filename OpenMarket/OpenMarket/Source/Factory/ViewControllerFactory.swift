@@ -3,6 +3,12 @@
 
 import UIKit
 
+enum FactoryDependency {
+    case live
+    case preview
+    case test
+}
+
 enum ViewControllerKind {
     case tabBarController(child: [UIViewController])
     case productList
@@ -13,7 +19,7 @@ enum ViewControllerKind {
 
 final class ViewControllerFactory {
     
-    static func make(_ kind: ViewControllerKind) -> UIViewController {
+    static func make(_ kind: ViewControllerKind, dependency: FactoryDependency) -> UIViewController {
         switch kind {
         case .tabBarController(let child):
             let tabBarController: BaseTabBarController = .init()
@@ -22,7 +28,7 @@ final class ViewControllerFactory {
             
             return tabBarController
         case .productList:
-            let productListViewModel: ProductListViewModel = .init()
+            let productListViewModel: ProductListViewModel = ViewModelFactory.make(.productList, type: dependency)
             let productListViewController: UINavigationController = .init(
                 rootViewController: ProductListViewController(viewModel: productListViewModel)
             )
@@ -31,13 +37,13 @@ final class ViewControllerFactory {
             return productListViewController
             
         case .productDetail(let id):
-            let productDetailViewModel: ProductDetailViewModel = .init(productID: id)
+            let productDetailViewModel: ProductDetailViewModel = ViewModelFactory.make(.productDetail(id: id), type: dependency)
             let productDetailViewController: ProductDetailViewController = .init(viewModel: productDetailViewModel)
             
             return productDetailViewController
             
         case .search:
-            let searchViewModel: SearchViewModel = .init()
+            let searchViewModel: SearchViewModel = ViewModelFactory.make(.search, type: dependency)
             let searchViewController: UINavigationController = .init(
                 rootViewController: SearchViewController(viewModel: searchViewModel)
             )
@@ -47,7 +53,7 @@ final class ViewControllerFactory {
             return searchViewController
             
         case .register:
-            let registerViewModel: ProductRegisterViewModel = .init()
+            let registerViewModel: ProductRegisterViewModel = ViewModelFactory.make(.register, type: dependency)
             let registerViewController: ProductRegisterViewController = .init(viewModel: registerViewModel)
             
             return registerViewController
