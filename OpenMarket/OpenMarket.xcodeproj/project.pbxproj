@@ -52,6 +52,7 @@
 		B466C76129CC0EC100E8745F /* ProductListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B466C76029CC0EC100E8745F /* ProductListViewModel.swift */; };
 		B466C76329CC109200E8745F /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B466C76229CC109200E8745F /* ProductCell.swift */; };
 		B466C76529CC1CBB00E8745F /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B466C76429CC1CBB00E8745F /* ReusableView.swift */; };
+		B4808F862B6F9BB8007CF21E /* APIServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4808F852B6F9BB8007CF21E /* APIServiceTest.swift */; };
 		B481D4AD2B44257F001F91B2 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481D4AC2B44257F001F91B2 /* BaseViewModel.swift */; };
 		B4A5A3C12B4D2575009F3400 /* Locale+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A5A3BF2B4D2575009F3400 /* Locale+.swift */; };
 		B4A5A3C22B4D2575009F3400 /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A5A3C02B4D2575009F3400 /* DateFormatter+.swift */; };
@@ -124,6 +125,8 @@
 		B466C76029CC0EC100E8745F /* ProductListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewModel.swift; sourceTree = "<group>"; };
 		B466C76229CC109200E8745F /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		B466C76429CC1CBB00E8745F /* ReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
+		B4808F832B6F9BB8007CF21E /* APIServieTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APIServieTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4808F852B6F9BB8007CF21E /* APIServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceTest.swift; sourceTree = "<group>"; };
 		B481D4AC2B44257F001F91B2 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		B4A5A3BF2B4D2575009F3400 /* Locale+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Locale+.swift"; sourceTree = "<group>"; };
 		B4A5A3C02B4D2575009F3400 /* DateFormatter+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+.swift"; sourceTree = "<group>"; };
@@ -256,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				B45C6ECF29C58DCC00739811 /* OpenMarket */,
+				B4808F842B6F9BB8007CF21E /* APIServieTest */,
 				B45C6ECE29C58DCC00739811 /* Products */,
 				7975C9578C68374791D3C753 /* Pods */,
 				E66A1EACF6086D1B21B7D426 /* Frameworks */,
@@ -266,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				B45C6ECD29C58DCC00739811 /* OpenMarket.app */,
+				B4808F832B6F9BB8007CF21E /* APIServieTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -347,6 +352,14 @@
 				B44936E129D41493001E5F20 /* Alert */,
 			);
 			path = Pages;
+			sourceTree = "<group>";
+		};
+		B4808F842B6F9BB8007CF21E /* APIServieTest */ = {
+			isa = PBXGroup;
+			children = (
+				B4808F852B6F9BB8007CF21E /* APIServiceTest.swift */,
+			);
+			path = APIServieTest;
 			sourceTree = "<group>";
 		};
 		B481D4A92B44252D001F91B2 /* Extensions */ = {
@@ -474,6 +487,24 @@
 			productReference = B45C6ECD29C58DCC00739811 /* OpenMarket.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B4808F822B6F9BB8007CF21E /* APIServieTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B4808F892B6F9BB8007CF21E /* Build configuration list for PBXNativeTarget "APIServieTest" */;
+			buildPhases = (
+				B4808F7F2B6F9BB8007CF21E /* Sources */,
+				B4808F802B6F9BB8007CF21E /* Frameworks */,
+				B4808F812B6F9BB8007CF21E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B4808F882B6F9BB8007CF21E /* PBXTargetDependency */,
+			);
+			name = APIServieTest;
+			productName = APIServieTest;
+			productReference = B4808F832B6F9BB8007CF21E /* APIServieTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -503,6 +534,7 @@
 			projectRoot = "";
 			targets = (
 				B45C6ECC29C58DCC00739811 /* OpenMarket */,
+				B4808F822B6F9BB8007CF21E /* APIServieTest */,
 			);
 		};
 /* End PBXProject section */
@@ -632,7 +664,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B4808F7F2B6F9BB8007CF21E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4808F862B6F9BB8007CF21E /* APIServiceTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B4808F882B6F9BB8007CF21E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B45C6ECC29C58DCC00739811 /* OpenMarket */;
+			targetProxy = B4808F872B6F9BB8007CF21E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B45C6EDB29C58DCD00739811 /* LaunchScreen.storyboard */ = {
@@ -817,6 +865,50 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B4808F8A2B6F9BB8007CF21E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7T7HF9QMND;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = main.APIServieTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenMarket.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OpenMarket";
+			};
+			name = Debug;
+		};
+		B4808F8B2B6F9BB8007CF21E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7T7HF9QMND;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = main.APIServieTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenMarket.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OpenMarket";
 			};
 			name = Release;
 		};

@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "6042F5F8-DFF5-43D7-9179-934E0763877C",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:OpenMarket.xcodeproj",
+          "identifier" : "B45C6ECC29C58DCC00739811",
+          "name" : "OpenMarket"
+        }
+      ]
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:OpenMarket.xcodeproj",
+      "identifier" : "B45C6ECC29C58DCC00739811",
+      "name" : "OpenMarket"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:OpenMarket.xcodeproj",
+        "identifier" : "B4808F822B6F9BB8007CF21E",
+        "name" : "APIServieTest"
+      }
+    }
+  ],
+  "version" : 1
+}
