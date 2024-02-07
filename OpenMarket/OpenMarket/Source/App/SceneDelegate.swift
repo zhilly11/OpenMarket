@@ -14,12 +14,11 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let productListViewController = ViewControllerFactory.make(.productList)
-        let searchViewController = ViewControllerFactory.make(.search)
+        let productListViewController = ViewControllerFactory.make(.productList, dependency: .live)
+        let searchViewController = ViewControllerFactory.make(.search, dependency: .live)
         let tabBarController = ViewControllerFactory.make(
-            .tabBarController(
-                child: [productListViewController, searchViewController]
-            )
+            .tabBarController(child: [productListViewController, searchViewController]),
+            dependency: .live
         )
         
         window = UIWindow(windowScene: windowScene)

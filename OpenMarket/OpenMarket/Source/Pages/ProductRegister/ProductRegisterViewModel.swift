@@ -7,6 +7,12 @@ import RxSwift
 
 final class ProductRegisterViewModel: ViewModel {
     
+    var apiService: OpenMarketAPIService
+    
+    init(apiService: OpenMarketAPIService) {
+        self.apiService = apiService
+    }
+    
     struct Input {
         let title: ControlProperty<String?> // 상품 이름
         let price: ControlProperty<String?> // 상품 가격
@@ -108,7 +114,7 @@ final class ProductRegisterViewModel: ViewModel {
                         let imagesDatas: [Data] = selectedImages.value.map { $0.convertToData()! }
                         
                         Task {
-                            let result: Result<Data, OpenMarketAPIError> = await APIService.createProduct(paramsProduct, imagesDatas)
+                            let result: Result<Data, OpenMarketAPIError> = await owner.apiService.createProduct(paramsProduct, imagesDatas)
                             
                             switch result {
                             case .success(_):

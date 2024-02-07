@@ -11,12 +11,12 @@ PODS:
   - Then (3.0.0)
 
 DEPENDENCIES:
-  - Alamofire
-  - lottie-ios
+  - Alamofire (= 5.6.4)
+  - lottie-ios (= 4.3.4)
   - RxCocoa (= 6.5.0)
   - RxSwift (= 6.5.0)
   - SnapKit (= 5.6.0)
-  - Then
+  - Then (= 3.0.0)
 
 SPEC REPOS:
   trunk:
@@ -37,6 +37,6 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: c9ef60d3666c4b80c98583d16478f9d23799b1d1
+PODFILE CHECKSUM: a21ffc3e681f8d0d118dbc19f40c7899f3787713
 
 COCOAPODS: 1.12.1

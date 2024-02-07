@@ -1,6 +1,7 @@
 //  OpenMarket - ProductListViewModel.swift
 //  Created by zhilly on 2023/03/23
 
+import Alamofire
 import RxCocoa
 import RxRelay
 import RxSwift
@@ -89,14 +90,20 @@ final class ProductListViewModel: ViewModel, ProductListProvider {
     
     // MARK: - ProductListProvider
     
+    var apiService: OpenMarketAPIService
     var productList: BehaviorRelay<[Product]> = .init(value: [])
     var pageCounter: Int = APIConstant.startPage
     
+    init(apiService: OpenMarketAPIService) {
+        self.apiService = apiService
+    }
+    
     @MainActor
     func fetchProductPage() async {
-        let response: Result<ProductList, OpenMarketAPIError> = await APIService.inquiryProductList(
+        let response: Result<ProductList, OpenMarketAPIError> = await apiService.inquiryProductList(
             pageNumber: self.pageCounter,
-            itemsPerPage: APIConstant.itemPerPage
+            itemsPerPage: APIConstant.itemPerPage,
+            searchValue: nil
         )
         
         switch response {

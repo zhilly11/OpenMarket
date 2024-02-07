@@ -90,8 +90,13 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
     
     // MARK: - ProductListProvider
     
+    var apiService: OpenMarketAPIService
     var productList: BehaviorRelay<[Product]> = .init(value: [])
     var pageCounter: Int = 1
+    
+    init(apiService: OpenMarketAPIService) {
+        self.apiService = apiService
+    }
     
     @MainActor
     func fetchProductPage() async {
@@ -100,7 +105,7 @@ final class SearchViewModel: ViewModel, ProductListProvider, ProductSearchable {
             return
         }
         
-        let response: Result<ProductList, OpenMarketAPIError> = await APIService.inquiryProductList(
+        let response: Result<ProductList, OpenMarketAPIError> = await apiService.inquiryProductList(
             pageNumber: self.pageCounter,
             itemsPerPage: APIConstant.itemPerPage,
             searchValue: self.searchKeyword

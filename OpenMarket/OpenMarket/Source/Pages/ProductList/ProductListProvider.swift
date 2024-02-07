@@ -4,6 +4,7 @@
 import RxRelay
 
 protocol ProductListProvider {
+    var apiService: OpenMarketAPIService { get set }
     var productList: BehaviorRelay<[Product]> { get set }
     var pageCounter: Int { get set }
     
@@ -12,7 +13,7 @@ protocol ProductListProvider {
 
 extension ProductListProvider {
     func isServerOnline() async -> Bool {
-        switch await APIService.healthCheck() {
+        switch await apiService.healthCheck() {
         case .success: return true
         case .failure: return false
         }

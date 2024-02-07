@@ -6,6 +6,13 @@ import RxSwift
 
 final class ProductDetailViewModel: ViewModel {
     
+    var apiService: OpenMarketAPIService
+
+    init(apiService: OpenMarketAPIService, productID: Int) {
+        self.apiService = apiService
+        self.productID = productID
+    }
+    
     struct Input {
         let viewDidLoadTrigger: Observable<Void>
         let deleteAction: PublishSubject<Void>
@@ -25,10 +32,6 @@ final class ProductDetailViewModel: ViewModel {
     private let product: BehaviorRelay<Product?> = .init(value: nil)
     private let failAlertAction: PublishRelay<String> = .init()
     private let deleteCompleted: PublishRelay<String> = .init()
-    
-    init(productID: Int) {
-        self.productID = productID
-    }
     
     func transform(input: Input) -> Output {
         let fetchCompleted: PublishSubject<Void> = .init()
@@ -51,11 +54,11 @@ final class ProductDetailViewModel: ViewModel {
                 with: self,
                 onNext: { owner, _ in
                     Task {
-                        let response: Result<String, OpenMarketAPIError> = await APIService.inquiryDeleteURI(id: owner.productID)
+                        let response: Result<String, OpenMarketAPIError> = await owner.apiService.inquiryDeleteURI(id: owner.productID)
                         
                         switch response {
                         case .success(let deleteURL):
-                            let result: Result<Bool, OpenMarketAPIError> = await APIService.deleteProduct(path: deleteURL)
+                            let result: Result<Bool, OpenMarketAPIError> = await owner.apiService.deleteProduct(path: deleteURL)
                             
                             switch result {
                             case .success:
@@ -90,7 +93,7 @@ final class ProductDetailViewModel: ViewModel {
     
     @MainActor
     private func fetchProduct(id: Int) async -> Product? {
-        let productResult = await APIService.fetchProduct(id: id)
+        let productResult = await apiService.fetchProduct(id: id)
         
         switch productResult {
         case .success(let product):
