@@ -70,4 +70,18 @@ extension JSONDecoder {
         
         return decodedData
     }
+    
+    static func decodeFile<T: Decodable>(_ object: T.Type, fileName: String) -> T? {
+        guard let file = Bundle.main.url(forResource: fileName, withExtension: nil) else {
+            return nil
+        }
+        
+        do {
+            let data: Data = try Data(contentsOf: file)
+            let decoded: T? = JSONDecoder.decodeData(data: data, to: object)
+            return decoded
+        } catch {
+            return nil
+        }
+    }
 }

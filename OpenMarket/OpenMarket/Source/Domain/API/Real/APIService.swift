@@ -4,13 +4,19 @@
 import Alamofire
 import RxSwift
 
-final class APIService {
+final class APIService: OpenMarketAPIService {
     
-    static func request<T>(
+    let session: Session
+    
+    init(session: Session = Session.default) {
+        self.session = session
+    }
+    
+    func request<T>(
         _ object: T.Type,
         router: APIRouter
     ) async -> Result<T, OpenMarketAPIError> where T: Decodable {
-        let dataTask: DataTask<Data> = AF.request(router).serializingData(automaticallyCancelling: true)
+        let dataTask: DataTask<Data> = session.request(router).serializingData(automaticallyCancelling: true)
         
         switch await dataTask.result {
         case .success(let data):
@@ -29,18 +35,18 @@ final class APIService {
         }
     }
     
-    static func healthCheck() async -> Result<Bool, OpenMarketAPIError> {
+    func healthCheck() async -> Result<Bool, OpenMarketAPIError> {
         let result: Result<String, OpenMarketAPIError> = await request(String.self, router: .healthChecker)
         
         switch result {
         case .success(let result):
-            return result.trimmingCharacters(in: ["\""]) == "OK" ? .success(true) : .failure(.failHealthChecker)
+            return result.trimmingCharacters(in: ["\"", "\n"]) == "OK" ? .success(true) : .failure(.failHealthChecker)
         case .failure(let error):
             return .failure(error)
         }
     }
     
-    static func inquiryProductList(
+    func inquiryProductList(
         pageNumber: Int,
         itemsPerPage: Int,
         searchValue: String? = nil
@@ -51,11 +57,11 @@ final class APIService {
                                                          searchValue: searchValue))
     }
     
-    static func fetchProduct(id: Int) async -> Result<Product, OpenMarketAPIError> {
+    func fetchProduct(id: Int) async -> Result<Product, OpenMarketAPIError> {
         return await request(Product.self, router: .inquiryProduct(id: id))
     }
     
-    static func createProduct(
+    func createProduct(
         _ item: ParamsProduct,
         _ images: [Data]
     ) async -> Result<Data, OpenMarketAPIError> {
@@ -65,7 +71,7 @@ final class APIService {
             return .failure(OpenMarketAPIError.invalidData)
         }
         
-        let uploadRequest: UploadRequest = AF.upload(
+        let uploadRequest: UploadRequest = session.upload(
             multipartFormData: { formData in
                 formData.append(paramsData, withName: "params")
                 
@@ -93,21 +99,21 @@ final class APIService {
         }
     }
     
-    static func inquiryDeleteURI(id: Int) async -> Result<String, OpenMarketAPIError> {
+    func inquiryDeleteURI(id: Int) async -> Result<String, OpenMarketAPIError> {
         let result = await request(String.self, router: .inquiryDeleteURI(id: id))
         
         switch result {
         case .success(let data):
-            return .success(data.trimmingCharacters(in: ["\""]))
+            return .success(data.trimmingCharacters(in: ["\"", "\n"]))
         case .failure(let error):
             return .failure(error)
         }
     }
     
-    static func updateProduct(id: Int) { }
+    func updateProduct(id: Int) { }
     
-    static func deleteProduct(path: String) async -> Result<Bool, OpenMarketAPIError> {
-        let response: DataRequest = AF.request(APIRouter.deleteProduct(path: path))
+    func deleteProduct(path: String) async -> Result<Bool, OpenMarketAPIError> {
+        let response: DataRequest = session.request(APIRouter.deleteProduct(path: path))
         
         return await withCheckedContinuation { continuation in
             response.responseData(

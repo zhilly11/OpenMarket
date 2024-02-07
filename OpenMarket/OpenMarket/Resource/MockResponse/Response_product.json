@@ -1,0 +1,38 @@
+{
+    "id":2454,
+    "vendor_id":48,
+    "name":"애플 매직 키보드",
+    "description":"애플 매직 키보드 판매합니다. S급!!\n비닐만 뜯은 새제품입니다~\n\n영문 각인, 풀배열, Touch ID 탑재 버전",
+    "thumbnail":"https://s3.ap-northeast-2.amazonaws.com/media.yagom-academy.kr/training-resources/48/20240130/6809fffcbf1811eeaa7e6f3376c52955_thumb.png",
+    "currency":"KRW",
+    "price":150000.0,
+    "bargain_price":150000.0,
+    "discounted_price":0.0,
+    "stock":0,
+    "created_at":"2024-01-30T00:00:00",
+    "issued_at":"2024-01-30T00:00:00",
+    "images":[
+        {
+            "id":3335,
+            "url":"https://s3.ap-northeast-2.amazonaws.com/media.yagom-academy.kr/training-resources/48/20240130/6809fffbbf1811eeaa7ed35e44deece1_origin.png",
+            "thumbnail_url":"https://s3.ap-northeast-2.amazonaws.com/media.yagom-academy.kr/training-resources/48/20240130/6809fffcbf1811eeaa7e6f3376c52955_thumb.png",
+            "issued_at":"2024-01-30T00:00:00"
+        },
+        {
+            "id":3336,
+            "url":"https://s3.ap-northeast-2.amazonaws.com/media.yagom-academy.kr/training-resources/48/20240130/688179edbf1811eeaa7eb55b3ae4b5da_origin.png",
+            "thumbnail_url":"https://s3.ap-northeast-2.amazonaws.com/media.yagom-academy.kr/training-resources/48/20240130/688179eebf1811eeaa7e1b7879051d61_thumb.png",
+            "issued_at":"2024-01-30T00:00:00"
+        },
+        {
+            "id":3337,
+            "url":"https://s3.ap-northeast-2.amazonaws.com/media.yagom-academy.kr/training-resources/48/20240130/68f9b72fbf1811eeaa7e6365aa912a26_origin.png",
+            "thumbnail_url":"https://s3.ap-northeast-2.amazonaws.com/media.yagom-academy.kr/training-resources/48/20240130/68f9b730bf1811eeaa7e45e1a7a64e79_thumb.png",
+            "issued_at":"2024-01-30T00:00:00"
+        }
+    ],
+    "vendors":{
+        "id":48,
+        "name":"zhilly"
+    }
+}
